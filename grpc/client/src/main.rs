@@ -7,8 +7,6 @@ pub mod agent{
 
 
 
-
-
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut client = IrisInferenceClient::connect("http://[::1]:8080").await?;
