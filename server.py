@@ -15,7 +15,7 @@ class Model1Service(dbus.service.Object):
         dbus.service.Object.__init__(self, bus_name, OBJECT_PATH)
 
     @dbus.service.method(INTERFACE_NAME, in_signature='s', out_signature='s')
-    def predict(self, input_str):
+    def Predict(self, input_str):
         print("Received input:", input_str)
         return input_str
 

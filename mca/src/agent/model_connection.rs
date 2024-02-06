@@ -5,20 +5,20 @@ use crate::model_enum::MCA_MODEL_ENUM;
 use crate::model_structure::*;
 use zbus::{Connection, Result};
 
-pub struct ModelConnection {
-    connection_map: HashMap<MCA_MODEL_ENUM, Box<dyn AIModelTrait>>,
+pub struct ModelConnection<'a> {
+    connection_map: HashMap<MCA_MODEL_ENUM, Model1Struct<'a> >,
 }
 
 
 pub trait MCAOperations {
     fn new() -> Self;
     async fn register_model(&mut self, model_enum: MCA_MODEL_ENUM) -> Result<String>;
-    fn get_model(&mut self, model_enum: MCA_MODEL_ENUM) -> &Box<dyn AIModelTrait + 'static>;
+    fn get_model(&mut self, model_enum: MCA_MODEL_ENUM) -> &Model1Struct;
 }
 
-impl MCAOperations for ModelConnection {
+impl MCAOperations for ModelConnection<'_>{
     fn new() -> Self{
-        let connection_map:HashMap<MCA_MODEL_ENUM, Box<dyn AIModelTrait>> = HashMap::new();
+        let connection_map:HashMap<MCA_MODEL_ENUM, Model1Struct> = HashMap::new();
         ModelConnection {connection_map}
     }
 
@@ -30,24 +30,24 @@ impl MCAOperations for ModelConnection {
                 MCA_MODEL_ENUM::MODEL_1 => {
                     let connection = Connection::session().await?;
                    let proxy = Model1Proxy::new(&connection).await?;
-                   self.connection_map.insert(model_enum, Box::new(Model1Struct {
+                   self.connection_map.insert(model_enum, Model1Struct {
                         proxy,
-                    }) as Box<dyn AIModelTrait>);
+                    });
                     return Ok("success".to_string());
                 }
                 MCA_MODEL_ENUM::MODEL_2 => {
-                    let connection = Connection::session().await?;
-                    let proxy = Model2Proxy::new(&connection).await?;
-                    self.connection_map.insert(model_enum, Box::new(Model2Struct {
-                        proxy,
-                    }) as Box<dyn AIModelTrait>);
+                    // let connection = Connection::session().await?;
+                    // let proxy = Model2Proxy::new(&connection).await?;
+                    // self.connection_map.insert(model_enum, Box::new(Model2Struct {
+                    //     proxy,
+                    // }) as Model1Struct);
                     return Ok("success".to_string());
                 }
                 _ => panic!("Invalid model type"),
             }
         }
     }
-    fn get_model(&mut self, model_enum: MCA_MODEL_ENUM) -> &Box<dyn AIModelTrait + 'static> {
+    fn get_model(&mut self, model_enum: MCA_MODEL_ENUM) -> &Model1Struct <'_>{
         self.connection_map.get(&model_enum).unwrap()
     }
 

@@ -5,6 +5,7 @@ mod model_structure;
 
 use model_enum::MCA_MODEL_ENUM;
 use model_connection::*;
+use model_structure::*;
 
 fn print_description() {
     println!("-----------------------------");
@@ -41,9 +42,9 @@ async fn main() -> Result<(), Box<dyn Error>> {
                     //     .expect("Fail to read input");
                     let mut model_connection_handler = ModelConnection::new();
                     
-                    let mut result = model_connection_handler.register_model(MCA_MODEL_ENUM::MODEL_1).await;
-                    let mut proxy = model_connection_handler.get_model(MCA_MODEL_ENUM::MODEL_1);
-                    let reply = proxy.predict("testset");
+                    let _result: Result<String, zbus::Error> = model_connection_handler.register_model(MCA_MODEL_ENUM::MODEL_1).await;
+                    let model = model_connection_handler.get_model(MCA_MODEL_ENUM::MODEL_1);
+                    let _reply = model.test("testset").await?;
 
                 }
                 "q" => {
