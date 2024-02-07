@@ -9,8 +9,8 @@ use model_structure::*;
 
 fn print_description() {
     println!("-----------------------------");
-    println!("s: send string");
-    println!("d: send json string data");
+    println!("r: register model1");
+    println!("d: register model2");
     println!("q: quit");
 }
 
@@ -41,9 +41,21 @@ async fn main() -> Result<(), Box<dyn Error>> {
                     // io::stdin().read_line(&mut send_input)
                     //     .expect("Fail to read input");
                     let mut model_connection_handler = ModelConnection::new();
-                    
+
                     let _result: Result<String, zbus::Error> = model_connection_handler.register_model(MCA_MODEL_ENUM::MODEL_1).await;
-                    let model = model_connection_handler.get_model(MCA_MODEL_ENUM::MODEL_1);
+                    let model = model_connection_handler.get_model(MCA_MODEL_ENUM::MODEL_1).downcast_ref::<Model1Struct>().unwrap();
+                    let _reply = model.test("testset").await?;
+
+                }
+                "d" => {
+                    println!("Register Model2 ");
+                    // let mut send_input = String::new();
+                    // io::stdin().read_line(&mut send_input)
+                    //     .expect("Fail to read input");
+                    let mut model_connection_handler = ModelConnection::new();
+
+                    let _result: Result<String, zbus::Error> = model_connection_handler.register_model(MCA_MODEL_ENUM::MODEL_2).await;
+                    let model = model_connection_handler.get_model(MCA_MODEL_ENUM::MODEL_2).downcast_ref::<Model2Struct>().unwrap();
                     let _reply = model.test("testset").await?;
 
                 }

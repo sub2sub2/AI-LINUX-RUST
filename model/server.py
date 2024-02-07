@@ -4,9 +4,9 @@ import dbus.service
 from dbus.mainloop.glib import DBusGMainLoop
 
 # DBus 인터페이스 정보
-INTERFACE_NAME = 'org.mca.Model1'
-SERVICE_NAME = 'org.mca.Model1'
-OBJECT_PATH = '/org/mca/Model1'
+INTERFACE_NAME = 'org.mca.Model2'
+SERVICE_NAME = 'org.mca.Model2'
+OBJECT_PATH = '/org/mca/Model2'
 
 # DBus 서버 구현
 class Model1Service(dbus.service.Object):

@@ -36,3 +36,31 @@ impl Model1Trait for Model1Struct<'_> {
 pub trait Model1 {
     async fn predict(&self, input: &str) -> Result<String>;
 }
+
+pub trait Model2Trait {
+    async fn test(&self, input: &str) -> Result<String>;
+}
+
+// Model1 구조체 정의
+pub struct Model2Struct<'a>{
+    pub proxy: Model2Proxy<'a>,
+}
+
+// AIModelTrait을 Model1과 Model2에 대한 특성으로 구현
+impl Model2Trait for Model2Struct<'_> {
+    async fn test(&self, input: &str) -> Result<String> {
+        println!("{:?}", input);
+        let _reply = self.proxy.predict(input).await?;
+        Ok("ok".to_string())
+    }
+}
+
+// zbus Proxy 구조체 정의
+#[dbus_proxy(
+    interface = "org.mca.Model2",
+    default_service = "org.mca.Model2",
+    default_path = "/org/mca/Model2"
+)]
+pub trait Model2 {
+    async fn predict(&self, input: &str) -> Result<String>;
+}
