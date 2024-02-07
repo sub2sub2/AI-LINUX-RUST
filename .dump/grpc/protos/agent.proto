@@ -1,0 +1,19 @@
+syntax = "proto3";
+package agent;
+
+service IrisInference {
+    rpc Inference (IrisInferenceRequest) returns (IrisInferenceResponse);
+}
+
+message IrisInferenceRequest {
+    string id = 1;
+
+    float sepal_length = 2;
+    float sepal_width = 3;
+    float petal_length = 4;
+    float petal_width = 5;
+}
+
+message IrisInferenceResponse {
+    string species = 1;
+}
