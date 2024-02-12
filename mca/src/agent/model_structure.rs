@@ -2,10 +2,11 @@ use zbus::{Result, dbus_proxy, Error};
 use serde::{Serialize, Deserialize};
 
 #[derive(Serialize, Deserialize, Debug)]
-struct IrisData {
-    name: String,
-    age: i32,
-    birthday: i32,
+pub struct IrisData {
+    pub col1: f32,
+    pub col2: f32,
+    pub col3: f32,
+    pub col4: f32,
 }
 
 // Model1Trait 특성 정의
@@ -23,7 +24,7 @@ impl Model1Trait for Model1Struct<'_> {
     async fn test(&self, input: &str) -> Result<String> {
         println!("{:?}", input);
         let _reply = self.proxy.predict(input).await?;
-        Ok("ok".to_string())
+        Ok(_reply)
     }
 }
 
@@ -51,7 +52,7 @@ impl Model2Trait for Model2Struct<'_> {
     async fn test(&self, input: &str) -> Result<String> {
         println!("{:?}", input);
         let _reply = self.proxy.predict(input).await?;
-        Ok("ok".to_string())
+        Ok(_reply)
     }
 }
 

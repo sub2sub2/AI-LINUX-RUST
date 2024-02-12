@@ -23,6 +23,9 @@ tonic = "0.10.2"
 name = "mca-agent"
 path = "src/agent/main.rs"
 
+[[bin]]
+name = "mcf-agent-test"
+path = "src/agent/test.rs"
 
 [build-dependencies]
 tonic-build = "0.10.2"

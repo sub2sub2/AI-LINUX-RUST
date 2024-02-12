@@ -3,7 +3,7 @@ use std::sync::Mutex;
 use std::collections::HashMap;
 use crate::model_enum::MCA_MODEL_ENUM;
 use crate::model_structure::*;
-use zbus::{Connection, Result};
+use zbus::{Connection};
 
 pub struct ModelConnection<> {
     connection_map: HashMap<MCA_MODEL_ENUM, Box<dyn std::any::Any>>,
@@ -12,8 +12,9 @@ pub struct ModelConnection<> {
 
 pub trait MCAOperations {
     fn new() -> Self;
-    async fn register_model(&mut self, model_enum: MCA_MODEL_ENUM) -> Result<String>;
-    fn get_model(&mut self, model_enum: MCA_MODEL_ENUM) -> &Box<dyn std::any::Any>;
+    async fn register_model(&mut self, model_enum: MCA_MODEL_ENUM) -> zbus::Result<String>;
+    fn get_model(&mut self, model_enum: MCA_MODEL_ENUM) -> Result<&Box<dyn std::any::Any>, String>;
+    fn clean_registered_model(&mut self);
 }
 
 impl MCAOperations for ModelConnection{
@@ -22,7 +23,7 @@ impl MCAOperations for ModelConnection{
         ModelConnection {connection_map}
     }
 
-    async fn register_model(&mut self, model_enum: MCA_MODEL_ENUM) -> Result<String> {
+    async fn register_model(&mut self, model_enum: MCA_MODEL_ENUM) -> zbus::Result<String> {
         if self.connection_map.contains_key(&model_enum) {
             Ok("Fail".to_string())
         } else {
@@ -47,8 +48,16 @@ impl MCAOperations for ModelConnection{
             }
         }
     }
-    fn get_model(&mut self, model_enum: MCA_MODEL_ENUM) -> &Box<dyn std::any::Any>{
-        self.connection_map.get(&model_enum).unwrap()
+    fn get_model(&mut self, model_enum: MCA_MODEL_ENUM) -> Result<&Box<dyn std::any::Any>, String>{
+        if let Some(value) = self.connection_map.get(&model_enum) {
+            Ok(value)
+        } else {
+            Err(format!("Model with enum {:?} not found", model_enum))
+        }
+    }
+
+    fn clean_registered_model(&mut self) {
+        self.connection_map.clear();
     }
 
 }
