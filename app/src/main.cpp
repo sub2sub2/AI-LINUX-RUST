@@ -2,42 +2,53 @@
 #include <stdio.h>
 #include <string>
 #include <grpc.h>
+#include <vector>
 
 using namespace std;
-
-gRPC::eAPI getCommand ()
-{
-
-    // Get a character input from the user
-    std::cout << "Enter a character (Q to quit): " << endl;        
-    for (gRPC::eAPI i = gRPC::API_BEGIN; i < gRPC::API_END; i = gRPC::eAPI(i + 1))
-    {
-        // std::cout << i << ". " << (string)gRPC::eAPI << std::endl; 
-        std::cout << i << ". " << gRPC::enumToString(i) << std::endl; 
-    }
-
-    string cInput;
-    std::cin >> cInput;
-
-    int userInput = stoi(cInput.substr(0));
-    switch((gRPC::eAPI)userInput){
-
-        case gRPC::API_INIT:
-            return gRPC::API_INIT;
-            // cout << enumToString(API_INIT) << endl;
-    }
-    return (gRPC::eAPI)userInput;
-}
-
+using namespace gRPC;
 
 int main() {
-    auto command = getCommand();
+    gRPC::ApiEx api = gRPC::ApiEx(); 
+    
+    bool flag = true;
+    while (flag){
+        vector<string> apiList = api.getAllApi(); 
 
-    while (true){
-        switch((gRPC::eAPI)command){
-            case gRPC::API_INIT: break;
-
+        int i = 1;
+        std::cout << "\n===============================" << endl;
+        std::cout << "Enter an option (1, 2, 3, etc.):"  << std::endl;
+        for(auto a : apiList)
+        {
+            std::cout << i++ << ". " << a << std::endl;
         }
+        std::cout << "q. " << "quit" << std::endl;
+        std::cout << "===============================" << endl;
+
+        std::cout << "Please write your option: ";
+        char option;    
+        cin >> option;
+
+        switch (option) {
+        case 'q':
+            std::cout << ">>> Option q selected.\n"; 
+            flag = false;
+            break;
+
+        case '1': // init
+            std::cout << ">>> Option 'init' selected.\n";
+            break;
+
+        case '2': // request
+            std::cout << ">>> Option 'request' selected.\n";
+            break;
+        // Add more cases for other options as needed
+
+        default:
+            std::cout << ">>> Invalid option. Please choose a valid option.\n";
+            break;
+
+    }
+
         
     }
     

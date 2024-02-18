@@ -4,6 +4,7 @@
 #ifndef GRPC_H
 #define GRPC_H
 
+using namespace std;
 
 class Object {
 protected:
@@ -14,19 +15,6 @@ public:
 namespace gRPC
 {
 
-    // XXX: should we implement with interface IApi?
-    class ApiEx {
-    
-    public:
-        vector<string> getAllApi(); 
-        
-        ApiExResponseItem init();
-
-        ApiExResponseItem request(ApiExRequestItem data);
-    
-    private:
-        vector<string> apiList { "init", "request" };
-    };
 
     // XXX: should we implement with Interface IRequestItem?  
     class ApiExRequestItem {
@@ -41,6 +29,28 @@ namespace gRPC
         int result = 0; 
         Object body;
     };
+
+    // XXX: should we implement with interface IApi?
+    class ApiEx {
+    
+    public:
+
+        // ApiEx();
+
+        // show up all the api
+        vector<string> getAllApi(); 
+        
+        // register app as on mca
+        ApiExResponseItem init();
+
+        // send data as a request
+        ApiExResponseItem request(ApiExRequestItem data);
+    
+    private:
+        vector<string> apiList { "init", "request" };
+    };
+
+    
 }    
 
 #endif // EXAMPLE_H

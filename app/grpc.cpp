@@ -33,6 +33,12 @@ namespace gRPC
     //     }
     // }
 
+    // ApiEx::ApiEx(){
+    //     ApiEx::apiList = vector<string> {
+    //         "init", "request"
+    //     };
+    // }
+
     vector<string> ApiEx::getAllApi()
     {
         return ApiEx::apiList;
