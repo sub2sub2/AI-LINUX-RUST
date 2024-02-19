@@ -25,11 +25,8 @@
 
 #include <grpcpp/grpcpp.h>
 
-#ifdef BAZEL_BUILD
-#include "examples/protos/agent.grpc.pb.h"
-#else
-#include "agent.grpc.pb.h"
-#endif
+#include "m_grpc/agent.grpc.pb.h"
+#include "api/appEx.h"
 
 // change
 ABSL_FLAG(std::string, target, "localhost:8080", "Server address");

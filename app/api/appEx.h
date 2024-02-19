@@ -12,9 +12,8 @@ protected:
 public:
 };
 
-namespace gRPC
+namespace AppEx
 {
-
 
     // XXX: should we implement with Interface IRequestItem?  
     class ApiExRequestItem {

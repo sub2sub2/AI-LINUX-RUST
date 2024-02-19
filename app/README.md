@@ -4,12 +4,15 @@
 ## Installation
 
 Install the shared libraray. 
-You will get 
+After the installation, you will get 
 - /usr/local/lib/grpc.so
 - /usr/local/include/grpc.h
 
 ```bash
-$ cd app/build
+$ cd app
+
+# at project/app,
+$ mkdir build && cd build
 $ cmake ..
 $ make
 $ sudo make install
@@ -17,8 +20,8 @@ $ sudo make install
 
 Compile via the CMakefile 
 ```bash
-
-$ cd ~/app/build
+# at project/app,
+$ cd app/build
 $ cmake ..
 
 # you can check myapp

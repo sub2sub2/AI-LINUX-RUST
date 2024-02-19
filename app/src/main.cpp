@@ -1,19 +1,22 @@
 #include <iostream>
 #include <stdio.h>
 #include <string>
-#include <grpc.h>
+#include <appEx.h>
+#include <agent.grpc.pb.h>
 #include <vector>
 
 using namespace std;
-using namespace gRPC;
+// using namespace gRPC;
+
 
 int main() {
-    gRPC::ApiEx api = gRPC::ApiEx(); 
+    AppEx::ApiEx api = AppEx::ApiEx(); 
     
     bool flag = true;
     while (flag){
         vector<string> apiList = api.getAllApi(); 
 
+        // print Options
         int i = 1;
         std::cout << "\n===============================" << endl;
         std::cout << "Enter an option (1, 2, 3, etc.):"  << std::endl;
@@ -24,12 +27,14 @@ int main() {
         std::cout << "q. " << "quit" << std::endl;
         std::cout << "===============================" << endl;
 
+
+        // input option
         std::cout << "Please write your option: ";
         char option;    
         cin >> option;
 
         switch (option) {
-        case 'q':
+        case 'q': // quit
             std::cout << ">>> Option q selected.\n"; 
             flag = false;
             break;

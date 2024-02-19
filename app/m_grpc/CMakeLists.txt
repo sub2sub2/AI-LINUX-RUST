@@ -48,25 +48,31 @@ add_custom_command(
 include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
 # hw_grpc_proto
-add_library(hw_grpc_proto
+add_library(hw_grpc_proto SHARED
   ${hw_grpc_srcs}
   ${hw_grpc_hdrs}
   ${hw_proto_srcs}
   ${hw_proto_hdrs})
+
+
 target_link_libraries(hw_grpc_proto
   ${_REFLECTION}
   ${_GRPC_GRPCPP}
   ${_PROTOBUF_LIBPROTOBUF})
 
+
+# ================= Deleted (Not Make Executable) =================
 # Targets greeter_[async_](client|server)
-foreach(_target
-  grpc_client)
-  add_executable(${_target} "${_target}.cc")
-  target_link_libraries(${_target}
-    hw_grpc_proto
-    absl::flags
-    absl::flags_parse
-    ${_REFLECTION}
-    ${_GRPC_GRPCPP}
-    ${_PROTOBUF_LIBPROTOBUF})
-endforeach()
+# foreach(_target
+#   grpc_client)
+#   add_executable(${_target} "${_target}.cpp")
+#   target_link_libraries(${_target}
+#     hw_grpc_proto
+#     absl::flags
+#     absl::flags_parse
+#     ${_REFLECTION}
+#     ${_GRPC_GRPCPP}
+#     ${_PROTOBUF_LIBPROTOBUF})
+# endforeach()
+
+
