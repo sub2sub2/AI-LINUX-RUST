@@ -9,7 +9,7 @@ namespace AppEx
 {
 
     vector<string> ApiEx::getAllApi()
-    {
+    { 
         return ApiEx::apiList;
     }
 
