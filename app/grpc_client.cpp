@@ -25,8 +25,8 @@
 
 #include <grpcpp/grpcpp.h>
 
-#include "m_grpc/agent.grpc.pb.h"
-#include "api/appEx.h"
+#include "agent.grpc.pb.h"
+#include "appEx.h"
 
 // change
 ABSL_FLAG(std::string, target, "localhost:8080", "Server address");
@@ -46,12 +46,12 @@ service Greeter {
 using grpc::Channel;
 using grpc::ClientContext;
 using grpc::Status;
-using agent::IrisInference;
+// using agent::IrisInference;
 using agent::IrisInferenceResponse;
 using agent::IrisInferenceRequest;
 
 class AgentClient {
- public:
+public:
   AgentClient(std::shared_ptr<Channel> channel)
       : stub_(IrisInference::NewStub(channel)) {}
 

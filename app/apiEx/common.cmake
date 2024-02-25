@@ -90,6 +90,7 @@ elseif(GRPC_FETCHCONTENT)
   else()
     set(_GRPC_CPP_PLUGIN_EXECUTABLE $<TARGET_FILE:grpc_cpp_plugin>)
   endif()
+  
 else()
   # This branch assumes that gRPC and all its dependencies are already installed
   # on this system, so they can be located by find_package().

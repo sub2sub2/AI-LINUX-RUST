@@ -1,16 +1,16 @@
 #include <iostream>
 #include <stdio.h>
 #include <string>
-#include <appEx.h>
-#include <agent.grpc.pb.h>
+// #include <agent.grpc.pb.h>
 #include <vector>
+#include <appEx.h>
 
 using namespace std;
 // using namespace gRPC;
 
 
 int main() {
-    AppEx::ApiEx api = AppEx::ApiEx(); 
+    AppEx::ApiEx api("192.178.0.1:8080"); 
     
     bool flag = true;
     while (flag){

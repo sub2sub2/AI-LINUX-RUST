@@ -1,45 +1,36 @@
 cmake_minimum_required(VERSION 3.10)
 project(MyApp)
 
+
 message(PROJECT_SOURCE_DIR="${PROJECT_SOURCE_DIR}")
 message(CMAKE_SOURCE_DIR="${CMAKE_SOURCE_DIR}")
 message(CMAKE_CURRENT_BINARY_DIR="${CMAKE_CURRENT_BINARY_DIR}")
-message(SOURCES="${SOURCES}src/main.cpp")
+message(SOURCES="${SOURCES}")
+
+include(apiEx/common.cmake)
 
 
-include(m_grpc/common.cmake)
+add_subdirectory(grpc)
+add_subdirectory(apiEx)
 
-set(GRPC "m_grpc")
-set(API "api")
+include_directories(${CMAKE_SOURCE_DIR}/grpc)
+include_directories(${CMAKE_SOURCE_DIR}/apiEx)
 
-add_subdirectory(${GRPC})
-# add_subdirectory(${API})
-
-# CMAKE_CURRENT_BINARY_DIR=AI-LINUX-RUST/app/build
-include_directories("${CMAKE_CURRENT_BINARY_DIR}"/${GRPC})
-# include_directories(${CMAKE_SOURCE_DIR}/${GRPC})
-
-# idk why this is not necessary
-# CMAKE_SOURCE_DIR=AI-LINUX-RUST/app
-# include_directories(${CMAKE_SOURCE_DIR}/${API})
+# add_custom_target(CompileModules DEPENDS grpc apiEx)
 
 # Create the main executable
-add_executable(TARGET grpc_client.cpp)
+add_executable(MyExecutable src/main.cpp)
 
-
-# Link the modules to the main executable
-# target_link_libraries(MyExecutable GRPC API)
-
-# target_include_directories(MyExecutable PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/${GRPC})
-# target_include_directories(MyExecutable PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/${API})
+# add_dependencies(MyExecutable CompileModules)
 
 ## necessary 
-target_link_libraries(TARGET 
-    # ${CMAKE_CURRENT_BINARY_DIR}/${GRPC} 
-    # ${CMAKE_CURRENT_BINARY_DIR}/${API}
-    hw_grpc_proto
-    absl::flags
-    absl::flags_parse
-    ${_REFLECTION}
-    ${_GRPC_GRPCPP}
-    ${_PROTOBUF_LIBPROTOBUF})
+
+target_link_libraries(MyExecutable
+#   grpc 
+  apiEx
+  absl::flags
+  absl::flags_parse
+  ${_GRPC_GRPCPP}
+  ${_PROTOBUF_LIBPROTOBUF}
+  ${_REFLECTION}
+)
