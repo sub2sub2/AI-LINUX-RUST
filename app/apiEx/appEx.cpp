@@ -21,89 +21,93 @@ using grpc::Status;
 using agent::IrisInference;
 using agent::IrisInferenceResponse;
 using agent::IrisInferenceRequest;
-using namespace std;
 
 
 namespace AppEx
 {
 
-    
+
 ApiEx::ApiEx(string ipAddr) {
     
-    cout << ipAddr << endl;
+    std::cout << ipAddr << std::endl;
     // Access the value of the ABSL_FLAG using the Flag object
     std::string target_str = absl::GetFlag(FLAGS_target);
 
     // Now use target_str to create AgentClient and assign to the pointer
     client = new AgentClient(grpc::CreateChannel(target_str, grpc::InsecureChannelCredentials()));
 
+    apiList = new vector<std::string> {
+        "init", "request"
+    };
+
 }
+
 
 vector<string> ApiEx::getAllApi()
 {
-    return apiList;
+    return *apiList;
 }
 
+int ApiEx::request(const char* id, const float sepal_length, const float sepal_width, const float petal_length, const float petal_width, std::string response)
+{
 
-    // vector<string> ApiEx::getAllApi()
-    // {
-    //     return apiList;
-    // }
+    std::cout << "In the request" << std::endl;
+    try
+    {
+        response = client->inference(id, sepal_length, sepal_width, petal_length, petal_width);    
+    }
+    catch (std::exception& e){
 
-    // ApiExResponseItem ApiEx::init()
-    // {
-    //     return ApiExResponseItem();
-    // }
+        std::cout << "In the request, catch()" << std::endl;
 
-    // ApiExResponseItem ApiEx::init()
-    // {
-        
-    //     return ApiExResponseItem();
-    // }
+        std::cout << e.what() << std::endl;
+        return 1; 
+    }
+    return 0;
 
-    // ApiExResponseItem ApiEx::request(ApiExRequestItem data)
-    // {
-    //     return ApiExResponseItem();
-    // }
+}
 
-    AgentClient::AgentClient(std::shared_ptr<Channel> channel)
-        : stub_(IrisInference::NewStub(channel)) {}
+#pragma region AgentClient
 
+AgentClient::AgentClient(std::shared_ptr<Channel> channel)
+    : stub_(IrisInference::NewStub(channel)) {}
 
-    std::string AgentClient::Inference (
+std::string AgentClient::inference (
     const char* id,
     const float sepal_length,
     const float sepal_width,
     const float petal_length,
     const float petal_width ) 
-    {
+{
+    std::cout << "In inference" << std::endl;
 
-        // Data we are sending to the server.
-        IrisInferenceRequest request;
-        request.set_id(id);
-        request.set_sepal_length(sepal_length);
-        request.set_sepal_width(sepal_width);
-        request.set_petal_length(petal_length);
-        request.set_petal_width(petal_width);
+    // Data we are sending to the server.
+    IrisInferenceRequest request;
+    request.set_id(id);
+    request.set_sepal_length(sepal_length);
+    request.set_sepal_width(sepal_width);
+    request.set_petal_length(petal_length);
+    request.set_petal_width(petal_width);
 
-        // Container for the data we expect from the server.
-        IrisInferenceResponse reply;
+    // Container for the data we expect from the server.
+    IrisInferenceResponse reply;
 
-        // Context for the client. It could be used to convey extra information to
-        // the server and/or tweak certain RPC behaviors.
-        ClientContext context;
+    // Context for the client. It could be used to convey extra information to
+    // the server and/or tweak certain RPC behaviors.
+    ClientContext context;
 
-        // The actual RPC.
-        Status status = stub_->Inference(&context, request, &reply);
+    // The actual RPC.
+    Status status = stub_->Inference(&context, request, &reply);
 
-        // Act upon its status.
-        if (status.ok()) {
-        return reply.species();
-        } else {
-        std::cout << status.error_code() << ": " << status.error_message()
-                    << std::endl;
-        return "RPC failed";
-        }
+    // Act upon its status.
+    if (status.ok()) {
+    return reply.species();
+    } else {
+    std::cout << status.error_code() << ": " << status.error_message()
+                << std::endl;
+    return "RPC failed";
     }
-        
+}
+#pragma endregion
+
 }

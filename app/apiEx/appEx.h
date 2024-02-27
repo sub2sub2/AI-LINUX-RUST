@@ -31,63 +31,55 @@ public:
 namespace AppEx
 {
 
-    // XXX: should we implement with Interface IRequestItem?  
-    class ApiExRequestItem 
-    {
-
-    public:
-        vector<float> input; 
-    };
 
 
-    class ApiExResponseItem 
-    {
-    public:
-        int result = 0; 
-        Object body;
-    };
+class AgentClient 
+{
+public:
+    AgentClient(std::shared_ptr<Channel> channel);
 
+    // Assembles the client's payload, sends it and presents the response back
+    // from the server.
+    std::string inference(
+        const char* id,
+        const float sepal_length,
+        const float sepal_width,
+        const float petal_length,
+        const float petal_width);
 
+private:    
+    std::unique_ptr<IrisInference::Stub> stub_;
+};
 
-    class AgentClient 
-    {
-    public:
-        AgentClient(std::shared_ptr<Channel> channel);
+// XXX: should we implement with interface IApi?
+class ApiEx  {
 
-        // Assembles the client's payload, sends it and presents the response back
-        // from the server.
-        std::string Inference(
-            const char* id,
-            const float sepal_length,
-            const float sepal_width,
-            const float petal_length,
-            const float petal_width);
+public:
+    ApiEx(string ipAddr);
 
-    private:    
-        std::unique_ptr<IrisInference::Stub> stub_;
-    };
-
-    // XXX: should we implement with interface IApi?
-    class ApiEx  {
-
-    public:
-        ApiEx(string ipAddr);
-
-        // show up all the api
-        vector<string> getAllApi(); 
-        
-        // register app as on mca
-        ApiExResponseItem init();
-
-        // send data as a request
-        ApiExResponseItem request(ApiExRequestItem data);
-
-    private:
-        AgentClient* client;
-        vector<string> apiList;
-    };
-
+    // show up all the api
+    // XXX: Need to be capsulated 
+    vector<string> getAllApi(); 
     
+    // register app as on mca
+    // XXX: Need to be capsulated.
+    int init();
+
+    // send data as a request
+    // XXX: Should response be wrapped by wrapper? and for what?
+    int request(
+        const char* id, 
+        const float sepal_length, 
+        const float sepal_width, 
+        const float petal_length, 
+        const float petal_width, 
+        std::string response);
+
+private:
+    AgentClient* client;
+    vector<string> *apiList;
+};
+  
 }    
 
 #endif // EXAMPLE_H
