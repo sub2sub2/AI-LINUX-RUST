@@ -33,3 +33,7 @@ _deps
 .dump/
 app/grpc/build
 app/build
+grpc/
+
+# vs
+.vscode/
