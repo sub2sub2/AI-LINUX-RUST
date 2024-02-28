@@ -102,7 +102,7 @@ int main() {
             for(float n: i)
                 std::cout << n << " "; 
 
-            std::string result;
+            std::unique_ptr<std::string> result;
             auto response = api.request(
                 const_cast<char*>(std::to_string(id).c_str()), // sorry, it could be fixed
                 i[0], i[1], i[2], i[3],
@@ -110,7 +110,7 @@ int main() {
             );
 
             if (response == 0) {
-                std::cout << result << std::endl;            
+                std::cout << *result.get() << std::endl;            
             } else 
             {
                 std::cout << "gRPC not working" << std::endl;

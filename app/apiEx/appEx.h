@@ -73,7 +73,7 @@ public:
         const float sepal_width, 
         const float petal_length, 
         const float petal_width, 
-        std::string response);
+        std::unique_ptr<std::string>& response);
 
 private:
     AgentClient* client;

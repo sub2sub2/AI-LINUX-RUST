@@ -48,18 +48,21 @@ vector<string> ApiEx::getAllApi()
     return *apiList;
 }
 
-int ApiEx::request(const char* id, const float sepal_length, const float sepal_width, const float petal_length, const float petal_width, std::string response)
+int ApiEx::request(
+    const char* id, 
+    const float sepal_length, 
+    const float sepal_width, 
+    const float petal_length, 
+    const float petal_width, 
+    std::unique_ptr<std::string>& response)
 {
-
-    std::cout << "In the request" << std::endl;
     try
     {
-        response = client->inference(id, sepal_length, sepal_width, petal_length, petal_width);    
+        response = std::make_unique<std::string>(
+            client->inference(id, sepal_length, sepal_width, petal_length, petal_width)
+        ); 
     }
     catch (std::exception& e){
-
-        std::cout << "In the request, catch()" << std::endl;
-
         std::cout << e.what() << std::endl;
         return 1; 
     }
@@ -79,8 +82,6 @@ std::string AgentClient::inference (
     const float petal_length,
     const float petal_width ) 
 {
-    std::cout << "In inference" << std::endl;
-
     // Data we are sending to the server.
     IrisInferenceRequest request;
     request.set_id(id);
@@ -101,11 +102,12 @@ std::string AgentClient::inference (
 
     // Act upon its status.
     if (status.ok()) {
-    return reply.species();
+        std::cout << "species are " << reply.species() << std::endl; 
+        return reply.species();
     } else {
-    std::cout << status.error_code() << ": " << status.error_message()
+        std::cout << status.error_code() << ": " << status.error_message()
                 << std::endl;
-    return "RPC failed";
+        return "RPC failed";
     }
 }
 #pragma endregion
