@@ -12,21 +12,16 @@ using namespace std;
 std::vector<float> getInput()
 {
     std::cout << "Enter four float numbers separated by commas >>> " <<std::endl;
-    
-    cin.ignore(1000, '\n');
 
+    // flush buffer    
+    cin.ignore(1000, '\n');
 
     std::string input;
     std::getline(std::cin, input);
 
-    // std::cin >> input;
-
-    
     std::vector<float> numbers;
     if (!input.empty()) {
         std::istringstream stream(input);
-
-
 
         float num;
         char comma;
@@ -38,6 +33,7 @@ std::vector<float> getInput()
     }
     else
     {
+        // default values 
         numbers.push_back(1.0);   
         numbers.push_back(2.0);   
         numbers.push_back(3.0);   
@@ -83,7 +79,7 @@ int main() {
 
         // input option
         std::cout << "Please write your option: ";
-        char option;    
+        char option;
         cin >> option;
 
         switch (option) {
@@ -93,14 +89,15 @@ int main() {
             break;
 
         case '1': // init
-            std::cout << ">>> Option 'init' selected.\n";
+            std::cout << ">>> Option 'init' selected. (NOT IMPLEMENTED YET)\n";
             break;
 
         case '2': {
             // request
             std::cout << ">>> Option 'request' selected." << std::endl;
-            std::vector<float> i = getInput();
+
             // float sepal_length, sepal_width, petal_length, petal_width;
+            std::vector<float> i = getInput();
             
             for(float n: i)
                 std::cout << n << " "; 
@@ -111,7 +108,7 @@ int main() {
                 i[0], i[1], i[2], i[3],
                 result
             );
-            
+
             if (response == 0) {
                 std::cout << result << std::endl;            
             } else 
