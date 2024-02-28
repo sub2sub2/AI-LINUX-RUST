@@ -99,9 +99,6 @@ int main() {
             // float sepal_length, sepal_width, petal_length, petal_width;
             std::vector<float> i = getInput();
             
-            for(float n: i)
-                std::cout << n << " "; 
-
             std::unique_ptr<std::string> result;
             auto response = api.request(
                 const_cast<char*>(std::to_string(id).c_str()), // sorry, it could be fixed
@@ -110,7 +107,7 @@ int main() {
             );
 
             if (response == 0) {
-                std::cout << *result.get() << std::endl;            
+                std::cout << "Response: " << *result.get() << std::endl;            
             } else 
             {
                 std::cout << "gRPC not working" << std::endl;

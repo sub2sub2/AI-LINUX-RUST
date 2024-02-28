@@ -102,7 +102,6 @@ std::string AgentClient::inference (
 
     // Act upon its status.
     if (status.ok()) {
-        std::cout << "species are " << reply.species() << std::endl; 
         return reply.species();
     } else {
         std::cout << status.error_code() << ": " << status.error_message()
