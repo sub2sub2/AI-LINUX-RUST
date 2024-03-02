@@ -2,12 +2,6 @@
 
 
 
-
-
-
-
-
-
 ## Installation
 
 To install gRPC, follow the steps below. Detailed information can be found in the gRPC C++ Quick Start Guide.
@@ -40,9 +34,8 @@ $ popd
 $ protoc --version
 
 
-
-
 ```
+
 
 After downloading gRPC and Protocol Buffers, build the app using the following commands:
 
@@ -64,3 +57,45 @@ $ ./MyExecutable
 
 ```
 
+## Usage
+
+Fisrt, run the server with the following commands
+```bash
+
+$ cd AI-LINUX-RUST/mca
+
+# 
+$ cargo build
+$ cargo run --bin mca-app-test
+
+```
+
+Then, run the client app as the follow:
+
+```bash
+
+$ cd AI-LINUX-RUST/mca
+
+# After the installation,
+$ ./MyExecutable
+
+```
+
+### Example
+```terminal
+sseo@sseo-PS42-8RB:~/Proj/AI-LINUX-RUST/app/build$ ./MyExecutable 
+192.178.0.1:8080
+
+===============================
+Enter an option (1, 2, 3, etc.):
+1. init
+2. request
+q. quit
+===============================
+Please write your option: 2
+>>> Option 'request' selected.
+Enter four float numbers separated by commas >>> 
+
+You entered: 1, 2, 3, 4
+Response: This iris' species is something
+```
