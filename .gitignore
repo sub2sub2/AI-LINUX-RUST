@@ -37,3 +37,4 @@ grpc/
 
 # vs
 .vscode/
+*/build
