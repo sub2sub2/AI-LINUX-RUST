@@ -3,7 +3,7 @@ mod model_connection;
 mod model_enum;
 mod model_structure;
 
-use model_enum::MCA_MODEL_ENUM;
+use model_enum::MCAModelEnum;
 use model_connection::*;
 use model_structure::*;
 
@@ -26,7 +26,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     // // Do other things or go to wait forever
     // pending::<()>().await;
-    let mut model_connection_handler = ModelConnection::new();
+    MODEL_CONNECTION.lock().unwrap().clean_registered_model();
     loop {
         print_description();
         let mut input = String::new();
@@ -43,7 +43,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
                     // io::stdin().read_line(&mut send_input)
                     //     .expect("Fail to read input");
 
-                    let _result: Result<String, zbus::Error> = model_connection_handler.register_model(MCA_MODEL_ENUM::MODEL_1).await;
+                    let _result: Result<String, zbus::Error> = MODEL_CONNECTION.lock().unwrap().register_model(MCAModelEnum::Model1).await;
                     println!("Register resut {:?}", _result);
                 }
                 "r2" => {
@@ -52,7 +52,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
                     // io::stdin().read_line(&mut send_input)
                     //     .expect("Fail to read input");
 
-                    let _result: Result<String, zbus::Error> = model_connection_handler.register_model(MCA_MODEL_ENUM::MODEL_2).await;
+                    let _result: Result<String, zbus::Error> = MODEL_CONNECTION.lock().unwrap().register_model(MCAModelEnum::Model2).await;
                     println!("Register resut {:?}", _result);
 
                 }
@@ -61,7 +61,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
                     let _data = IrisData{col1:3.2, col2:3.2 ,col3:3.2 ,col4:3.2};
                     let serialized = serde_json::to_string(&_data).unwrap();
 
-                    let model = model_connection_handler.get_model(MCA_MODEL_ENUM::MODEL_1).unwrap().downcast_ref::<Model1Struct>().unwrap();
+                    let mut instance = MODEL_CONNECTION.lock().unwrap(); // We should separate getting model and call method in this case(?)
+                    let model = instance.get_model(MCAModelEnum::Model1).unwrap().downcast_ref::<Model1Struct>().unwrap(); // The Hashmap has std::any::Any type as a value, so we need to cast it into Model Structure
                     let _reply = model.test(&serialized.to_string()).await?;
                     println!("Output is {_reply}");
                 }
@@ -70,8 +71,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
                     let _data = IrisData{col1:3.2, col2:3.2 ,col3:3.2 ,col4:3.2};
                     let serialized = serde_json::to_string(&_data).unwrap();
 
-                    let model = model_connection_handler.get_model(MCA_MODEL_ENUM::MODEL_2).unwrap().downcast_ref::<Model2Struct>().unwrap();
-                    let _reply = model.test(&serialized.to_string()).await?;
+                    let mut instance = MODEL_CONNECTION.lock().unwrap(); // We should separate getting model and call method in this case(?)
+                    let model = instance.get_model(MCAModelEnum::Model2).unwrap().downcast_ref::<Model2Struct>().unwrap();                    let _reply = model.test(&serialized.to_string()).await?;
                     println!("Output is {_reply}");
                 }
 

@@ -1,4 +1,4 @@
-use zbus::{Result, dbus_proxy, Error};
+use zbus::{Result, dbus_proxy};
 use serde::{Serialize, Deserialize};
 
 #[derive(Serialize, Deserialize, Debug)]
