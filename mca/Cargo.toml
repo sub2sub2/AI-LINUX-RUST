@@ -20,16 +20,8 @@ tonic = "0.10.2"
 
 
 [[bin]]
-name = "mca-agent"
-path = "src/agent/main.rs"
-
-[[bin]]
-name = "mca-agent-test"
-path = "src/agent/test.rs"
-
-[[bin]]
 name = "mca-app-test"
-path = "src/api/test.rs"
+path = "src/api/main.rs"
 
 
 [build-dependencies]
