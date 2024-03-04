@@ -17,3 +17,5 @@ mca/target
 .vscode
 
 model/build/
+
+app/build

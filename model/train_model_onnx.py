@@ -24,6 +24,7 @@ class Net(nn.Module):
 
 if __name__ == '__main__':
     # Load the MNIST dataset
+    device = "cuda" if torch.cuda.is_available() else "cpu"
     transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))])
     train_dataset = torchvision.datasets.MNIST(root='./build/mnist', train=True, transform=transform, download=True)
     train_loader = DataLoader(train_dataset, batch_size=256, shuffle=True)
@@ -33,15 +34,15 @@ if __name__ == '__main__':
     criterion = nn.NLLLoss()
     optimizer = optim.SGD(net.parameters(), lr=0.01)
     net.train()
-    net.cuda()
+    net.to(device)
     # Train the neural network
     for epoch in range(1, 11):
         running_loss = 0.0
         for i, data in enumerate(train_loader, 0):
             inputs, labels = data
             optimizer.zero_grad()
-            outputs = net(inputs.cuda())
-            loss = criterion(outputs, labels.cuda())
+            outputs = net(inputs.to(device))
+            loss = criterion(outputs, labels.to(device))
             loss.backward()
             optimizer.step()
             running_loss += loss.item()
