@@ -6,7 +6,7 @@ use std::{error::Error, io};
 #[path = "agent/model_structure.rs"] mod model_structure;
 #[path = "agent/model_enum.rs"] mod model_enum;
 
-use model_enum::McaModelEnum;
+use model_enum::MCAModelEnum;
 use model_connection::*;
 use model_structure::*;
 
@@ -46,7 +46,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
                     // io::stdin().read_line(&mut send_input)
                     //     .expect("Fail to read input");
 
-                    let _result: Result<String, zbus::Error> = model_connection_handler.register_model(McaModelEnum::Model1).await;
+                    let _result: Result<String, zbus::Error> = model_connection_handler.register_model(MCAModelEnum::Model1).await;
                     println!("Register resut {:?}", _result);
                 }
                 "r2" => {
@@ -55,7 +55,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
                     // io::stdin().read_line(&mut send_input)
                     //     .expect("Fail to read input");
 
-                    let _result: Result<String, zbus::Error> = model_connection_handler.register_model(McaModelEnum::Model2).await;
+                    let _result: Result<String, zbus::Error> = model_connection_handler.register_model(MCAModelEnum::Model2).await;
                     println!("Register resut {:?}", _result);
 
                 }
@@ -64,7 +64,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
                     let _data = IrisData{col1:3.2, col2:3.2 ,col3:3.2 ,col4:3.2};
                     let serialized = serde_json::to_string(&_data).unwrap();
 
-                    let model = model_connection_handler.get_model(McaModelEnum::Model1).unwrap().downcast_ref::<Model1Struct>().unwrap();
+                    let model = model_connection_handler.get_model(MCAModelEnum::Model1).unwrap().downcast_ref::<Model1Struct>().unwrap();
                     let _reply = model.test(&serialized.to_string()).await?;
                     println!("Output is {_reply}");
                 }
@@ -73,7 +73,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
                     let _data = IrisData{col1:3.2, col2:3.2 ,col3:3.2 ,col4:3.2};
                     let serialized = serde_json::to_string(&_data).unwrap();
 
-                    let model = model_connection_handler.get_model(McaModelEnum::Model2).unwrap().downcast_ref::<Model2Struct>().unwrap();
+                    let model = model_connection_handler.get_model(MCAModelEnum::Model2).unwrap().downcast_ref::<Model2Struct>().unwrap();
                     let _reply = model.test(&serialized.to_string()).await?;
                     println!("Output is {_reply}");
                 }
