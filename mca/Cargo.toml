@@ -20,6 +20,13 @@ tonic = "0.10.2"
 
 
 [[bin]]
+<<<<<<< Updated upstream
+=======
+name = "mca-app-test"
+path = "src/api/main.rs"
+
+[[bin]]
+>>>>>>> Stashed changes
 name = "mca-agent"
 path = "src/agent/main.rs"
 
