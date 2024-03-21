@@ -1,0 +1,13 @@
+syntax = "proto3";
+package mca;
+
+service Basic {
+    rpc register (AppInfo) returns (Empty) ;
+}
+
+message AppInfo {
+    string address = 1;
+    string name = 2;
+}
+
+message Empty {}

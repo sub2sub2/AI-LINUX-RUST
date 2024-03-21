@@ -18,12 +18,6 @@ fn print_description() {
 
 #[async_std::main]
 async fn main() -> Result<(), Box<dyn Error>> {
-    // let _conn = ConnectionBuilder::session()?
-    //     .name("org.zbus.DataIPC")?
-    //     .serve_at("/org/zbus/DataIPC")?
-    //     .build()
-    //     .await?;
-
     // // Do other things or go to wait forever
     // pending::<()>().await;
     MODEL_CONNECTION.lock().unwrap().clean_registered_model();

@@ -18,11 +18,24 @@ tokio = {version = "1.35.1", features = ["full"]}
 lazy_static = "1.4.0"
 prost = "0.12.3"
 tonic = "0.10.2"
-
+tower = { version = "0.4", features = ["full"] }
 
 [[bin]]
 name = "mca-agent-test"
 path = "src/agent/test.rs"
+
+[[bin]]
+name = "mca-api-test"
+path = "src/api/test.rs"
+
+[[bin]]
+name = "gpt"
+path = "src/gpt.rs"
+
+
+[[bin]]
+name = "mca"
+path = "src/main.rs"
 
 [build-dependencies]
 tonic-build = "0.10.2"
