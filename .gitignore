@@ -37,3 +37,9 @@ grpc/
 # vs
 .vscode/
 */build
+mca/target
+
+
+model/build/
+
+app/build

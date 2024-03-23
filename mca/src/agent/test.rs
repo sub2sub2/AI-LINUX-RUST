@@ -18,12 +18,6 @@ fn print_description() {
 
 #[async_std::main]
 async fn main() -> Result<(), Box<dyn Error>> {
-    // let _conn = ConnectionBuilder::session()?
-    //     .name("org.zbus.DataIPC")?
-    //     .serve_at("/org/zbus/DataIPC")?
-    //     .build()
-    //     .await?;
-
     // // Do other things or go to wait forever
     // pending::<()>().await;
     MODEL_CONNECTION.lock().unwrap().clean_registered_model();
@@ -72,7 +66,9 @@ async fn main() -> Result<(), Box<dyn Error>> {
                     let serialized = serde_json::to_string(&_data).unwrap();
 
                     let mut instance = MODEL_CONNECTION.lock().unwrap(); // We should separate getting model and call method in this case(?)
-                    let model = instance.get_model(MCAModelEnum::Model2).unwrap().downcast_ref::<Model2Struct>().unwrap();                    let _reply = model.test(&serialized.to_string()).await?;
+                    let model = instance.get_model(MCAModelEnum::Model2).unwrap().downcast_ref::<Model2Struct>().unwrap();
+                    let _reply = model.test(&serialized.to_string()).await?;
+
                     println!("Output is {_reply}");
                 }
 
