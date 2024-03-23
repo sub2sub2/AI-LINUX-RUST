@@ -1,8 +1,12 @@
-use std::any::Any;
+use std::{any::Any, future::IntoFuture};
 
+use futures_util::Future;
 use tonic::{transport::Error, Request, Response, Status};
+use tokio::runtime::Runtime;
+// use zbus::Error; // 0.3.5
 
-use crate::api::{app::{AppBase, Resource, Role}, mca_model1::{iris_inference_server::IrisInference, IrisInferenceRequest, IrisInferenceResponse}, service::ServiceBase, service_enum::{get_service_name, ServiceEnum}};
+use crate::{agent::{model_connection::{self, *}, model_enum::MCAModelEnum, model_structure::{IrisData, Model1Struct, Model1Trait}}, api::{app::{AppBase, Resource, Role}, mca_model1::{iris_inference_server::IrisInference, IrisInferenceRequest, IrisInferenceResponse}, service::ServiceBase, service_enum::{get_service_name, ServiceEnum}}};
+use std::pin::Pin;
 
 
 // Define a simple gRPC service
@@ -10,7 +14,8 @@ use crate::api::{app::{AppBase, Resource, Role}, mca_model1::{iris_inference_ser
 pub struct InferenceService{
     name:&'static str,
     port: u32,
-    role: Role
+    role: Role,
+    // model: &'static ModelConnection
 }
 
 impl InferenceService {
@@ -18,7 +23,8 @@ impl InferenceService {
         Self {
             name: name,
             port: port,
-            role: role
+            role: role,
+            // model: model
         }
     }
     
@@ -28,34 +34,39 @@ impl InferenceService {
 impl IrisInference for InferenceService {
     async fn inference(&self, request: Request<IrisInferenceRequest>) -> Result<Response<IrisInferenceResponse>, Status> {
         
-
         let app = AppBase::new (
             "someapp".to_string(), "192.168.0.1".to_string(), Role::Admin
         );
 
         // let r: IrisInferenceRequest = .into_inner();
 
-        println! ("Iris Inference {:?} {:?}", app.appname(), app.address());
+        dbg! ("Iris Inference {:?} {:?}", app.appname(), app.address());
 
-        let inference_result = self.perform_action(&app, request);
-        
+        let inference_result = self.perform_action(&app, request).await;
+
+        // Ok(Response::new(IrisInferenceResponse { species }))
+        // match self.perform_action(&app, request).await {
+        //     Ok(species) => Ok(Response::new(IrisInferenceResponse { species })),
+        //     Err(err) => {
+        //         let status = Status::internal("D-Bus error occurred");
+        //         Err(status)
+        //     }
+        // }
+
+        // let inference_result = self.perform_action(&app, request).await?;
+        // Ok(Response::new(IrisInferenceResponse {species: inference_result}))
+
         match inference_result {
-            Result::Ok(species) => {
+            Ok(species) => {
                 Ok(Response::new(IrisInferenceResponse {species: species}))
             }
-            Result::Err(err) => {
+            Err(err) => {
                 Result::Err(
                     Status::new(tonic::Code::PermissionDenied, "Permission Denied")
                 )
             }
         }
         
-        // let inference_result = inference(
-        //     r.sepal_length, 
-        //     r.sepal_width, 
-        //     r.petal_length, 
-        //     r.petal_width
-        // );
         
     }
 }
@@ -77,22 +88,28 @@ impl ServiceBase for InferenceService{
 
 
 
+// XXX: Should return tonic:transport::Error
 impl Resource<IrisInferenceRequest, String> for InferenceService {
-    fn perform_action(
+    async fn perform_action(
         &self, 
         app: &AppBase,
-        req: Request<IrisInferenceRequest>
-    ) -> Result<String, Error> 
+        req: Request<IrisInferenceRequest> )
+    -> Result<String, Error>
     {   
+
         let r = req.into_inner();
         match app.has_permission(self.role) {
             true => {
+                
+                dbg!("try inference");
+                
                 let inference_result = inference(
                     r.sepal_length, 
                     r.sepal_width, 
                     r.petal_length, 
                     r.petal_width
-                );
+                )
+                .await?;
                 
                 Ok(inference_result)
             }
@@ -100,17 +117,40 @@ impl Resource<IrisInferenceRequest, String> for InferenceService {
                 panic!("User '{}' does not have permission to perform action on service '{}'.", app.appname(), self.name);
             }
         }
+
     }
 }
 
 
 
-
-fn inference(sepal_length: f32, sepal_width: f32, petal_length: f32, petal_width: f32) -> String {
-    let s = format!("Input features: {} {} {} {}", 
+async fn inference(
+    sepal_length: f32, sepal_width: f32, petal_length: f32, petal_width: f32) 
+-> Result<String, Error>
+// -> impl Future<Output=Result<String, zbus::Error>>
+{
+    dbg!("Input features", 
         sepal_length, sepal_width, petal_length, petal_width
     );
-    println!("{}", s);
-    
-    format!("This iris' species is {}", "something")
+
+    dbg! ("Please add the model here!");
+    // let mut instance: std::sync::MutexGuard<'_, ModelConnection> = MODEL_CONNECTION.lock().unwrap(); // We should separate getting model and call method in this case(?)
+
+    // let model = instance.get_model(MCAModelEnum::Model1).unwrap().downcast_ref::<Model1Struct>().unwrap();
+
+
+    // let _data = IrisData{col1:3.2, col2:3.2 ,col3:3.2 ,col4:3.2};
+    // let serialized = serde_json::to_string(&_data).unwrap();
+
+    // let reply = model.test(&serialized.to_string()).await;
+    // match reply {
+    //     Ok(model_return) => {
+    //         Ok(model_return)
+    //     }
+    //     Err(err) => {
+    //         panic!("Dbus Error: {}", err)
+    //     }
+    // }
+
+    Ok("Good".to_string())
+
 }

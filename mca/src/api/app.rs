@@ -1,5 +1,7 @@
 use tonic::{transport::Error, Request};
 
+use crate::agent::model_connection::ModelConnection;
+
 
 // Define an enum for different roles
 #[derive(Debug, PartialEq, Clone, Copy)]
@@ -60,5 +62,6 @@ pub trait Resource<T, U>{
         &self, 
         app: &AppBase,
         req: Request<T>
-    ) -> Result<U, Error>;
+    ) 
+    -> impl futures_util::Future<Output = Result<std::string::String, Error>>;
 }

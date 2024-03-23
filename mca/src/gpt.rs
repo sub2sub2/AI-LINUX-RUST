@@ -1,7 +1,5 @@
-use std::thread::JoinHandle;
-
-use mca_package::api::{app::Role, mca_model1::{basic_server::BasicServer, iris_inference_server::IrisInferenceServer}, service_enum::{get_service_name, ServiceEnum}, service_handler::GrpcServiceRegistry, services::{basic::BasicService, iris::InferenceService}};
-use tonic::transport::Server;
+use mca_package::{agent::model_enum::MCAModelEnum, api::{app::Role, mca_model1::{basic_server::BasicServer, iris_inference_server::IrisInferenceServer}, service_enum::ServiceEnum, service_handler::GrpcServiceRegistry, services::{basic::BasicService, iris::InferenceService}}};
+use mca_package::agent::model_connection::*;
 
 use tokio::task::JoinSet;
 
@@ -9,8 +7,13 @@ use tokio::task::JoinSet;
 async fn main() {
 // async fn main() -> Result<(), Box<dyn std::error::Error>> {
     
+    MODEL_CONNECTION.lock().unwrap().clean_registered_model();
 
+    let _result: Result<String, zbus::Error> = MODEL_CONNECTION.lock().unwrap().register_model(MCAModelEnum::Model1).await;
+    println!("Register resut {:?}", _result);
+    
     let mut registry = GrpcServiceRegistry::new();
+    
     registry.register_service(
         ServiceEnum::Basic(
             BasicServer::<BasicService>::new (

@@ -56,7 +56,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
                     let serialized = serde_json::to_string(&_data).unwrap();
 
                     let mut instance = MODEL_CONNECTION.lock().unwrap(); // We should separate getting model and call method in this case(?)
-                    let model = instance.get_model(MCAModelEnum::Model1).unwrap().downcast_ref::<Model1Struct>().unwrap(); // The Hashmap has std::any::Any type as a value, so we need to cast it into Model Structure
+                    let model: &Model1Struct<'_> = instance.get_model(MCAModelEnum::Model1).unwrap().downcast_ref::<Model1Struct>().unwrap(); // The Hashmap has std::any::Any type as a value, so we need to cast it into Model Structure
                     let _reply = model.test(&serialized.to_string()).await?;
                     println!("Output is {_reply}");
                 }
@@ -66,7 +66,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
                     let serialized = serde_json::to_string(&_data).unwrap();
 
                     let mut instance = MODEL_CONNECTION.lock().unwrap(); // We should separate getting model and call method in this case(?)
-                    let model = instance.get_model(MCAModelEnum::Model2).unwrap().downcast_ref::<Model2Struct>().unwrap();                    let _reply = model.test(&serialized.to_string()).await?;
+                    let model = instance.get_model(MCAModelEnum::Model2).unwrap().downcast_ref::<Model2Struct>().unwrap();
+                    let _reply = model.test(&serialized.to_string()).await?;
                     println!("Output is {_reply}");
                 }
 
