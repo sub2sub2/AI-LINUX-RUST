@@ -13,7 +13,6 @@ mca/Cargo.lock
 # MSVC Windows builds of rustc generate these, which store debugging information
 *.pdb
 
-
 # CMake
 CMakeLists.txt.user
 CMakeCache.txt

@@ -75,4 +75,3 @@ $ cd AI-LINUX-RUST/app/build
 $ ./MyExecutalbe
 
 ```
-

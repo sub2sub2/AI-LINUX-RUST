@@ -768,7 +768,6 @@ dependencies = [
  "num-traits",
 ]
 
-[[package]]
 name = "heck"
 version = "0.4.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1083,7 +1082,6 @@ dependencies = [
  "autocfg",
 ]
 
-[[package]]
 name = "num_cpus"
 version = "1.16.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"

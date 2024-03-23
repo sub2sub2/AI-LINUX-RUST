@@ -33,9 +33,12 @@ name = "gpt"
 path = "src/gpt.rs"
 
 
+name = "mca-agent"
+path = "src/agent/main.rs"
+
 [[bin]]
-name = "mca"
-path = "src/main.rs"
+name = "mca-agent-test"
+path = "src/agent/test.rs"
 
 [build-dependencies]
 tonic-build = "0.10.2"
