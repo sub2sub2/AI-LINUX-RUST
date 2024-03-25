@@ -17,5 +17,7 @@ mca/target
 .vscode
 
 model/build/
+model/src
 
 app/build
+grpc
