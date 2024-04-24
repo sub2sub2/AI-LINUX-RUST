@@ -19,5 +19,4 @@ What kind of change does this PR introduce?
 
 ## What is the new behavior?
 
-
 ## Other information

@@ -12,12 +12,29 @@ mca/Cargo.lock
 
 # MSVC Windows builds of rustc generate these, which store debugging information
 *.pdb
-mca/target
 
-.vscode
+# CMake
+CMakeLists.txt.user
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Testing
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps
 
 model/build/
 model/src
 
+# gRPC
+.dump/
+app/grpc/build
 app/build
-grpc
+grpc/
+
+# vs
+.vscode/
+*/build
