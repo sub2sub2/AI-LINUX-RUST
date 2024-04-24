@@ -1,11 +1,16 @@
 cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
-project(dcgan)
+project(AI_Model)
 
-find_package(Torch REQUIRED)
+find_package(PkgConfig REQUIRED)
+find_package(jsoncpp CONFIG REQUIRED)
 
-add_executable(dcgan dcgan.cpp)
-add_executable(net_onnx net_onnx.cpp)
+pkg_check_modules(DBUS REQUIRED dbus-1)
+pkg_check_modules(GLIB REQUIRED glib-2.0)
 
-target_link_libraries(dcgan "${TORCH_LIBRARIES}")
-target_link_libraries(net_onnx onnxruntime)
-set_property(TARGET dcgan PROPERTY CXX_STANDARD 17)
+add_executable(model_process main.cpp DBusHandler.cpp ModelInference.cpp Timer.cpp)
+
+include_directories(${DBUS_INCLUDE_DIRS} ${GLIB_INCLUDE_DIRS})
+include_directories("/usr/include/dbus-1.0")
+include_directories("/usr/include/jsoncpp")
+
+target_link_libraries(model_process onnxruntime ${DBUS_LIBRARIES} ${GLIB_LIBRARIES} JsonCpp::JsonCpp)
