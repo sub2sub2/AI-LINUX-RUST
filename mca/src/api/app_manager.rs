@@ -7,7 +7,6 @@ use crate::common::utils::get_id;
 
 use super::app_base::{AppBase, Role};
 
-#[macro_use]
 use lazy_static::lazy_static;
 
 pub struct AppManager {
@@ -38,7 +37,7 @@ impl AppManager {
     
 
     fn check_auth(&self) -> MetadataValue<tonic::metadata::Ascii>{
-        todo!("Make a authentification process ");
+        // todo!("Make a authentification process ");
         "Bearer some-secret-token".parse().unwrap()
     }
 }

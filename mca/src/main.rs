@@ -10,7 +10,7 @@ async fn main() {
     // let _result: Result<String, zbus::Error> = MODEL_CONNECTION.lock().unwrap().register_model(MCAModelEnum::Model1).await;
     // println!("Register resut {:?}", _result);
     
-    let app_manager = AppManager::new();
+    // let app_manager = AppManager::new();
 
     let mut service_manager = ServiceManager::new();
     
@@ -21,13 +21,6 @@ async fn main() {
     //         )
     //     )
     // );
-
-    // XXX: How to capsulate the IrisInferenceServer
-
-    // let server = ServiceBase::new("iris", 8080, Role::Admin );
-
-    // let svc: tonic::service::interceptor::InterceptedService<IrisInferenceServer<ServiceBase>, fn(tonic::Request<()>) -> Result<tonic::Request<()>, tonic::Status>> = IrisInferenceServer::with_interceptor(server, check_auth);
-
 
     service_manager.register_service(
         ServiceEnum::IrisService(
