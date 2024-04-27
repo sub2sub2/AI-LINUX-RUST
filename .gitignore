@@ -26,7 +26,8 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 
-
+model/build/
+model/src
 
 # gRPC
 .dump/
