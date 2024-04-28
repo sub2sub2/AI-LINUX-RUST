@@ -1,13 +1,14 @@
 use lazy_static::lazy_static;
-use std::sync::Mutex;
+use std::sync::Arc;
 use std::collections::HashMap;
 use super::model_enum::MCAModelEnum;
 use super::model_structure::*;
-use zbus::{Connection};
+use zbus::Connection;
 
+use futures::lock::Mutex;
 
 lazy_static! {
-    pub static ref MODEL_CONNECTION: Mutex::<ModelConnection> = Mutex::new(ModelConnection::new());
+    pub static ref MODEL_CONNECTION: Arc<Mutex<ModelConnection>> = Arc::new(Mutex::new(ModelConnection::new()));
 }
 pub struct ModelConnection<> {
     connection_map: HashMap<MCAModelEnum, Box<dyn std::any::Any>>,
@@ -18,7 +19,7 @@ unsafe impl Sync for ModelConnection {}
 
 pub trait MCAOperations {
     fn new() -> Self;
-    async fn register_model(&mut self, model_enum: MCAModelEnum) -> zbus::Result<String>;
+    fn register_model(&mut self, model_enum: MCAModelEnum) -> impl std::future::Future<Output = zbus::Result<String>> + Send;
     fn get_model(&mut self, model_enum: MCAModelEnum) -> Result<&Box<dyn std::any::Any >, String>;
     fn clean_registered_model(&mut self);
 }

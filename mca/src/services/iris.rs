@@ -1,13 +1,7 @@
-
-
-use std::{sync::{Arc, Mutex}};
-
-use futures_util::Future;
 use tonic::{Request, Response, Status};
 use zbus::{Connection, Error};
 
-use crate::{agent::{model_connection::MODEL_CONNECTION, model_enum::MCAModelEnum, model_structure::{IrisData, Model1Proxy, Model1Struct, Model1Trait}}, api::{app_base::{AppBase, Role}, service_base::ServiceBase}};
-use crate::agent::model_connection::MCAOperations;
+use crate::{agent::{model_connection::{MCAOperations, MODEL_CONNECTION}, model_enum::MCAModelEnum, model_structure::{IrisData, Model1Proxy, Model1Struct, Model1Trait}}, api::service_base::ServiceBase};
 
 use super::agent::{iris_inference_server::IrisInference, IrisInferenceRequest, IrisInferenceResponse};
 
@@ -48,10 +42,14 @@ async fn inference(
 
     dbg! ("Please add the model here!");
 
-    let connection = Connection::session().await?;
+    let mut  conn = MODEL_CONNECTION.lock().await;
+    let model = (*conn).get_model(MCAModelEnum::Model1).unwrap().downcast_ref::<Model1Struct>().unwrap();;
+    // let model = (*conn).get_model(MCAModelEnum::Model1).unwrap().downcast_ref::<Model1Struct>().unwrap(); // The Hashmap has std::any::Any type as a value, so we need to cast it into Model Structure
+    
+    // let connection = Connection::session().await?;
 
-    let proxy = Model1Proxy::new(&connection).await?;
-    let model = Model1Struct{proxy};
+    // let proxy = Model1Proxy::new(&connection).await?;
+    // let model = Model1Struct{proxy};
 
     let _data = IrisData{col1:sepal_length, col2:sepal_width ,col3:petal_length ,col4:petal_width};
     let serialized = serde_json::to_string(&_data).unwrap();

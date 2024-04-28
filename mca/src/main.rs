@@ -1,16 +1,16 @@
 use tokio::task::JoinSet;
 use mca_package::{api::{app_base::Role, app_manager::{check_auth, AppManager}, service_base::ServiceBase, service_enum::ServiceEnum, service_manager::ServiceManager}, services::agent::iris_inference_server::IrisInferenceServer};
-
+use mca_package::agent::{model_connection::{MCAOperations, MODEL_CONNECTION}, model_enum::MCAModelEnum};
 #[tokio::main]
 async fn main() {
 // async fn main() -> Result<(), Box<dyn std::error::Error>> {
     
-    // MODEL_CONNECTION.lock().unwrap().clean_registered_model();
-
-    // let _result: Result<String, zbus::Error> = MODEL_CONNECTION.lock().unwrap().register_model(MCAModelEnum::Model1).await;
-    // println!("Register resut {:?}", _result);
+    let mut conn = MODEL_CONNECTION.lock().await;
+    (*conn).clean_registered_model();
     
-    // let app_manager = AppManager::new();
+    let _result = (*conn).register_model(MCAModelEnum::Model1).await;
+    println!("Register resut {:?}", _result);
+    
 
     let mut service_manager = ServiceManager::new();
     
@@ -27,14 +27,11 @@ async fn main() {
             IrisInferenceServer::with_interceptor(
                 ServiceBase::new("iris", 8080, Role::Admin )
             , check_auth)
-                
         )
     );
+
+
     let mut set = JoinSet::new();
-
-
-
-
     for service in service_manager.get_services() {
         
         match service {

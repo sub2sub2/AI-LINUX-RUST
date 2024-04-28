@@ -43,11 +43,11 @@ impl AppManager {
 }
 
 lazy_static! {
-    static ref APP_MANAGER: AppManager = AppManager::new();
+    static ref APP_MANAGER: Arc<Mutex<AppManager>> = Arc::new(Mutex::new(AppManager::new()));
 }
 pub fn check_auth(req: Request<()>) -> Result<Request<()>, Status>{
 
-    let token = APP_MANAGER.check_auth();
+    let token = APP_MANAGER.lock().unwrap().check_auth();
     match req.metadata().get("authorization") {
         Some(t) if token == t => {
             dbg!(t);

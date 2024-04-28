@@ -9,9 +9,10 @@ pub enum ServiceEnum {
     // Basic(BasicServer<BasicService>),
     // IrisService(IrisInferenceServer<ServiceBase>),
     IrisService(
-        InterceptedService<IrisInferenceServer<ServiceBase>, 
-        fn(tonic::Request<()>) -> 
-        Result<tonic::Request<()>, tonic::Status>>
+        InterceptedService<
+            IrisInferenceServer<ServiceBase>, 
+            fn(tonic::Request<()>) -> Result<tonic::Request<()>, tonic::Status>
+            >
     ),
     None
 }

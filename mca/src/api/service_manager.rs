@@ -1,5 +1,5 @@
 use futures_util::Future;
-use tonic::transport::Server;
+use tonic::transport::{Error, Server};
 
 use super::service_enum::ServiceEnum;
 
@@ -24,10 +24,9 @@ impl ServiceManager {
         )
     }
 
-    pub fn get_services(&mut self) -> Vec<Option<impl Future<Output = Result<(), tonic::transport::Error>>>> {
+    pub fn get_services(&mut self) -> Vec<Option<impl Future<Output = Result<(), Error>>>> {
     // pub fn get_services(&mut self) -> Vec::<Option<Router>> {
         let mut services = Vec::new();
-        // let mut services = Vec::<Option<Router>>::new();
 
         for svc in &self.services {
 
@@ -52,7 +51,6 @@ impl ServiceManager {
                 }
                 ServiceEnum::None => {}
             }
-
         }
         services
     }
