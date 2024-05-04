@@ -11,8 +11,10 @@ pub struct IrisData {
 
 // Model1Trait 특성 정의
 pub trait Model1Trait {
-    async fn test(&self, input: &str) -> Result<String>;
+    // async fn test(&self, input: String) -> Result<String>;
+    fn test(&self, input: String) -> impl std::future::Future<Output = Result<String>> + Send;
 }
+
 
 // Model1 구조체 정의
 pub struct Model1Struct<'a>{
@@ -21,9 +23,9 @@ pub struct Model1Struct<'a>{
 
 // AIModelTrait을 Model1과 Model2에 대한 특성으로 구현
 impl Model1Trait for Model1Struct<'_> {
-    async fn test(&self, input: &str) -> Result<String> {
+    async fn test(&self, input: String) -> Result<String> {
         println!("{:?}", input);
-        let _reply = self.proxy.predict(input).await?;
+        let _reply = self.proxy.predict(&input).await?;
         Ok(_reply)
     }
 }
@@ -39,10 +41,11 @@ pub trait Model1 {
 }
 
 pub trait Model2Trait {
-    async fn test(&self, input: &str) -> Result<String>;
+    // async fn test(&self, input: &str) -> Result<String>;
+    fn test(&self, input: &str) -> impl std::future::Future<Output = Result<String>> + Send;
 }
 
-// Model1 구조체 정의
+// Model2 구조체 정의
 pub struct Model2Struct<'a>{
     pub proxy: Model2Proxy<'a>,
 }
