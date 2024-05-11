@@ -4,13 +4,13 @@ use mca_package::agent::{model_connection::{MCAOperations, MODEL_CONNECTION}, mo
 #[tokio::main]
 async fn main() {
 // async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    
-    let mut conn = MODEL_CONNECTION.lock().await;
-    (*conn).clean_registered_model();
-    
-    let _result = (*conn).register_model(MCAModelEnum::Model1).await;
-    println!("Register resut {:?}", _result);
-    
+    {
+        let mut conn = MODEL_CONNECTION.lock().await;
+        (*conn).clean_registered_model();
+        
+        let _result = (*conn).register_model(MCAModelEnum::Model1).await;
+        println!("Register resut {:?}", _result);
+    }
 
     let mut service_manager = ServiceManager::new();
     
@@ -25,19 +25,19 @@ async fn main() {
     service_manager.register_service(
         ServiceEnum::IrisService(
             IrisInferenceServer::with_interceptor(
-                ServiceBase::new("iris", 8080, Role::Admin )
+                ServiceBase::new("iris", 8080, Role::Admin)
             , check_auth)
         )
     );
 
 
-    let mut set = JoinSet::new();
+    let mut set = JoinSet::new(); // 서비스 별로(?) 스레드 풀이다.
     for service in service_manager.get_services() {
         
         match service {
             Some(svc) => {
                 // println!("{:?}", svc);
-                set.spawn( 
+                set.spawn( // 다른 스레드로 돔
                     svc
                     // .serve(address)
                 );
@@ -46,8 +46,6 @@ async fn main() {
                 panic!("invalid service");
             }
         }
-
-        
     }
     while let Some(res) = set.join_next().await {
         
@@ -61,6 +59,7 @@ async fn main() {
         // };
         // ...
     }
+
 
 
 }

@@ -96,7 +96,7 @@ std::string AgentClient::inference (
     // Context for the client. It could be used to convey extra information to
     // the server and/or tweak certain RPC behaviors.
     ClientContext context;
-
+    context.AddMetadata("authorization", "Bearer some-secret-token");
     // The actual RPC.
     Status status = stub_->Inference(&context, request, &reply);
 

@@ -9,7 +9,7 @@ pub enum ServiceEnum {
     // Basic(BasicServer<BasicService>),
     // IrisService(IrisInferenceServer<ServiceBase>),
     IrisService(
-        InterceptedService<
+        InterceptedService< // This will call whenever gRPC call occurs.
             IrisInferenceServer<ServiceBase>, 
             fn(tonic::Request<()>) -> Result<tonic::Request<()>, tonic::Status>
             >

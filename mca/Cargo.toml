@@ -19,9 +19,6 @@ prost = "0.12.3"
 tonic = "0.10.2"
 futures = "0.3"
 
-[[bin]]
-name = "mca-app-test"
-path = "src/api/main.rs"
 
 [[bin]]
 name = "mca-agent"

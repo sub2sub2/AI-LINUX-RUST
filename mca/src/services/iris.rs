@@ -41,7 +41,7 @@ async fn inference(
     );
 
     dbg! ("Please add the model here!");
-
+    
     let mut  conn = MODEL_CONNECTION.lock().await;
     let model = (*conn).get_model(MCAModelEnum::Model1).unwrap().downcast_ref::<Model1Struct>().unwrap();;
     // let model = (*conn).get_model(MCAModelEnum::Model1).unwrap().downcast_ref::<Model1Struct>().unwrap(); // The Hashmap has std::any::Any type as a value, so we need to cast it into Model Structure
