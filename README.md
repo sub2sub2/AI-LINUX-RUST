@@ -1,15 +1,13 @@
 # AI-LINUX-RUST
 This project consists of `AI App`, `Model Control Agent(MCA)`, and `AI model`.
 
-## Docker environment(Only support Mac M serises)
-1. Intall and set docker in Mac
-```
-$sudo wget -qO- http://get.docker.com/ | sh
-```
+## Docker environment(fo)
+1. Intall and set docker in Mac (refer. https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry#authenticating-to-the-container-registry)
+
 2. Pull and run the docker image
 ```
 $docker pull ghcr.io/sub2sub2/ai_rust:1.0.0
-$docker run -it --name AI_RUST ghcr.io/sub2sub2/ai_rust:1.0.0 bin
+$docker run -it --name AI_RUST ghcr.io/sub2sub2/ai_rust:1.0.0 /bash/bin
 ```
 3. Access into the running container and clone the git
 ```
