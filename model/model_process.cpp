@@ -19,7 +19,7 @@ Ort::SessionOptions session_options;
 // session_options.SetIntraOpNumThreads(1);
 
 // Load the model from the ONNX file
-Ort::Session session(env, "/home/hyunsub/workspace/hyunsub/AI-LINUX-RUST/model/weights/iris.onnx", session_options);
+Ort::Session session(env, "/home/AI-LINUX-RUST/model/weights/iris.onnx", session_options);
 
 // Get the input and output names
 Ort::AllocatorWithDefaultOptions allocators;
