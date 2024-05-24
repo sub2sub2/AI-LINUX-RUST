@@ -11,25 +11,15 @@ async fn main() {
         let _result = (*conn).register_model(MCAModelEnum::Model1).await;
         println!("Register resut {:?}", _result);
     }
-
     let mut service_manager = ServiceManager::new();
-    
-    // service_manager.register_service(
-    //     ServiceEnum::Basic(
-    //         BasicServer::<BasicService>::new (
-    //             BasicService::new("Basic", 50050)
-    //         )
-    //     )
-    // );
 
-    service_manager.register_service(
-        ServiceEnum::IrisService(
-            IrisInferenceServer::with_interceptor(
-                ServiceBase::new("iris", 8080, Role::Admin)
-            , check_auth)
-        )
-    );
+    let service_model_1 = ServiceBase::new("iris", 8080, Role::Admin, MCAModelEnum::Model1).await;
 
+    // ServiceBase instance is successfully created, proceed with registering the service
+    service_manager.register_service(ServiceEnum::IrisService(IrisInferenceServer::with_interceptor(
+            service_model_1,
+            check_auth,
+        )));
 
     let mut set = JoinSet::new(); // 서비스 별로(?) 스레드 풀이다.
     for service in service_manager.get_services() {

@@ -1010,6 +1010,7 @@ name = "mca_package"
 version = "0.1.0"
 dependencies = [
  "async-std",
+ "async-trait",
  "event-listener 4.0.3",
  "futures",
  "futures-util",
