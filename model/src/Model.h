@@ -11,10 +11,10 @@ class ModelInstance {
         void set_input_size(const std::vector<int64_t> &inputShape);
         void set_output_size(const std::vector<int64_t> &outputShape);
 
-        void set_input_name(const std::string &inputName);
-        void set_output_name(const std::string &outputName);
+        void set_input_name(std::vector<const char*> &inputName);
+        void set_output_name();
 
-        std::string infernce(const std::vector<float> &inputData);
+        std::string infernce(std::vector<float> &inputData);
     
     private:
 
@@ -24,15 +24,15 @@ class ModelInstance {
         std::vector<int64_t> mOutputShape;
         size_t mOutputSize;
 
-        std::vector<const char*> mInputName = {"input"};
+        std::vector<const char*> mInputName;
         char *mOutputName;
 
         Ort::Env mEnv;
         Ort::Session *mSession;
         Ort::SessionOptions mSessionOptions;
         Ort::AllocatorWithDefaultOptions mAllocators;
-        float* mInputTensor;
-        float* mOutputTensor;
+        float *mInputTensor;
+        float *mOutputTensor;
 
         
 

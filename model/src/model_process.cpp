@@ -58,6 +58,9 @@ DBusHandlerResult handleDBusMessage(DBusConnection* connection, DBusMessage* mes
         mModel->set_input_size(input_shape);
         mModel->set_output_size(output_shape);
 
+        std::vector<const char *> input_name = {"input"};
+        mModel->set_input_name(input_name);
+
         const char* response = mModel->infernce(input_data).c_str();
         DBusMessage* reply = dbus_message_new_method_return(message);
         dbus_message_append_args(reply, DBUS_TYPE_STRING, &response, DBUS_TYPE_INVALID);

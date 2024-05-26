@@ -7,7 +7,7 @@ ModelInstance::ModelInstance(const std::string &modelPath)
     mModelPath = modelPath;
     mSession = new Ort::Session(mEnv, mModelPath.c_str(), mSessionOptions);
     Ort::AllocatedStringPtr pstrOutputName = mSession->GetOutputNameAllocated(0, mAllocators.operator OrtAllocator * ());
-    mOutputName = strdup(pstrOutputName.get()); 
+    mOutputName = strdup(pstrOutputName.get());
 }
 
 void ModelInstance::set_input_size(const std::vector<int64_t> &inputShape)
@@ -36,22 +36,24 @@ void ModelInstance::set_output_size(const std::vector<int64_t> &outputShape)
 
 }
 
-void ModelInstance::set_input_name(const std::string &inputName)
+void ModelInstance::set_input_name(std::vector<const char*> &inputName)
 {
-    return;
+    mInputName = inputName;
 }
 
-void ModelInstance::set_output_name(const std::string &outputName)
+void ModelInstance::set_output_name()
 {
-    return;
+    Ort::AllocatedStringPtr pstrOutputName = mSession->GetOutputNameAllocated(0, mAllocators.operator OrtAllocator * ());
+    mOutputName = strdup(pstrOutputName.get());
 }
 
-std::string ModelInstance::infernce(const std::vector<float> &inputData)
+std::string ModelInstance::infernce(std::vector<float> &inputData)
 {
     if (inputData.size() == 0)
         return "";
 
-    memcpy(mInputTensor, &inputData, sizeof(float) * mInputSize);
+    // memcpy(mInputTensor, &inputData, sizeof(float) * mInputSize);
+    mInputTensor = inputData.data();
     Ort::MemoryInfo memory_info = Ort::MemoryInfo::CreateCpu(OrtArenaAllocator, OrtMemTypeDefault);
     
     auto inputValue = Ort::Value::CreateTensor(memory_info,
