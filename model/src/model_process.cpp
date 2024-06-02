@@ -1,6 +1,8 @@
 #include <iostream>
 #include <dbus/dbus.h>
-
+#include <onnxruntime_cxx_api.h>
+#include <chrono>
+#include <thread>
 #include <string>
 #include <vector>
 #include <jsoncpp/json/json.h>
@@ -57,6 +59,9 @@ DBusHandlerResult handleDBusMessage(DBusConnection* connection, DBusMessage* mes
         std::vector<int64_t> input_shape = {1, 4};
         mModel->set_input_size(input_shape);
         mModel->set_output_size(output_shape);
+
+        std::vector<const char *> input_name = {"input"};
+        mModel->set_input_name(input_name);
 
         const char* response = mModel->infernce(input_data).c_str();
         DBusMessage* reply = dbus_message_new_method_return(message);

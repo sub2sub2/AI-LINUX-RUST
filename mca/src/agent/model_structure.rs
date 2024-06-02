@@ -1,5 +1,6 @@
-use zbus::{Result, dbus_proxy};
+use async_trait::async_trait;
 use serde::{Serialize, Deserialize};
+use zbus::{dbus_proxy, Result};
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct IrisData {
@@ -9,28 +10,26 @@ pub struct IrisData {
     pub col4: f32,
 }
 
-// Model1Trait 특성 정의
+#[async_trait]
 pub trait Model1Trait {
-    // async fn test(&self, input: String) -> Result<String>;
-    fn test(&self, input: String) -> impl std::future::Future<Output = Result<String>> + Send;
+    async fn test(&self, input: String) -> Result<String>;
 }
 
-
-// Model1 구조체 정의
-pub struct Model1Struct<'a>{
+// Model1Struct definition
+pub struct Model1Struct<'a> {
     pub proxy: Model1Proxy<'a>,
 }
 
-// AIModelTrait을 Model1과 Model2에 대한 특성으로 구현
+#[async_trait]
 impl Model1Trait for Model1Struct<'_> {
     async fn test(&self, input: String) -> Result<String> {
         println!("{:?}", input);
-        let _reply = self.proxy.predict(&input).await?;
-        Ok(_reply)
+        let reply = self.proxy.predict(&input).await?;
+        Ok(reply)
     }
 }
 
-// zbus Proxy 구조체 정의
+// Define the zbus Proxy for Model1
 #[dbus_proxy(
     interface = "org.mca.Model1",
     default_service = "org.mca.Model1",
@@ -40,26 +39,26 @@ pub trait Model1 {
     async fn predict(&self, input: &str) -> Result<String>;
 }
 
+#[async_trait]
 pub trait Model2Trait {
-    // async fn test(&self, input: &str) -> Result<String>;
-    fn test(&self, input: &str) -> impl std::future::Future<Output = Result<String>> + Send;
+    async fn test(&self, input: &str) -> Result<String>;
 }
 
-// Model2 구조체 정의
-pub struct Model2Struct<'a>{
+// Model2Struct definition
+pub struct Model2Struct<'a> {
     pub proxy: Model2Proxy<'a>,
 }
 
-// AIModelTrait을 Model1과 Model2에 대한 특성으로 구현
+#[async_trait]
 impl Model2Trait for Model2Struct<'_> {
     async fn test(&self, input: &str) -> Result<String> {
         println!("{:?}", input);
-        let _reply = self.proxy.predict(input).await?;
-        Ok(_reply)
+        let reply = self.proxy.predict(input).await?;
+        Ok(reply)
     }
 }
 
-// zbus Proxy 구조체 정의
+// Define the zbus Proxy for Model2
 #[dbus_proxy(
     interface = "org.mca.Model2",
     default_service = "org.mca.Model2",
