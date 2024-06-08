@@ -3,7 +3,6 @@ message("${CMAKE_CURRENT_BINARY_DIR}")
 
 
 add_library(apiEx SHARED 
-  appEx.cpp
   appEx.h
 )
 

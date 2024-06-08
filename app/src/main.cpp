@@ -6,8 +6,16 @@
 #include <appEx.h>
 
 using namespace std;
-// using namespace gRPC;
+using namespace AppEx;
 
+
+std::string getStringInput()
+{
+    std::string input;
+    std::getline(std::cin, input);
+
+    return input;
+}
 
 std::vector<float> getInput()
 {
@@ -57,22 +65,16 @@ std::vector<float> getInput()
 
 
 int main() {
-    AppEx::ApiEx api("192.178.0.1:8080"); 
-    
 
     int id = 0; 
     bool flag = true;
     while (flag){
-        vector<string> apiList = api.getAllApi(); 
 
         // print Options
         int i = 1;
         std::cout << "\n===============================" << endl;
         std::cout << "Enter an option (1, 2, 3, etc.):"  << std::endl;
-        for(auto a : apiList)
-        {
-            std::cout << i++ << ". " << a << std::endl;
-        }
+
         std::cout << "q. " << "quit" << std::endl;
         std::cout << "===============================" << endl;
 
@@ -94,6 +96,8 @@ int main() {
 
         case '2': {
             // request
+            ApiEx<AgentClient<IrisInference>> api("localhost", 8080); 
+
             std::cout << ">>> Option 'request' selected." << std::endl;
 
             // float sepal_length, sepal_width, petal_length, petal_width;
@@ -116,7 +120,31 @@ int main() {
             break;
         }
         // Add more cases for other options as needed
+        case '3': {
+            // request
+            ApiEx<AgentClient<MnistInference>> api("localhost", 8081); 
 
+            std::cout << ">>> Option 'request path' selected." << std::endl;
+
+            auto filePath = getStringInput();
+            if (filePath.empty())  
+                filePath = "testtesttest";
+            std::cout << filePath << std::endl;
+            std::unique_ptr<std::string> result;
+            auto response = api.request(
+                filePath,
+                result
+            );
+
+            if (response == 0) {
+                std::cout << "Response: " << *result.get() << std::endl;            
+            } else 
+            {
+                std::cout << "gRPC not working" << std::endl;
+            }
+            
+            break;
+        }
         default:
             std::cout << ">>> Invalid option. Please choose a valid option.\n";
             break;

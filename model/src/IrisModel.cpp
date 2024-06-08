@@ -7,6 +7,7 @@
 #include <vector>
 #include <jsoncpp/json/json.h>
 #include <cstdlib>
+#include <syslog.h>
 
 #include "Timer.h"
 #include "Model.h"
@@ -27,8 +28,6 @@ DBusHandlerResult handleDBusMessage(DBusConnection* connection, DBusMessage* mes
     // 인터페이스, 메서드 및 인자 확인
     const char* interface = dbus_message_get_interface(message);
     const char* method = dbus_message_get_member(message);
-    std::cout << "received[" << method << "]" << std::endl;
-    std::cout << "received[" << interface << "]" << std::endl;
     timer.reset(1);
     if (strcmp(interface, interfaceName.c_str()) == 0 && strcmp(method, "Predict") == 0) {
         // MyMethod가 호출되면 실행할 코드
@@ -57,7 +56,7 @@ DBusHandlerResult handleDBusMessage(DBusConnection* connection, DBusMessage* mes
                                         std::stof(root["col3"].asString()),std::stof(root["col4"].asString())}};
         std::vector<int64_t> output_shape = {1, 1};
         std::vector<int64_t> input_shape = {1, 4};
-        mModel->set_input_size(input_shape);
+        mModel->set_input_size(input_ shape);
         mModel->set_output_size(output_shape);
 
         std::vector<const char *> input_name = {"input"};

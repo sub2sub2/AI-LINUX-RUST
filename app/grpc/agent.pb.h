@@ -62,6 +62,12 @@ extern IrisInferenceRequestDefaultTypeInternal _IrisInferenceRequest_default_ins
 class IrisInferenceResponse;
 struct IrisInferenceResponseDefaultTypeInternal;
 extern IrisInferenceResponseDefaultTypeInternal _IrisInferenceResponse_default_instance_;
+class MnistInferenceRequest;
+struct MnistInferenceRequestDefaultTypeInternal;
+extern MnistInferenceRequestDefaultTypeInternal _MnistInferenceRequest_default_instance_;
+class MnistInferenceResponse;
+struct MnistInferenceResponseDefaultTypeInternal;
+extern MnistInferenceResponseDefaultTypeInternal _MnistInferenceResponse_default_instance_;
 }  // namespace agent
 namespace google {
 namespace protobuf {
@@ -74,6 +80,386 @@ namespace agent {
 
 
 // -------------------------------------------------------------------
+
+class MnistInferenceResponse final :
+    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:agent.MnistInferenceResponse) */ {
+ public:
+  inline MnistInferenceResponse() : MnistInferenceResponse(nullptr) {}
+  ~MnistInferenceResponse() override;
+  template<typename = void>
+  explicit PROTOBUF_CONSTEXPR MnistInferenceResponse(::google::protobuf::internal::ConstantInitialized);
+
+  inline MnistInferenceResponse(const MnistInferenceResponse& from)
+      : MnistInferenceResponse(nullptr, from) {}
+  MnistInferenceResponse(MnistInferenceResponse&& from) noexcept
+    : MnistInferenceResponse() {
+    *this = ::std::move(from);
+  }
+
+  inline MnistInferenceResponse& operator=(const MnistInferenceResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline MnistInferenceResponse& operator=(MnistInferenceResponse&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetArena() == from.GetArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const MnistInferenceResponse& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const MnistInferenceResponse* internal_default_instance() {
+    return reinterpret_cast<const MnistInferenceResponse*>(
+               &_MnistInferenceResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    3;
+
+  friend void swap(MnistInferenceResponse& a, MnistInferenceResponse& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(MnistInferenceResponse* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetArena() != nullptr &&
+        GetArena() == other->GetArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetArena() == other->GetArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(MnistInferenceResponse* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  MnistInferenceResponse* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<MnistInferenceResponse>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const MnistInferenceResponse& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom( const MnistInferenceResponse& from) {
+    MnistInferenceResponse::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::google::protobuf::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target, ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  ::google::protobuf::internal::CachedSize* AccessCachedSize() const final;
+  void SharedCtor(::google::protobuf::Arena* arena);
+  void SharedDtor();
+  void InternalSwap(MnistInferenceResponse* other);
+
+  private:
+  friend class ::google::protobuf::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "agent.MnistInferenceResponse";
+  }
+  protected:
+  explicit MnistInferenceResponse(::google::protobuf::Arena* arena);
+  MnistInferenceResponse(::google::protobuf::Arena* arena, const MnistInferenceResponse& from);
+  public:
+
+  static const ClassData _class_data_;
+  const ::google::protobuf::Message::ClassData*GetClassData() const final;
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kFilePathFieldNumber = 1,
+  };
+  // string file_path = 1;
+  void clear_file_path() ;
+  const std::string& file_path() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_file_path(Arg_&& arg, Args_... args);
+  std::string* mutable_file_path();
+  PROTOBUF_NODISCARD std::string* release_file_path();
+  void set_allocated_file_path(std::string* value);
+
+  private:
+  const std::string& _internal_file_path() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_file_path(
+      const std::string& value);
+  std::string* _internal_mutable_file_path();
+
+  public:
+  // @@protoc_insertion_point(class_scope:agent.MnistInferenceResponse)
+ private:
+  class _Internal;
+
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<
+      0, 1, 0,
+      46, 2>
+      _table_;
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+
+        inline explicit constexpr Impl_(
+            ::google::protobuf::internal::ConstantInitialized) noexcept;
+        inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
+                              ::google::protobuf::Arena* arena);
+        inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
+                              ::google::protobuf::Arena* arena, const Impl_& from);
+    ::google::protobuf::internal::ArenaStringPtr file_path_;
+    mutable ::google::protobuf::internal::CachedSize _cached_size_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_agent_2eproto;
+};// -------------------------------------------------------------------
+
+class MnistInferenceRequest final :
+    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:agent.MnistInferenceRequest) */ {
+ public:
+  inline MnistInferenceRequest() : MnistInferenceRequest(nullptr) {}
+  ~MnistInferenceRequest() override;
+  template<typename = void>
+  explicit PROTOBUF_CONSTEXPR MnistInferenceRequest(::google::protobuf::internal::ConstantInitialized);
+
+  inline MnistInferenceRequest(const MnistInferenceRequest& from)
+      : MnistInferenceRequest(nullptr, from) {}
+  MnistInferenceRequest(MnistInferenceRequest&& from) noexcept
+    : MnistInferenceRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline MnistInferenceRequest& operator=(const MnistInferenceRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline MnistInferenceRequest& operator=(MnistInferenceRequest&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetArena() == from.GetArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const MnistInferenceRequest& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const MnistInferenceRequest* internal_default_instance() {
+    return reinterpret_cast<const MnistInferenceRequest*>(
+               &_MnistInferenceRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    2;
+
+  friend void swap(MnistInferenceRequest& a, MnistInferenceRequest& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(MnistInferenceRequest* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetArena() != nullptr &&
+        GetArena() == other->GetArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetArena() == other->GetArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(MnistInferenceRequest* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  MnistInferenceRequest* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<MnistInferenceRequest>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const MnistInferenceRequest& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom( const MnistInferenceRequest& from) {
+    MnistInferenceRequest::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::google::protobuf::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target, ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  ::google::protobuf::internal::CachedSize* AccessCachedSize() const final;
+  void SharedCtor(::google::protobuf::Arena* arena);
+  void SharedDtor();
+  void InternalSwap(MnistInferenceRequest* other);
+
+  private:
+  friend class ::google::protobuf::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "agent.MnistInferenceRequest";
+  }
+  protected:
+  explicit MnistInferenceRequest(::google::protobuf::Arena* arena);
+  MnistInferenceRequest(::google::protobuf::Arena* arena, const MnistInferenceRequest& from);
+  public:
+
+  static const ClassData _class_data_;
+  const ::google::protobuf::Message::ClassData*GetClassData() const final;
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kIdFieldNumber = 1,
+    kFilePathFieldNumber = 2,
+  };
+  // string id = 1;
+  void clear_id() ;
+  const std::string& id() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_id(Arg_&& arg, Args_... args);
+  std::string* mutable_id();
+  PROTOBUF_NODISCARD std::string* release_id();
+  void set_allocated_id(std::string* value);
+
+  private:
+  const std::string& _internal_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_id(
+      const std::string& value);
+  std::string* _internal_mutable_id();
+
+  public:
+  // string file_path = 2;
+  void clear_file_path() ;
+  const std::string& file_path() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_file_path(Arg_&& arg, Args_... args);
+  std::string* mutable_file_path();
+  PROTOBUF_NODISCARD std::string* release_file_path();
+  void set_allocated_file_path(std::string* value);
+
+  private:
+  const std::string& _internal_file_path() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_file_path(
+      const std::string& value);
+  std::string* _internal_mutable_file_path();
+
+  public:
+  // @@protoc_insertion_point(class_scope:agent.MnistInferenceRequest)
+ private:
+  class _Internal;
+
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<
+      1, 2, 0,
+      47, 2>
+      _table_;
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+
+        inline explicit constexpr Impl_(
+            ::google::protobuf::internal::ConstantInitialized) noexcept;
+        inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
+                              ::google::protobuf::Arena* arena);
+        inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
+                              ::google::protobuf::Arena* arena, const Impl_& from);
+    ::google::protobuf::internal::ArenaStringPtr id_;
+    ::google::protobuf::internal::ArenaStringPtr file_path_;
+    mutable ::google::protobuf::internal::CachedSize _cached_size_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_agent_2eproto;
+};// -------------------------------------------------------------------
 
 class IrisInferenceResponse final :
     public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:agent.IrisInferenceResponse) */ {
@@ -701,6 +1087,173 @@ inline void IrisInferenceResponse::set_allocated_species(std::string* value) {
         }
   #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   // @@protoc_insertion_point(field_set_allocated:agent.IrisInferenceResponse.species)
+}
+
+// -------------------------------------------------------------------
+
+// MnistInferenceRequest
+
+// string id = 1;
+inline void MnistInferenceRequest::clear_id() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.id_.ClearToEmpty();
+}
+inline const std::string& MnistInferenceRequest::id() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:agent.MnistInferenceRequest.id)
+  return _internal_id();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void MnistInferenceRequest::set_id(Arg_&& arg,
+                                                     Args_... args) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.id_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:agent.MnistInferenceRequest.id)
+}
+inline std::string* MnistInferenceRequest::mutable_id() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  std::string* _s = _internal_mutable_id();
+  // @@protoc_insertion_point(field_mutable:agent.MnistInferenceRequest.id)
+  return _s;
+}
+inline const std::string& MnistInferenceRequest::_internal_id() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.id_.Get();
+}
+inline void MnistInferenceRequest::_internal_set_id(const std::string& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.id_.Set(value, GetArena());
+}
+inline std::string* MnistInferenceRequest::_internal_mutable_id() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  return _impl_.id_.Mutable( GetArena());
+}
+inline std::string* MnistInferenceRequest::release_id() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:agent.MnistInferenceRequest.id)
+  return _impl_.id_.Release();
+}
+inline void MnistInferenceRequest::set_allocated_id(std::string* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.id_.SetAllocated(value, GetArena());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.id_.IsDefault()) {
+          _impl_.id_.Set("", GetArena());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:agent.MnistInferenceRequest.id)
+}
+
+// string file_path = 2;
+inline void MnistInferenceRequest::clear_file_path() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.file_path_.ClearToEmpty();
+}
+inline const std::string& MnistInferenceRequest::file_path() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:agent.MnistInferenceRequest.file_path)
+  return _internal_file_path();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void MnistInferenceRequest::set_file_path(Arg_&& arg,
+                                                     Args_... args) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.file_path_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:agent.MnistInferenceRequest.file_path)
+}
+inline std::string* MnistInferenceRequest::mutable_file_path() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  std::string* _s = _internal_mutable_file_path();
+  // @@protoc_insertion_point(field_mutable:agent.MnistInferenceRequest.file_path)
+  return _s;
+}
+inline const std::string& MnistInferenceRequest::_internal_file_path() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.file_path_.Get();
+}
+inline void MnistInferenceRequest::_internal_set_file_path(const std::string& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.file_path_.Set(value, GetArena());
+}
+inline std::string* MnistInferenceRequest::_internal_mutable_file_path() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  return _impl_.file_path_.Mutable( GetArena());
+}
+inline std::string* MnistInferenceRequest::release_file_path() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:agent.MnistInferenceRequest.file_path)
+  return _impl_.file_path_.Release();
+}
+inline void MnistInferenceRequest::set_allocated_file_path(std::string* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.file_path_.SetAllocated(value, GetArena());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.file_path_.IsDefault()) {
+          _impl_.file_path_.Set("", GetArena());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:agent.MnistInferenceRequest.file_path)
+}
+
+// -------------------------------------------------------------------
+
+// MnistInferenceResponse
+
+// string file_path = 1;
+inline void MnistInferenceResponse::clear_file_path() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.file_path_.ClearToEmpty();
+}
+inline const std::string& MnistInferenceResponse::file_path() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:agent.MnistInferenceResponse.file_path)
+  return _internal_file_path();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void MnistInferenceResponse::set_file_path(Arg_&& arg,
+                                                     Args_... args) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.file_path_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:agent.MnistInferenceResponse.file_path)
+}
+inline std::string* MnistInferenceResponse::mutable_file_path() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  std::string* _s = _internal_mutable_file_path();
+  // @@protoc_insertion_point(field_mutable:agent.MnistInferenceResponse.file_path)
+  return _s;
+}
+inline const std::string& MnistInferenceResponse::_internal_file_path() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.file_path_.Get();
+}
+inline void MnistInferenceResponse::_internal_set_file_path(const std::string& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.file_path_.Set(value, GetArena());
+}
+inline std::string* MnistInferenceResponse::_internal_mutable_file_path() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  return _impl_.file_path_.Mutable( GetArena());
+}
+inline std::string* MnistInferenceResponse::release_file_path() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:agent.MnistInferenceResponse.file_path)
+  return _impl_.file_path_.Release();
+}
+inline void MnistInferenceResponse::set_allocated_file_path(std::string* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.file_path_.SetAllocated(value, GetArena());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.file_path_.IsDefault()) {
+          _impl_.file_path_.Set("", GetArena());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:agent.MnistInferenceResponse.file_path)
 }
 
 #ifdef __GNUC__

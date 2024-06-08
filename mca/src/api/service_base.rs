@@ -2,7 +2,6 @@ use super::app_base::Role;
 use crate::agent::model_enum::MCAModelEnum;
 use zbus::Connection;
 use crate::agent::model_structure::*;
-use std::error::Error;
 use std::sync::Arc;
 use tokio::sync::Mutex;
 

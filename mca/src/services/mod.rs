@@ -1,4 +1,5 @@
 pub mod iris;
+pub mod mnist;
 
 
 // mod => define module(library)

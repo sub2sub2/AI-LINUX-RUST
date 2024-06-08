@@ -33,4 +33,5 @@ target_link_libraries(MyExecutable
   ${_GRPC_GRPCPP}
   ${_PROTOBUF_LIBPROTOBUF}
   ${_REFLECTION}
+  agent_grpc_shared
 )
