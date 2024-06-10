@@ -17,3 +17,17 @@ message IrisInferenceRequest {
 message IrisInferenceResponse {
     string species = 1;
 }
+
+service MnistInference {
+    rpc Inference (MnistInferenceRequest) returns (MnistInferenceResponse);
+}
+
+message MnistInferenceRequest {
+    string id = 1;
+    string file_path = 2;
+}
+
+message MnistInferenceResponse {
+    string file_path = 1;
+}
+

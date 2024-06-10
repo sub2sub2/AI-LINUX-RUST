@@ -38,6 +38,14 @@ impl ServiceManager {
                         )
                     );
                 }
+                ServiceEnum::MnistService(svc) => {
+                    services.push(
+                        Some(
+                            Server::builder().add_service(svc.clone())
+                            .serve("[::1]:8081".parse().unwrap())
+                        )
+                    );
+                }
                 ServiceEnum::None => {}
             }
         }

@@ -22,6 +22,51 @@ namespace _pbi = ::google::protobuf::internal;
 namespace _fl = ::google::protobuf::internal::field_layout;
 namespace agent {
 
+inline constexpr MnistInferenceResponse::Impl_::Impl_(
+    ::_pbi::ConstantInitialized) noexcept
+      : file_path_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        _cached_size_{0} {}
+
+template <typename>
+PROTOBUF_CONSTEXPR MnistInferenceResponse::MnistInferenceResponse(::_pbi::ConstantInitialized)
+    : _impl_(::_pbi::ConstantInitialized()) {}
+struct MnistInferenceResponseDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR MnistInferenceResponseDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~MnistInferenceResponseDefaultTypeInternal() {}
+  union {
+    MnistInferenceResponse _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 MnistInferenceResponseDefaultTypeInternal _MnistInferenceResponse_default_instance_;
+
+inline constexpr MnistInferenceRequest::Impl_::Impl_(
+    ::_pbi::ConstantInitialized) noexcept
+      : id_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        file_path_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        _cached_size_{0} {}
+
+template <typename>
+PROTOBUF_CONSTEXPR MnistInferenceRequest::MnistInferenceRequest(::_pbi::ConstantInitialized)
+    : _impl_(::_pbi::ConstantInitialized()) {}
+struct MnistInferenceRequestDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR MnistInferenceRequestDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~MnistInferenceRequestDefaultTypeInternal() {}
+  union {
+    MnistInferenceRequest _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 MnistInferenceRequestDefaultTypeInternal _MnistInferenceRequest_default_instance_;
+
 inline constexpr IrisInferenceResponse::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : species_(
@@ -68,7 +113,7 @@ struct IrisInferenceRequestDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 IrisInferenceRequestDefaultTypeInternal _IrisInferenceRequest_default_instance_;
 }  // namespace agent
-static ::_pb::Metadata file_level_metadata_agent_2eproto[2];
+static ::_pb::Metadata file_level_metadata_agent_2eproto[4];
 static constexpr const ::_pb::EnumDescriptor**
     file_level_enum_descriptors_agent_2eproto = nullptr;
 static constexpr const ::_pb::ServiceDescriptor**
@@ -97,39 +142,66 @@ const ::uint32_t TableStruct_agent_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     ~0u,  // no _split_
     ~0u,  // no sizeof(Split)
     PROTOBUF_FIELD_OFFSET(::agent::IrisInferenceResponse, _impl_.species_),
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::agent::MnistInferenceRequest, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::agent::MnistInferenceRequest, _impl_.id_),
+    PROTOBUF_FIELD_OFFSET(::agent::MnistInferenceRequest, _impl_.file_path_),
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::agent::MnistInferenceResponse, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::agent::MnistInferenceResponse, _impl_.file_path_),
 };
 
 static const ::_pbi::MigrationSchema
     schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
         {0, -1, -1, sizeof(::agent::IrisInferenceRequest)},
         {13, -1, -1, sizeof(::agent::IrisInferenceResponse)},
+        {22, -1, -1, sizeof(::agent::MnistInferenceRequest)},
+        {32, -1, -1, sizeof(::agent::MnistInferenceResponse)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
     &::agent::_IrisInferenceRequest_default_instance_._instance,
     &::agent::_IrisInferenceResponse_default_instance_._instance,
+    &::agent::_MnistInferenceRequest_default_instance_._instance,
+    &::agent::_MnistInferenceResponse_default_instance_._instance,
 };
 const char descriptor_table_protodef_agent_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
     "\n\013agent.proto\022\005agent\"x\n\024IrisInferenceReq"
     "uest\022\n\n\002id\030\001 \001(\t\022\024\n\014sepal_length\030\002 \001(\002\022\023"
     "\n\013sepal_width\030\003 \001(\002\022\024\n\014petal_length\030\004 \001("
     "\002\022\023\n\013petal_width\030\005 \001(\002\"(\n\025IrisInferenceR"
-    "esponse\022\017\n\007species\030\001 \001(\t2W\n\rIrisInferenc"
-    "e\022F\n\tInference\022\033.agent.IrisInferenceRequ"
-    "est\032\034.agent.IrisInferenceResponseb\006proto"
-    "3"
+    "esponse\022\017\n\007species\030\001 \001(\t\"6\n\025MnistInferen"
+    "ceRequest\022\n\n\002id\030\001 \001(\t\022\021\n\tfile_path\030\002 \001(\t"
+    "\"+\n\026MnistInferenceResponse\022\021\n\tfile_path\030"
+    "\001 \001(\t2W\n\rIrisInference\022F\n\tInference\022\033.ag"
+    "ent.IrisInferenceRequest\032\034.agent.IrisInf"
+    "erenceResponse2Z\n\016MnistInference\022H\n\tInfe"
+    "rence\022\034.agent.MnistInferenceRequest\032\035.ag"
+    "ent.MnistInferenceResponseb\006proto3"
 };
 static ::absl::once_flag descriptor_table_agent_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_agent_2eproto = {
     false,
     false,
-    281,
+    474,
     descriptor_table_protodef_agent_2eproto,
     "agent.proto",
     &descriptor_table_agent_2eproto_once,
     nullptr,
     0,
-    2,
+    4,
     schemas,
     file_default_instances,
     TableStruct_agent_2eproto::offsets,
@@ -704,6 +776,415 @@ void IrisInferenceResponse::InternalSwap(IrisInferenceResponse* PROTOBUF_RESTRIC
   return ::_pbi::AssignDescriptors(
       &descriptor_table_agent_2eproto_getter, &descriptor_table_agent_2eproto_once,
       file_level_metadata_agent_2eproto[1]);
+}
+// ===================================================================
+
+class MnistInferenceRequest::_Internal {
+ public:
+};
+
+MnistInferenceRequest::MnistInferenceRequest(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:agent.MnistInferenceRequest)
+}
+inline PROTOBUF_NDEBUG_INLINE MnistInferenceRequest::Impl_::Impl_(
+    ::google::protobuf::internal::InternalVisibility visibility, ::google::protobuf::Arena* arena,
+    const Impl_& from)
+      : id_(arena, from.id_),
+        file_path_(arena, from.file_path_),
+        _cached_size_{0} {}
+
+MnistInferenceRequest::MnistInferenceRequest(
+    ::google::protobuf::Arena* arena,
+    const MnistInferenceRequest& from)
+    : ::google::protobuf::Message(arena) {
+  MnistInferenceRequest* const _this = this;
+  (void)_this;
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  new (&_impl_) Impl_(internal_visibility(), arena, from._impl_);
+
+  // @@protoc_insertion_point(copy_constructor:agent.MnistInferenceRequest)
+}
+inline PROTOBUF_NDEBUG_INLINE MnistInferenceRequest::Impl_::Impl_(
+    ::google::protobuf::internal::InternalVisibility visibility,
+    ::google::protobuf::Arena* arena)
+      : id_(arena),
+        file_path_(arena),
+        _cached_size_{0} {}
+
+inline void MnistInferenceRequest::SharedCtor(::_pb::Arena* arena) {
+  new (&_impl_) Impl_(internal_visibility(), arena);
+}
+MnistInferenceRequest::~MnistInferenceRequest() {
+  // @@protoc_insertion_point(destructor:agent.MnistInferenceRequest)
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  SharedDtor();
+}
+inline void MnistInferenceRequest::SharedDtor() {
+  ABSL_DCHECK(GetArena() == nullptr);
+  _impl_.id_.Destroy();
+  _impl_.file_path_.Destroy();
+  _impl_.~Impl_();
+}
+
+PROTOBUF_NOINLINE void MnistInferenceRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:agent.MnistInferenceRequest)
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.id_.ClearToEmpty();
+  _impl_.file_path_.ClearToEmpty();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+const char* MnistInferenceRequest::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
+  return ptr;
+}
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<1, 2, 0, 47, 2> MnistInferenceRequest::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    2, 8,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967292,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    2,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_MnistInferenceRequest_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // string file_path = 2;
+    {::_pbi::TcParser::FastUS1,
+     {18, 63, 0, PROTOBUF_FIELD_OFFSET(MnistInferenceRequest, _impl_.file_path_)}},
+    // string id = 1;
+    {::_pbi::TcParser::FastUS1,
+     {10, 63, 0, PROTOBUF_FIELD_OFFSET(MnistInferenceRequest, _impl_.id_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // string id = 1;
+    {PROTOBUF_FIELD_OFFSET(MnistInferenceRequest, _impl_.id_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string file_path = 2;
+    {PROTOBUF_FIELD_OFFSET(MnistInferenceRequest, _impl_.file_path_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+  }},
+  // no aux_entries
+  {{
+    "\33\2\11\0\0\0\0\0"
+    "agent.MnistInferenceRequest"
+    "id"
+    "file_path"
+  }},
+};
+
+::uint8_t* MnistInferenceRequest::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:agent.MnistInferenceRequest)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  // string id = 1;
+  if (!this->_internal_id().empty()) {
+    const std::string& _s = this->_internal_id();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "agent.MnistInferenceRequest.id");
+    target = stream->WriteStringMaybeAliased(1, _s, target);
+  }
+
+  // string file_path = 2;
+  if (!this->_internal_file_path().empty()) {
+    const std::string& _s = this->_internal_file_path();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "agent.MnistInferenceRequest.file_path");
+    target = stream->WriteStringMaybeAliased(2, _s, target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:agent.MnistInferenceRequest)
+  return target;
+}
+
+::size_t MnistInferenceRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:agent.MnistInferenceRequest)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string id = 1;
+  if (!this->_internal_id().empty()) {
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_id());
+  }
+
+  // string file_path = 2;
+  if (!this->_internal_file_path().empty()) {
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_file_path());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::google::protobuf::Message::ClassData MnistInferenceRequest::_class_data_ = {
+    MnistInferenceRequest::MergeImpl,
+    nullptr,  // OnDemandRegisterArenaDtor
+};
+const ::google::protobuf::Message::ClassData* MnistInferenceRequest::GetClassData() const {
+  return &_class_data_;
+}
+
+void MnistInferenceRequest::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<MnistInferenceRequest*>(&to_msg);
+  auto& from = static_cast<const MnistInferenceRequest&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:agent.MnistInferenceRequest)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_id().empty()) {
+    _this->_internal_set_id(from._internal_id());
+  }
+  if (!from._internal_file_path().empty()) {
+    _this->_internal_set_file_path(from._internal_file_path());
+  }
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void MnistInferenceRequest::CopyFrom(const MnistInferenceRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:agent.MnistInferenceRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+PROTOBUF_NOINLINE bool MnistInferenceRequest::IsInitialized() const {
+  return true;
+}
+
+::_pbi::CachedSize* MnistInferenceRequest::AccessCachedSize() const {
+  return &_impl_._cached_size_;
+}
+void MnistInferenceRequest::InternalSwap(MnistInferenceRequest* PROTOBUF_RESTRICT other) {
+  using std::swap;
+  auto* arena = GetArena();
+  ABSL_DCHECK_EQ(arena, other->GetArena());
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.id_, &other->_impl_.id_, arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.file_path_, &other->_impl_.file_path_, arena);
+}
+
+::google::protobuf::Metadata MnistInferenceRequest::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_agent_2eproto_getter, &descriptor_table_agent_2eproto_once,
+      file_level_metadata_agent_2eproto[2]);
+}
+// ===================================================================
+
+class MnistInferenceResponse::_Internal {
+ public:
+};
+
+MnistInferenceResponse::MnistInferenceResponse(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:agent.MnistInferenceResponse)
+}
+inline PROTOBUF_NDEBUG_INLINE MnistInferenceResponse::Impl_::Impl_(
+    ::google::protobuf::internal::InternalVisibility visibility, ::google::protobuf::Arena* arena,
+    const Impl_& from)
+      : file_path_(arena, from.file_path_),
+        _cached_size_{0} {}
+
+MnistInferenceResponse::MnistInferenceResponse(
+    ::google::protobuf::Arena* arena,
+    const MnistInferenceResponse& from)
+    : ::google::protobuf::Message(arena) {
+  MnistInferenceResponse* const _this = this;
+  (void)_this;
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  new (&_impl_) Impl_(internal_visibility(), arena, from._impl_);
+
+  // @@protoc_insertion_point(copy_constructor:agent.MnistInferenceResponse)
+}
+inline PROTOBUF_NDEBUG_INLINE MnistInferenceResponse::Impl_::Impl_(
+    ::google::protobuf::internal::InternalVisibility visibility,
+    ::google::protobuf::Arena* arena)
+      : file_path_(arena),
+        _cached_size_{0} {}
+
+inline void MnistInferenceResponse::SharedCtor(::_pb::Arena* arena) {
+  new (&_impl_) Impl_(internal_visibility(), arena);
+}
+MnistInferenceResponse::~MnistInferenceResponse() {
+  // @@protoc_insertion_point(destructor:agent.MnistInferenceResponse)
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  SharedDtor();
+}
+inline void MnistInferenceResponse::SharedDtor() {
+  ABSL_DCHECK(GetArena() == nullptr);
+  _impl_.file_path_.Destroy();
+  _impl_.~Impl_();
+}
+
+PROTOBUF_NOINLINE void MnistInferenceResponse::Clear() {
+// @@protoc_insertion_point(message_clear_start:agent.MnistInferenceResponse)
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.file_path_.ClearToEmpty();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+const char* MnistInferenceResponse::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
+  return ptr;
+}
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<0, 1, 0, 46, 2> MnistInferenceResponse::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    1, 0,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967294,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    1,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_MnistInferenceResponse_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // string file_path = 1;
+    {::_pbi::TcParser::FastUS1,
+     {10, 63, 0, PROTOBUF_FIELD_OFFSET(MnistInferenceResponse, _impl_.file_path_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // string file_path = 1;
+    {PROTOBUF_FIELD_OFFSET(MnistInferenceResponse, _impl_.file_path_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+  }},
+  // no aux_entries
+  {{
+    "\34\11\0\0\0\0\0\0"
+    "agent.MnistInferenceResponse"
+    "file_path"
+  }},
+};
+
+::uint8_t* MnistInferenceResponse::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:agent.MnistInferenceResponse)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  // string file_path = 1;
+  if (!this->_internal_file_path().empty()) {
+    const std::string& _s = this->_internal_file_path();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "agent.MnistInferenceResponse.file_path");
+    target = stream->WriteStringMaybeAliased(1, _s, target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:agent.MnistInferenceResponse)
+  return target;
+}
+
+::size_t MnistInferenceResponse::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:agent.MnistInferenceResponse)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string file_path = 1;
+  if (!this->_internal_file_path().empty()) {
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_file_path());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::google::protobuf::Message::ClassData MnistInferenceResponse::_class_data_ = {
+    MnistInferenceResponse::MergeImpl,
+    nullptr,  // OnDemandRegisterArenaDtor
+};
+const ::google::protobuf::Message::ClassData* MnistInferenceResponse::GetClassData() const {
+  return &_class_data_;
+}
+
+void MnistInferenceResponse::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<MnistInferenceResponse*>(&to_msg);
+  auto& from = static_cast<const MnistInferenceResponse&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:agent.MnistInferenceResponse)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_file_path().empty()) {
+    _this->_internal_set_file_path(from._internal_file_path());
+  }
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void MnistInferenceResponse::CopyFrom(const MnistInferenceResponse& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:agent.MnistInferenceResponse)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+PROTOBUF_NOINLINE bool MnistInferenceResponse::IsInitialized() const {
+  return true;
+}
+
+::_pbi::CachedSize* MnistInferenceResponse::AccessCachedSize() const {
+  return &_impl_._cached_size_;
+}
+void MnistInferenceResponse::InternalSwap(MnistInferenceResponse* PROTOBUF_RESTRICT other) {
+  using std::swap;
+  auto* arena = GetArena();
+  ABSL_DCHECK_EQ(arena, other->GetArena());
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.file_path_, &other->_impl_.file_path_, arena);
+}
+
+::google::protobuf::Metadata MnistInferenceResponse::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_agent_2eproto_getter, &descriptor_table_agent_2eproto_once,
+      file_level_metadata_agent_2eproto[3]);
 }
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace agent

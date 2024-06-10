@@ -46,55 +46,12 @@ service Greeter {
 using grpc::Channel;
 using grpc::ClientContext;
 using grpc::Status;
-// using agent::IrisInference;
+
+using agent::IrisInference;
 using agent::IrisInferenceResponse;
 using agent::IrisInferenceRequest;
 
-class AgentClient {
-public:
-  AgentClient(std::shared_ptr<Channel> channel)
-      : stub_(IrisInference::NewStub(channel)) {}
-
-  // Assembles the client's payload, sends it and presents the response back
-  // from the server.
-  std::string Inference(
-    const char* id,
-    const float sepal_length,
-    const float sepal_width,
-    const float petal_length,
-    const float petal_width
-    ) {
-    // Data we are sending to the server.
-    IrisInferenceRequest request;
-    request.set_id(id);
-    request.set_sepal_length(sepal_length);
-    request.set_sepal_width(sepal_width);
-    request.set_petal_length(petal_length);
-    request.set_petal_width(petal_width);
-
-    // Container for the data we expect from the server.
-    IrisInferenceResponse reply;
-
-    // Context for the client. It could be used to convey extra information to
-    // the server and/or tweak certain RPC behaviors.
-    ClientContext context;
-
-    // The actual RPC.
-    Status status = stub_->Inference(&context, request, &reply);
-
-    // Act upon its status.
-    if (status.ok()) {
-      return reply.species();
-    } else {
-      std::cout << status.error_code() << ": " << status.error_message()
-                << std::endl;
-      return "RPC failed";
-    }
-  }
-
- private:
-  std::unique_ptr<IrisInference::Stub> stub_;
-};
+using namespace AppEx;
 
 int main(int argc, char** argv) {
   absl::ParseCommandLine(argc, argv);
@@ -104,7 +61,7 @@ int main(int argc, char** argv) {
   std::string target_str = absl::GetFlag(FLAGS_target);
   // We indicate that the channel isn't authenticated (use of
   // InsecureChannelCredentials()).
-  AgentClient appGrpc(
+  AgentClient<IrisInference> appGrpc(
       grpc::CreateChannel(target_str, grpc::InsecureChannelCredentials()));
   
   // std::string user("world");
