@@ -18,7 +18,7 @@ using namespace AIModel::Utils;
 const std::string interfaceName = "org.mca.Model2";
 const std::string serviceName = "org.mca.Model2";
 const std::string objectPath = "/org/mca/Model2";
-const std::string modelPath = "/home/hyunsub/workspace/hyunsub/AI-LINUX-RUST/model/weights/mnist.onnx";
+const std::string modelPath = "/home/hyunsub/workspace/hyunsub/AI-LINUX-RUST/model/weights/iris.onnx";
 
 std::unique_ptr<ModelInstance> mModel = std::make_unique<ModelInstance>(modelPath);
 Timer timer;
