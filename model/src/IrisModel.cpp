@@ -56,7 +56,7 @@ DBusHandlerResult handleDBusMessage(DBusConnection* connection, DBusMessage* mes
                                         std::stof(root["col3"].asString()),std::stof(root["col4"].asString())}};
         std::vector<int64_t> output_shape = {1, 1};
         std::vector<int64_t> input_shape = {1, 4};
-        mModel->set_input_size(input_ shape);
+        mModel->set_input_size(input_shape);
         mModel->set_output_size(output_shape);
 
         std::vector<const char *> input_name = {"input"};

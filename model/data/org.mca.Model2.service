@@ -1,0 +1,4 @@
+[D-BUS Service]
+Name=org.mca.Model2
+Exec=/usr/local/bin/MnistModel
+
