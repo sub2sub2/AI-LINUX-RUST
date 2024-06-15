@@ -1,4 +1,4 @@
-cd src1
+cd src2
 mkdir -p build && cd build
 cmake ..
 cmake --build .

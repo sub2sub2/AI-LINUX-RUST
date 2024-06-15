@@ -8,6 +8,7 @@
 #include <jsoncpp/json/json.h>
 #include <cstdlib>
 #include <syslog.h>
+#include <opencv2/opencv.hpp>
 
 #include "Timer.h"
 #include "Model.h"
@@ -18,7 +19,7 @@ using namespace AIModel::Utils;
 const std::string interfaceName = "org.mca.Model2";
 const std::string serviceName = "org.mca.Model2";
 const std::string objectPath = "/org/mca/Model2";
-const std::string modelPath = "/home/hyunsub/workspace/hyunsub/AI-LINUX-RUST/model/weights/iris.onnx";
+const std::string modelPath = "/home/hyunsub/workspace/hyunsub/AI-LINUX-RUST/model/weights/mnist.onnx";
 
 std::unique_ptr<ModelInstance> mModel = std::make_unique<ModelInstance>(modelPath);
 Timer timer;
@@ -46,21 +47,41 @@ DBusHandlerResult handleDBusMessage(DBusConnection* connection, DBusMessage* mes
         dbus_message_iter_get_basic(&iter, &str);
         auto filePath = std::string(str);
         std::cout << "File path: " << filePath << std::endl;
-        
-        /*
-        std::vector<int64_t> output_shape = {1, 1};
-        std::vector<int64_t> input_shape = {1, 4};
-        mModel->set_input_size(input_ shape);
+
+        std::vector<std::string> image_paths = {
+            "../test_images/1004.png", "../test_images/10.png", "../test_images/1010.png"
+        };
+        int batch_size = image_paths.size();
+        int64_t input_size = batch_size * 1 * 28 * 28;
+
+        std::vector<int64_t> output_shape = {batch_size, 10};
+        std::vector<int64_t> input_shape = {batch_size, 1, 28, 28};
+        mModel->set_input_size(input_shape);
         mModel->set_output_size(output_shape);
 
-        std::vector<const char *> input_name = {"input"};
-        mModel->set_input_name(input_name);
+        std::vector<float> input_tensor_values(input_size);
+        for (size_t i = 0; i < image_paths.size(); ++i) {
+            cv::Mat img = cv::imread(image_paths[i], cv::IMREAD_GRAYSCALE);
+            if (img.empty()) {
+                std::cerr << "Failed to load image: " << image_paths[i] << std::endl;
+                return DBUS_HANDLER_RESULT_HANDLED;
+            }
+        
+            cv::resize(img, img, cv::Size(28, 28));
+            img.convertTo(img, CV_32F, 1.0 / 255.0);
+            img = (img - 0.5f) / 0.5f;
 
-        const char* response = mModel->infernce(input_data).c_str();
+            // 이미지를 입력 텐서 데이터에 복사
+            std::memcpy(input_tensor_values.data() + i * 28 * 28, img.data, 28 * 28 * sizeof(float));
+        }
+
+        
+
+        auto response = mModel->infernce(input_tensor_values).c_str();
         DBusMessage* reply = dbus_message_new_method_return(message);
         dbus_message_append_args(reply, DBUS_TYPE_STRING, &response, DBUS_TYPE_INVALID);
         dbus_connection_send(connection, reply, NULL);
-        dbus_message_unref(reply);      */        
+        dbus_message_unref(reply);       
     }
     
     return DBUS_HANDLER_RESULT_HANDLED;
