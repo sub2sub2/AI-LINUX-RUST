@@ -14,7 +14,7 @@ class ModelInstance {
         void set_input_size(const std::vector<int64_t> &inputShape);
         void set_output_size(const std::vector<int64_t> &outputShape);
 
-        void set_input_name(std::vector<const char*> &inputName);
+        void set_input_name();
         void set_output_name();
 
         std::string infernce(std::vector<float> &inputData);
@@ -27,7 +27,7 @@ class ModelInstance {
         std::vector<int64_t> mOutputShape;
         size_t mOutputSize;
 
-        std::vector<const char*> mInputName;
+        const char* mInputName;
         char *mOutputName;
 
         Ort::Env mEnv;
