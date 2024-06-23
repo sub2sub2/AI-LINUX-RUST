@@ -53,7 +53,6 @@ $ cmake ..
 $ make
 
 # Check the generated executable in the "app/build" directory
-$ ./MyExecutable
 
 ```
 
@@ -66,7 +65,7 @@ $ cd AI-LINUX-RUST/mca
 
 # 
 $ cargo build
-$ cargo run --bin mca-app-test
+$ cargo run --bin mca
 
 ```
 
@@ -74,7 +73,7 @@ Then, run the client app as the follow:
 
 ```bash
 
-$ cd AI-LINUX-RUST/mca
+$ cd AI-LINUX-RUST/app/build
 
 # After the installation,
 $ ./MyExecutable
@@ -89,7 +88,8 @@ sseo@sseo-PS42-8RB:~/Proj/AI-LINUX-RUST/app/build$ ./MyExecutable
 ===============================
 Enter an option (1, 2, 3, etc.):
 1. init
-2. request
+2. request (iris model)
+3. request (mnist model)
 q. quit
 ===============================
 Please write your option: 2
@@ -98,4 +98,12 @@ Enter four float numbers separated by commas >>>
 
 You entered: 1, 2, 3, 4
 Response: This iris' species is something
+
+Please write your option: 3
+>>> Option 'request' selected.
+Enter file path of your data>>> 
+
+You entered: "path/to/your/data"
+Response: ~~~
+
 ```
