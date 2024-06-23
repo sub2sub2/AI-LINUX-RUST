@@ -19,7 +19,11 @@ $python3 train_model_onnx.py // train simple model and produce a weight file--> 
 $python3 convert_to_onnx.py // convert net.pt weight to net.onnx (.pt to .onnx)
 
 // Now we have iris.onnx in `./weights/iris.onnx`.
+```
 
-$cargo run --bin mca-agent-test // call dbus request to Model1.
+2. Install AI model
+```
+sudo sh init.sh
+sudo sh intall1.sh
 ```
 
