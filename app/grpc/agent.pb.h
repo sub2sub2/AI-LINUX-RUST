@@ -56,6 +56,12 @@ struct TableStruct_agent_2eproto {
 extern const ::google::protobuf::internal::DescriptorTable
     descriptor_table_agent_2eproto;
 namespace agent {
+class FileInferenceRequest;
+struct FileInferenceRequestDefaultTypeInternal;
+extern FileInferenceRequestDefaultTypeInternal _FileInferenceRequest_default_instance_;
+class FileInferenceResponse;
+struct FileInferenceResponseDefaultTypeInternal;
+extern FileInferenceResponseDefaultTypeInternal _FileInferenceResponse_default_instance_;
 class IrisInferenceRequest;
 struct IrisInferenceRequestDefaultTypeInternal;
 extern IrisInferenceRequestDefaultTypeInternal _IrisInferenceRequest_default_instance_;
@@ -869,6 +875,476 @@ class IrisInferenceRequest final :
   };
   union { Impl_ _impl_; };
   friend struct ::TableStruct_agent_2eproto;
+};// -------------------------------------------------------------------
+
+class FileInferenceResponse final :
+    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:agent.FileInferenceResponse) */ {
+ public:
+  inline FileInferenceResponse() : FileInferenceResponse(nullptr) {}
+  ~FileInferenceResponse() override;
+  template<typename = void>
+  explicit PROTOBUF_CONSTEXPR FileInferenceResponse(::google::protobuf::internal::ConstantInitialized);
+
+  inline FileInferenceResponse(const FileInferenceResponse& from)
+      : FileInferenceResponse(nullptr, from) {}
+  FileInferenceResponse(FileInferenceResponse&& from) noexcept
+    : FileInferenceResponse() {
+    *this = ::std::move(from);
+  }
+
+  inline FileInferenceResponse& operator=(const FileInferenceResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline FileInferenceResponse& operator=(FileInferenceResponse&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetArena() == from.GetArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const FileInferenceResponse& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const FileInferenceResponse* internal_default_instance() {
+    return reinterpret_cast<const FileInferenceResponse*>(
+               &_FileInferenceResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    5;
+
+  friend void swap(FileInferenceResponse& a, FileInferenceResponse& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(FileInferenceResponse* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetArena() != nullptr &&
+        GetArena() == other->GetArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetArena() == other->GetArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(FileInferenceResponse* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  FileInferenceResponse* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<FileInferenceResponse>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const FileInferenceResponse& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom( const FileInferenceResponse& from) {
+    FileInferenceResponse::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::google::protobuf::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target, ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  ::google::protobuf::internal::CachedSize* AccessCachedSize() const final;
+  void SharedCtor(::google::protobuf::Arena* arena);
+  void SharedDtor();
+  void InternalSwap(FileInferenceResponse* other);
+
+  private:
+  friend class ::google::protobuf::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "agent.FileInferenceResponse";
+  }
+  protected:
+  explicit FileInferenceResponse(::google::protobuf::Arena* arena);
+  FileInferenceResponse(::google::protobuf::Arena* arena, const FileInferenceResponse& from);
+  public:
+
+  static const ClassData _class_data_;
+  const ::google::protobuf::Message::ClassData*GetClassData() const final;
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kFilePathFieldNumber = 1,
+    kIpFieldNumber = 2,
+    kPortFieldNumber = 3,
+    kFileSizeFieldNumber = 4,
+    kIsRemoteFieldNumber = 5,
+  };
+  // string file_path = 1;
+  void clear_file_path() ;
+  const std::string& file_path() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_file_path(Arg_&& arg, Args_... args);
+  std::string* mutable_file_path();
+  PROTOBUF_NODISCARD std::string* release_file_path();
+  void set_allocated_file_path(std::string* value);
+
+  private:
+  const std::string& _internal_file_path() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_file_path(
+      const std::string& value);
+  std::string* _internal_mutable_file_path();
+
+  public:
+  // string ip = 2;
+  void clear_ip() ;
+  const std::string& ip() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_ip(Arg_&& arg, Args_... args);
+  std::string* mutable_ip();
+  PROTOBUF_NODISCARD std::string* release_ip();
+  void set_allocated_ip(std::string* value);
+
+  private:
+  const std::string& _internal_ip() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_ip(
+      const std::string& value);
+  std::string* _internal_mutable_ip();
+
+  public:
+  // float port = 3;
+  void clear_port() ;
+  float port() const;
+  void set_port(float value);
+
+  private:
+  float _internal_port() const;
+  void _internal_set_port(float value);
+
+  public:
+  // float file_size = 4;
+  void clear_file_size() ;
+  float file_size() const;
+  void set_file_size(float value);
+
+  private:
+  float _internal_file_size() const;
+  void _internal_set_file_size(float value);
+
+  public:
+  // bool is_remote = 5;
+  void clear_is_remote() ;
+  bool is_remote() const;
+  void set_is_remote(bool value);
+
+  private:
+  bool _internal_is_remote() const;
+  void _internal_set_is_remote(bool value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:agent.FileInferenceResponse)
+ private:
+  class _Internal;
+
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<
+      3, 5, 0,
+      47, 2>
+      _table_;
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+
+        inline explicit constexpr Impl_(
+            ::google::protobuf::internal::ConstantInitialized) noexcept;
+        inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
+                              ::google::protobuf::Arena* arena);
+        inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
+                              ::google::protobuf::Arena* arena, const Impl_& from);
+    ::google::protobuf::internal::ArenaStringPtr file_path_;
+    ::google::protobuf::internal::ArenaStringPtr ip_;
+    float port_;
+    float file_size_;
+    bool is_remote_;
+    mutable ::google::protobuf::internal::CachedSize _cached_size_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_agent_2eproto;
+};// -------------------------------------------------------------------
+
+class FileInferenceRequest final :
+    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:agent.FileInferenceRequest) */ {
+ public:
+  inline FileInferenceRequest() : FileInferenceRequest(nullptr) {}
+  ~FileInferenceRequest() override;
+  template<typename = void>
+  explicit PROTOBUF_CONSTEXPR FileInferenceRequest(::google::protobuf::internal::ConstantInitialized);
+
+  inline FileInferenceRequest(const FileInferenceRequest& from)
+      : FileInferenceRequest(nullptr, from) {}
+  FileInferenceRequest(FileInferenceRequest&& from) noexcept
+    : FileInferenceRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline FileInferenceRequest& operator=(const FileInferenceRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline FileInferenceRequest& operator=(FileInferenceRequest&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetArena() == from.GetArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const FileInferenceRequest& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const FileInferenceRequest* internal_default_instance() {
+    return reinterpret_cast<const FileInferenceRequest*>(
+               &_FileInferenceRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    4;
+
+  friend void swap(FileInferenceRequest& a, FileInferenceRequest& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(FileInferenceRequest* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetArena() != nullptr &&
+        GetArena() == other->GetArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetArena() == other->GetArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(FileInferenceRequest* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  FileInferenceRequest* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<FileInferenceRequest>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const FileInferenceRequest& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom( const FileInferenceRequest& from) {
+    FileInferenceRequest::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::google::protobuf::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target, ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  ::google::protobuf::internal::CachedSize* AccessCachedSize() const final;
+  void SharedCtor(::google::protobuf::Arena* arena);
+  void SharedDtor();
+  void InternalSwap(FileInferenceRequest* other);
+
+  private:
+  friend class ::google::protobuf::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "agent.FileInferenceRequest";
+  }
+  protected:
+  explicit FileInferenceRequest(::google::protobuf::Arena* arena);
+  FileInferenceRequest(::google::protobuf::Arena* arena, const FileInferenceRequest& from);
+  public:
+
+  static const ClassData _class_data_;
+  const ::google::protobuf::Message::ClassData*GetClassData() const final;
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kFilePathFieldNumber = 1,
+    kIpFieldNumber = 2,
+    kPortFieldNumber = 3,
+    kFileSizeFieldNumber = 4,
+    kIsRemoteFieldNumber = 5,
+  };
+  // string file_path = 1;
+  void clear_file_path() ;
+  const std::string& file_path() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_file_path(Arg_&& arg, Args_... args);
+  std::string* mutable_file_path();
+  PROTOBUF_NODISCARD std::string* release_file_path();
+  void set_allocated_file_path(std::string* value);
+
+  private:
+  const std::string& _internal_file_path() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_file_path(
+      const std::string& value);
+  std::string* _internal_mutable_file_path();
+
+  public:
+  // string ip = 2;
+  void clear_ip() ;
+  const std::string& ip() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_ip(Arg_&& arg, Args_... args);
+  std::string* mutable_ip();
+  PROTOBUF_NODISCARD std::string* release_ip();
+  void set_allocated_ip(std::string* value);
+
+  private:
+  const std::string& _internal_ip() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_ip(
+      const std::string& value);
+  std::string* _internal_mutable_ip();
+
+  public:
+  // float port = 3;
+  void clear_port() ;
+  float port() const;
+  void set_port(float value);
+
+  private:
+  float _internal_port() const;
+  void _internal_set_port(float value);
+
+  public:
+  // float file_size = 4;
+  void clear_file_size() ;
+  float file_size() const;
+  void set_file_size(float value);
+
+  private:
+  float _internal_file_size() const;
+  void _internal_set_file_size(float value);
+
+  public:
+  // bool is_remote = 5;
+  void clear_is_remote() ;
+  bool is_remote() const;
+  void set_is_remote(bool value);
+
+  private:
+  bool _internal_is_remote() const;
+  void _internal_set_is_remote(bool value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:agent.FileInferenceRequest)
+ private:
+  class _Internal;
+
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<
+      3, 5, 0,
+      46, 2>
+      _table_;
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+
+        inline explicit constexpr Impl_(
+            ::google::protobuf::internal::ConstantInitialized) noexcept;
+        inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
+                              ::google::protobuf::Arena* arena);
+        inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
+                              ::google::protobuf::Arena* arena, const Impl_& from);
+    ::google::protobuf::internal::ArenaStringPtr file_path_;
+    ::google::protobuf::internal::ArenaStringPtr ip_;
+    float port_;
+    float file_size_;
+    bool is_remote_;
+    mutable ::google::protobuf::internal::CachedSize _cached_size_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_agent_2eproto;
 };
 
 // ===================================================================
@@ -1254,6 +1730,364 @@ inline void MnistInferenceResponse::set_allocated_file_path(std::string* value) 
         }
   #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   // @@protoc_insertion_point(field_set_allocated:agent.MnistInferenceResponse.file_path)
+}
+
+// -------------------------------------------------------------------
+
+// FileInferenceRequest
+
+// string file_path = 1;
+inline void FileInferenceRequest::clear_file_path() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.file_path_.ClearToEmpty();
+}
+inline const std::string& FileInferenceRequest::file_path() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:agent.FileInferenceRequest.file_path)
+  return _internal_file_path();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void FileInferenceRequest::set_file_path(Arg_&& arg,
+                                                     Args_... args) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.file_path_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:agent.FileInferenceRequest.file_path)
+}
+inline std::string* FileInferenceRequest::mutable_file_path() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  std::string* _s = _internal_mutable_file_path();
+  // @@protoc_insertion_point(field_mutable:agent.FileInferenceRequest.file_path)
+  return _s;
+}
+inline const std::string& FileInferenceRequest::_internal_file_path() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.file_path_.Get();
+}
+inline void FileInferenceRequest::_internal_set_file_path(const std::string& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.file_path_.Set(value, GetArena());
+}
+inline std::string* FileInferenceRequest::_internal_mutable_file_path() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  return _impl_.file_path_.Mutable( GetArena());
+}
+inline std::string* FileInferenceRequest::release_file_path() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:agent.FileInferenceRequest.file_path)
+  return _impl_.file_path_.Release();
+}
+inline void FileInferenceRequest::set_allocated_file_path(std::string* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.file_path_.SetAllocated(value, GetArena());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.file_path_.IsDefault()) {
+          _impl_.file_path_.Set("", GetArena());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:agent.FileInferenceRequest.file_path)
+}
+
+// string ip = 2;
+inline void FileInferenceRequest::clear_ip() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.ip_.ClearToEmpty();
+}
+inline const std::string& FileInferenceRequest::ip() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:agent.FileInferenceRequest.ip)
+  return _internal_ip();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void FileInferenceRequest::set_ip(Arg_&& arg,
+                                                     Args_... args) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.ip_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:agent.FileInferenceRequest.ip)
+}
+inline std::string* FileInferenceRequest::mutable_ip() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  std::string* _s = _internal_mutable_ip();
+  // @@protoc_insertion_point(field_mutable:agent.FileInferenceRequest.ip)
+  return _s;
+}
+inline const std::string& FileInferenceRequest::_internal_ip() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.ip_.Get();
+}
+inline void FileInferenceRequest::_internal_set_ip(const std::string& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.ip_.Set(value, GetArena());
+}
+inline std::string* FileInferenceRequest::_internal_mutable_ip() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  return _impl_.ip_.Mutable( GetArena());
+}
+inline std::string* FileInferenceRequest::release_ip() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:agent.FileInferenceRequest.ip)
+  return _impl_.ip_.Release();
+}
+inline void FileInferenceRequest::set_allocated_ip(std::string* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.ip_.SetAllocated(value, GetArena());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.ip_.IsDefault()) {
+          _impl_.ip_.Set("", GetArena());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:agent.FileInferenceRequest.ip)
+}
+
+// float port = 3;
+inline void FileInferenceRequest::clear_port() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.port_ = 0;
+}
+inline float FileInferenceRequest::port() const {
+  // @@protoc_insertion_point(field_get:agent.FileInferenceRequest.port)
+  return _internal_port();
+}
+inline void FileInferenceRequest::set_port(float value) {
+  _internal_set_port(value);
+  // @@protoc_insertion_point(field_set:agent.FileInferenceRequest.port)
+}
+inline float FileInferenceRequest::_internal_port() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.port_;
+}
+inline void FileInferenceRequest::_internal_set_port(float value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.port_ = value;
+}
+
+// float file_size = 4;
+inline void FileInferenceRequest::clear_file_size() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.file_size_ = 0;
+}
+inline float FileInferenceRequest::file_size() const {
+  // @@protoc_insertion_point(field_get:agent.FileInferenceRequest.file_size)
+  return _internal_file_size();
+}
+inline void FileInferenceRequest::set_file_size(float value) {
+  _internal_set_file_size(value);
+  // @@protoc_insertion_point(field_set:agent.FileInferenceRequest.file_size)
+}
+inline float FileInferenceRequest::_internal_file_size() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.file_size_;
+}
+inline void FileInferenceRequest::_internal_set_file_size(float value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.file_size_ = value;
+}
+
+// bool is_remote = 5;
+inline void FileInferenceRequest::clear_is_remote() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.is_remote_ = false;
+}
+inline bool FileInferenceRequest::is_remote() const {
+  // @@protoc_insertion_point(field_get:agent.FileInferenceRequest.is_remote)
+  return _internal_is_remote();
+}
+inline void FileInferenceRequest::set_is_remote(bool value) {
+  _internal_set_is_remote(value);
+  // @@protoc_insertion_point(field_set:agent.FileInferenceRequest.is_remote)
+}
+inline bool FileInferenceRequest::_internal_is_remote() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.is_remote_;
+}
+inline void FileInferenceRequest::_internal_set_is_remote(bool value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.is_remote_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// FileInferenceResponse
+
+// string file_path = 1;
+inline void FileInferenceResponse::clear_file_path() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.file_path_.ClearToEmpty();
+}
+inline const std::string& FileInferenceResponse::file_path() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:agent.FileInferenceResponse.file_path)
+  return _internal_file_path();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void FileInferenceResponse::set_file_path(Arg_&& arg,
+                                                     Args_... args) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.file_path_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:agent.FileInferenceResponse.file_path)
+}
+inline std::string* FileInferenceResponse::mutable_file_path() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  std::string* _s = _internal_mutable_file_path();
+  // @@protoc_insertion_point(field_mutable:agent.FileInferenceResponse.file_path)
+  return _s;
+}
+inline const std::string& FileInferenceResponse::_internal_file_path() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.file_path_.Get();
+}
+inline void FileInferenceResponse::_internal_set_file_path(const std::string& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.file_path_.Set(value, GetArena());
+}
+inline std::string* FileInferenceResponse::_internal_mutable_file_path() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  return _impl_.file_path_.Mutable( GetArena());
+}
+inline std::string* FileInferenceResponse::release_file_path() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:agent.FileInferenceResponse.file_path)
+  return _impl_.file_path_.Release();
+}
+inline void FileInferenceResponse::set_allocated_file_path(std::string* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.file_path_.SetAllocated(value, GetArena());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.file_path_.IsDefault()) {
+          _impl_.file_path_.Set("", GetArena());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:agent.FileInferenceResponse.file_path)
+}
+
+// string ip = 2;
+inline void FileInferenceResponse::clear_ip() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.ip_.ClearToEmpty();
+}
+inline const std::string& FileInferenceResponse::ip() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:agent.FileInferenceResponse.ip)
+  return _internal_ip();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void FileInferenceResponse::set_ip(Arg_&& arg,
+                                                     Args_... args) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.ip_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:agent.FileInferenceResponse.ip)
+}
+inline std::string* FileInferenceResponse::mutable_ip() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  std::string* _s = _internal_mutable_ip();
+  // @@protoc_insertion_point(field_mutable:agent.FileInferenceResponse.ip)
+  return _s;
+}
+inline const std::string& FileInferenceResponse::_internal_ip() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.ip_.Get();
+}
+inline void FileInferenceResponse::_internal_set_ip(const std::string& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.ip_.Set(value, GetArena());
+}
+inline std::string* FileInferenceResponse::_internal_mutable_ip() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  return _impl_.ip_.Mutable( GetArena());
+}
+inline std::string* FileInferenceResponse::release_ip() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:agent.FileInferenceResponse.ip)
+  return _impl_.ip_.Release();
+}
+inline void FileInferenceResponse::set_allocated_ip(std::string* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.ip_.SetAllocated(value, GetArena());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.ip_.IsDefault()) {
+          _impl_.ip_.Set("", GetArena());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:agent.FileInferenceResponse.ip)
+}
+
+// float port = 3;
+inline void FileInferenceResponse::clear_port() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.port_ = 0;
+}
+inline float FileInferenceResponse::port() const {
+  // @@protoc_insertion_point(field_get:agent.FileInferenceResponse.port)
+  return _internal_port();
+}
+inline void FileInferenceResponse::set_port(float value) {
+  _internal_set_port(value);
+  // @@protoc_insertion_point(field_set:agent.FileInferenceResponse.port)
+}
+inline float FileInferenceResponse::_internal_port() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.port_;
+}
+inline void FileInferenceResponse::_internal_set_port(float value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.port_ = value;
+}
+
+// float file_size = 4;
+inline void FileInferenceResponse::clear_file_size() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.file_size_ = 0;
+}
+inline float FileInferenceResponse::file_size() const {
+  // @@protoc_insertion_point(field_get:agent.FileInferenceResponse.file_size)
+  return _internal_file_size();
+}
+inline void FileInferenceResponse::set_file_size(float value) {
+  _internal_set_file_size(value);
+  // @@protoc_insertion_point(field_set:agent.FileInferenceResponse.file_size)
+}
+inline float FileInferenceResponse::_internal_file_size() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.file_size_;
+}
+inline void FileInferenceResponse::_internal_set_file_size(float value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.file_size_ = value;
+}
+
+// bool is_remote = 5;
+inline void FileInferenceResponse::clear_is_remote() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.is_remote_ = false;
+}
+inline bool FileInferenceResponse::is_remote() const {
+  // @@protoc_insertion_point(field_get:agent.FileInferenceResponse.is_remote)
+  return _internal_is_remote();
+}
+inline void FileInferenceResponse::set_is_remote(bool value) {
+  _internal_set_is_remote(value);
+  // @@protoc_insertion_point(field_set:agent.FileInferenceResponse.is_remote)
+}
+inline bool FileInferenceResponse::_internal_is_remote() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.is_remote_;
+}
+inline void FileInferenceResponse::_internal_set_is_remote(bool value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.is_remote_ = value;
 }
 
 #ifdef __GNUC__

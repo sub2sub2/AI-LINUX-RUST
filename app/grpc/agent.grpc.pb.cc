@@ -143,5 +143,66 @@ MnistInference::Service::~Service() {
 }
 
 
+static const char* FileInference_method_names[] = {
+  "/agent.FileInference/Inference",
+};
+
+std::unique_ptr< FileInference::Stub> FileInference::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
+  (void)options;
+  std::unique_ptr< FileInference::Stub> stub(new FileInference::Stub(channel, options));
+  return stub;
+}
+
+FileInference::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options)
+  : channel_(channel), rpcmethod_Inference_(FileInference_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  {}
+
+::grpc::Status FileInference::Stub::Inference(::grpc::ClientContext* context, const ::agent::FileInferenceRequest& request, ::agent::FileInferenceResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::agent::FileInferenceRequest, ::agent::FileInferenceResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_Inference_, context, request, response);
+}
+
+void FileInference::Stub::async::Inference(::grpc::ClientContext* context, const ::agent::FileInferenceRequest* request, ::agent::FileInferenceResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::agent::FileInferenceRequest, ::agent::FileInferenceResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_Inference_, context, request, response, std::move(f));
+}
+
+void FileInference::Stub::async::Inference(::grpc::ClientContext* context, const ::agent::FileInferenceRequest* request, ::agent::FileInferenceResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_Inference_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::agent::FileInferenceResponse>* FileInference::Stub::PrepareAsyncInferenceRaw(::grpc::ClientContext* context, const ::agent::FileInferenceRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::agent::FileInferenceResponse, ::agent::FileInferenceRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_Inference_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::agent::FileInferenceResponse>* FileInference::Stub::AsyncInferenceRaw(::grpc::ClientContext* context, const ::agent::FileInferenceRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncInferenceRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+FileInference::Service::Service() {
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      FileInference_method_names[0],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< FileInference::Service, ::agent::FileInferenceRequest, ::agent::FileInferenceResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](FileInference::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::agent::FileInferenceRequest* req,
+             ::agent::FileInferenceResponse* resp) {
+               return service->Inference(ctx, req, resp);
+             }, this)));
+}
+
+FileInference::Service::~Service() {
+}
+
+::grpc::Status FileInference::Service::Inference(::grpc::ServerContext* context, const ::agent::FileInferenceRequest* request, ::agent::FileInferenceResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+
 }  // namespace agent
 

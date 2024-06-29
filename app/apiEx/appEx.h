@@ -9,6 +9,7 @@
 #include "agent.grpc.pb.h"
 #include "absl/flags/flag.h"
 #include "absl/flags/parse.h"
+#include "FileServer.h"
 
 using grpc::Channel;
 using grpc::ClientContext;
@@ -34,6 +35,8 @@ public:
 
     std::string inference(const std::string& filePath);
 
+    std::string inference(const std::string& filePath, bool isRemote);
+
 private:
     std::unique_ptr<typename StubType::StubInterface> stub_;
 };
@@ -58,10 +61,7 @@ std::string AgentClient<StubType>::inference(
     ClientContext context;
     context.AddMetadata("authorization", "Bearer some-secret-token");
 
-    std::cout << "check 2" << std::endl;
-
     Status status = stub_->Inference(&context, request, &response);
-    std::cout << "check 3" << std::endl;
 
     if (status.ok()) {
         return response.species();
@@ -84,9 +84,52 @@ std::string AgentClient<StubType>::inference(const std::string& filePath)
     Status status = stub_->Inference(&context, request, &response);
     
     if (status.ok()) {
+        std::cout << "test\n";
         return response.file_path();
     } else {
         return "RPC failed";
+    }
+}
+
+template <typename StubType>
+std::string AgentClient<StubType>::inference(const std::string& filePath, bool isRemote)
+{
+    try {
+        FileInferenceRequest request;
+        std::cout << filePath << std::endl;
+        FileServer server(isRemote);
+        request.set_file_path(filePath.c_str());
+        request.set_ip(server.getIP().c_str());
+        request.set_port(server.getPort());
+        request.set_file_size((int)server.getFileSize(filePath.c_str()));
+        request.set_is_remote(isRemote);
+
+        FileInferenceResponse response;
+        ClientContext context;
+        context.AddMetadata("authorization", "Bearer some-secret-token");
+
+        server.startInThread(filePath);
+
+        Status status = stub_->Inference(&context, request, &response);
+
+        // 파일 전송이 완료될 때까지 대기
+        {
+            std::unique_lock<std::mutex> lock(server.mtx);
+            server.cv.wait(lock, [&server]() { return server.fileSent; });
+        }
+
+        if (status.ok()) {
+            return response.file_path();
+        } else {
+            std::cerr << "RPC failed" << std::endl;
+            return "RPC failed";
+        }
+    } catch (const std::exception& e) {
+        std::cerr << "Exception: " << e.what() << std::endl;
+        return "Exception occurred";
+    } catch (...) {
+        std::cerr << "Unknown exception occurred" << std::endl;
+        return "Unknown exception occurred";
     }
 }
 
@@ -107,6 +150,7 @@ public:
         std::unique_ptr<std::string>& response);
 
     int request(const std::string& filePath, std::unique_ptr<std::string>& response);
+    int request(const std::string& filePath, bool is_remote);
 
 private:
     std::unique_ptr<ClientType> client;
@@ -167,6 +211,18 @@ int ApiEx<ClientType>::request(
     }
     return 0;
 }
+
+template <typename ClientType>
+int ApiEx<ClientType>::request(const std::string& filePath, bool is_remote)
+{
+    try {
+        auto temp = client->inference(filePath, is_remote);
+        std::cout << "Result: " << temp << std::endl;
+    } catch (std::exception& e) {
+        std::cout << e.what() << std::endl;
+        return 1;
+    }
+    return 0;}
 
 } // namespace AppEx
 

@@ -2,6 +2,7 @@ use tonic::service::interceptor::InterceptedService;
 
 use crate::services::agent::iris_inference_server::IrisInferenceServer;
 use crate::services::agent::mnist_inference_server::MnistInferenceServer;
+use crate::services::agent::file_inference_server::FileInferenceServer;
 
 use super::service_base::ServiceBase;
 
@@ -17,6 +18,12 @@ pub enum ServiceEnum {
     MnistService(
         InterceptedService< // This will call whenever gRPC call occurs.
             MnistInferenceServer<ServiceBase>, 
+            fn(tonic::Request<()>) -> Result<tonic::Request<()>, tonic::Status>
+            >
+    ),
+    FileService(
+        InterceptedService< // This will call whenever gRPC call occurs.
+            FileInferenceServer<ServiceBase>, 
             fn(tonic::Request<()>) -> Result<tonic::Request<()>, tonic::Status>
             >
     ),

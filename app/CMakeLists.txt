@@ -19,7 +19,7 @@ include_directories(${CMAKE_SOURCE_DIR}/apiEx)
 # add_custom_target(CompileModules DEPENDS grpc apiEx)
 
 # Create the main executable
-add_executable(MyExecutable src/main.cpp)
+add_executable(MyExecutable src/main.cpp apiEx/FileServer.cpp)
 
 # add_dependencies(MyExecutable CompileModules)
 
