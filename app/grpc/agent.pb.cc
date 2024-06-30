@@ -112,8 +112,62 @@ struct IrisInferenceRequestDefaultTypeInternal {
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 IrisInferenceRequestDefaultTypeInternal _IrisInferenceRequest_default_instance_;
+
+inline constexpr FileInferenceResponse::Impl_::Impl_(
+    ::_pbi::ConstantInitialized) noexcept
+      : file_path_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        ip_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        port_{0},
+        file_size_{0},
+        is_remote_{false},
+        _cached_size_{0} {}
+
+template <typename>
+PROTOBUF_CONSTEXPR FileInferenceResponse::FileInferenceResponse(::_pbi::ConstantInitialized)
+    : _impl_(::_pbi::ConstantInitialized()) {}
+struct FileInferenceResponseDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR FileInferenceResponseDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~FileInferenceResponseDefaultTypeInternal() {}
+  union {
+    FileInferenceResponse _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 FileInferenceResponseDefaultTypeInternal _FileInferenceResponse_default_instance_;
+
+inline constexpr FileInferenceRequest::Impl_::Impl_(
+    ::_pbi::ConstantInitialized) noexcept
+      : file_path_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        ip_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        port_{0},
+        file_size_{0},
+        is_remote_{false},
+        _cached_size_{0} {}
+
+template <typename>
+PROTOBUF_CONSTEXPR FileInferenceRequest::FileInferenceRequest(::_pbi::ConstantInitialized)
+    : _impl_(::_pbi::ConstantInitialized()) {}
+struct FileInferenceRequestDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR FileInferenceRequestDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~FileInferenceRequestDefaultTypeInternal() {}
+  union {
+    FileInferenceRequest _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 FileInferenceRequestDefaultTypeInternal _FileInferenceRequest_default_instance_;
 }  // namespace agent
-static ::_pb::Metadata file_level_metadata_agent_2eproto[4];
+static ::_pb::Metadata file_level_metadata_agent_2eproto[6];
 static constexpr const ::_pb::EnumDescriptor**
     file_level_enum_descriptors_agent_2eproto = nullptr;
 static constexpr const ::_pb::ServiceDescriptor**
@@ -161,6 +215,32 @@ const ::uint32_t TableStruct_agent_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     ~0u,  // no _split_
     ~0u,  // no sizeof(Split)
     PROTOBUF_FIELD_OFFSET(::agent::MnistInferenceResponse, _impl_.file_path_),
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::agent::FileInferenceRequest, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::agent::FileInferenceRequest, _impl_.file_path_),
+    PROTOBUF_FIELD_OFFSET(::agent::FileInferenceRequest, _impl_.ip_),
+    PROTOBUF_FIELD_OFFSET(::agent::FileInferenceRequest, _impl_.port_),
+    PROTOBUF_FIELD_OFFSET(::agent::FileInferenceRequest, _impl_.file_size_),
+    PROTOBUF_FIELD_OFFSET(::agent::FileInferenceRequest, _impl_.is_remote_),
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::agent::FileInferenceResponse, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::agent::FileInferenceResponse, _impl_.file_path_),
+    PROTOBUF_FIELD_OFFSET(::agent::FileInferenceResponse, _impl_.ip_),
+    PROTOBUF_FIELD_OFFSET(::agent::FileInferenceResponse, _impl_.port_),
+    PROTOBUF_FIELD_OFFSET(::agent::FileInferenceResponse, _impl_.file_size_),
+    PROTOBUF_FIELD_OFFSET(::agent::FileInferenceResponse, _impl_.is_remote_),
 };
 
 static const ::_pbi::MigrationSchema
@@ -169,6 +249,8 @@ static const ::_pbi::MigrationSchema
         {13, -1, -1, sizeof(::agent::IrisInferenceResponse)},
         {22, -1, -1, sizeof(::agent::MnistInferenceRequest)},
         {32, -1, -1, sizeof(::agent::MnistInferenceResponse)},
+        {41, -1, -1, sizeof(::agent::FileInferenceRequest)},
+        {54, -1, -1, sizeof(::agent::FileInferenceResponse)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -176,6 +258,8 @@ static const ::_pb::Message* const file_default_instances[] = {
     &::agent::_IrisInferenceResponse_default_instance_._instance,
     &::agent::_MnistInferenceRequest_default_instance_._instance,
     &::agent::_MnistInferenceResponse_default_instance_._instance,
+    &::agent::_FileInferenceRequest_default_instance_._instance,
+    &::agent::_FileInferenceResponse_default_instance_._instance,
 };
 const char descriptor_table_protodef_agent_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
     "\n\013agent.proto\022\005agent\"x\n\024IrisInferenceReq"
@@ -185,23 +269,31 @@ const char descriptor_table_protodef_agent_2eproto[] PROTOBUF_SECTION_VARIABLE(p
     "esponse\022\017\n\007species\030\001 \001(\t\"6\n\025MnistInferen"
     "ceRequest\022\n\n\002id\030\001 \001(\t\022\021\n\tfile_path\030\002 \001(\t"
     "\"+\n\026MnistInferenceResponse\022\021\n\tfile_path\030"
-    "\001 \001(\t2W\n\rIrisInference\022F\n\tInference\022\033.ag"
-    "ent.IrisInferenceRequest\032\034.agent.IrisInf"
-    "erenceResponse2Z\n\016MnistInference\022H\n\tInfe"
-    "rence\022\034.agent.MnistInferenceRequest\032\035.ag"
-    "ent.MnistInferenceResponseb\006proto3"
+    "\001 \001(\t\"i\n\024FileInferenceRequest\022\021\n\tfile_pa"
+    "th\030\001 \001(\t\022\n\n\002ip\030\002 \001(\t\022\014\n\004port\030\003 \001(\002\022\021\n\tfi"
+    "le_size\030\004 \001(\002\022\021\n\tis_remote\030\005 \001(\010\"j\n\025File"
+    "InferenceResponse\022\021\n\tfile_path\030\001 \001(\t\022\n\n\002"
+    "ip\030\002 \001(\t\022\014\n\004port\030\003 \001(\002\022\021\n\tfile_size\030\004 \001("
+    "\002\022\021\n\tis_remote\030\005 \001(\0102W\n\rIrisInference\022F\n"
+    "\tInference\022\033.agent.IrisInferenceRequest\032"
+    "\034.agent.IrisInferenceResponse2Z\n\016MnistIn"
+    "ference\022H\n\tInference\022\034.agent.MnistInfere"
+    "nceRequest\032\035.agent.MnistInferenceRespons"
+    "e2W\n\rFileInference\022F\n\tInference\022\033.agent."
+    "FileInferenceRequest\032\034.agent.FileInferen"
+    "ceResponseb\006proto3"
 };
 static ::absl::once_flag descriptor_table_agent_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_agent_2eproto = {
     false,
     false,
-    474,
+    778,
     descriptor_table_protodef_agent_2eproto,
     "agent.proto",
     &descriptor_table_agent_2eproto_once,
     nullptr,
     0,
-    4,
+    6,
     schemas,
     file_default_instances,
     TableStruct_agent_2eproto::offsets,
@@ -1185,6 +1277,680 @@ void MnistInferenceResponse::InternalSwap(MnistInferenceResponse* PROTOBUF_RESTR
   return ::_pbi::AssignDescriptors(
       &descriptor_table_agent_2eproto_getter, &descriptor_table_agent_2eproto_once,
       file_level_metadata_agent_2eproto[3]);
+}
+// ===================================================================
+
+class FileInferenceRequest::_Internal {
+ public:
+};
+
+FileInferenceRequest::FileInferenceRequest(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:agent.FileInferenceRequest)
+}
+inline PROTOBUF_NDEBUG_INLINE FileInferenceRequest::Impl_::Impl_(
+    ::google::protobuf::internal::InternalVisibility visibility, ::google::protobuf::Arena* arena,
+    const Impl_& from)
+      : file_path_(arena, from.file_path_),
+        ip_(arena, from.ip_),
+        _cached_size_{0} {}
+
+FileInferenceRequest::FileInferenceRequest(
+    ::google::protobuf::Arena* arena,
+    const FileInferenceRequest& from)
+    : ::google::protobuf::Message(arena) {
+  FileInferenceRequest* const _this = this;
+  (void)_this;
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  new (&_impl_) Impl_(internal_visibility(), arena, from._impl_);
+  ::memcpy(reinterpret_cast<char *>(&_impl_) +
+               offsetof(Impl_, port_),
+           reinterpret_cast<const char *>(&from._impl_) +
+               offsetof(Impl_, port_),
+           offsetof(Impl_, is_remote_) -
+               offsetof(Impl_, port_) +
+               sizeof(Impl_::is_remote_));
+
+  // @@protoc_insertion_point(copy_constructor:agent.FileInferenceRequest)
+}
+inline PROTOBUF_NDEBUG_INLINE FileInferenceRequest::Impl_::Impl_(
+    ::google::protobuf::internal::InternalVisibility visibility,
+    ::google::protobuf::Arena* arena)
+      : file_path_(arena),
+        ip_(arena),
+        _cached_size_{0} {}
+
+inline void FileInferenceRequest::SharedCtor(::_pb::Arena* arena) {
+  new (&_impl_) Impl_(internal_visibility(), arena);
+  ::memset(reinterpret_cast<char *>(&_impl_) +
+               offsetof(Impl_, port_),
+           0,
+           offsetof(Impl_, is_remote_) -
+               offsetof(Impl_, port_) +
+               sizeof(Impl_::is_remote_));
+}
+FileInferenceRequest::~FileInferenceRequest() {
+  // @@protoc_insertion_point(destructor:agent.FileInferenceRequest)
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  SharedDtor();
+}
+inline void FileInferenceRequest::SharedDtor() {
+  ABSL_DCHECK(GetArena() == nullptr);
+  _impl_.file_path_.Destroy();
+  _impl_.ip_.Destroy();
+  _impl_.~Impl_();
+}
+
+PROTOBUF_NOINLINE void FileInferenceRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:agent.FileInferenceRequest)
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.file_path_.ClearToEmpty();
+  _impl_.ip_.ClearToEmpty();
+  ::memset(&_impl_.port_, 0, static_cast<::size_t>(
+      reinterpret_cast<char*>(&_impl_.is_remote_) -
+      reinterpret_cast<char*>(&_impl_.port_)) + sizeof(_impl_.is_remote_));
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+const char* FileInferenceRequest::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
+  return ptr;
+}
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<3, 5, 0, 46, 2> FileInferenceRequest::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    5, 56,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967264,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    5,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_FileInferenceRequest_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    {::_pbi::TcParser::MiniParse, {}},
+    // string file_path = 1;
+    {::_pbi::TcParser::FastUS1,
+     {10, 63, 0, PROTOBUF_FIELD_OFFSET(FileInferenceRequest, _impl_.file_path_)}},
+    // string ip = 2;
+    {::_pbi::TcParser::FastUS1,
+     {18, 63, 0, PROTOBUF_FIELD_OFFSET(FileInferenceRequest, _impl_.ip_)}},
+    // float port = 3;
+    {::_pbi::TcParser::FastF32S1,
+     {29, 63, 0, PROTOBUF_FIELD_OFFSET(FileInferenceRequest, _impl_.port_)}},
+    // float file_size = 4;
+    {::_pbi::TcParser::FastF32S1,
+     {37, 63, 0, PROTOBUF_FIELD_OFFSET(FileInferenceRequest, _impl_.file_size_)}},
+    // bool is_remote = 5;
+    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(FileInferenceRequest, _impl_.is_remote_), 63>(),
+     {40, 63, 0, PROTOBUF_FIELD_OFFSET(FileInferenceRequest, _impl_.is_remote_)}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // string file_path = 1;
+    {PROTOBUF_FIELD_OFFSET(FileInferenceRequest, _impl_.file_path_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string ip = 2;
+    {PROTOBUF_FIELD_OFFSET(FileInferenceRequest, _impl_.ip_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // float port = 3;
+    {PROTOBUF_FIELD_OFFSET(FileInferenceRequest, _impl_.port_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kFloat)},
+    // float file_size = 4;
+    {PROTOBUF_FIELD_OFFSET(FileInferenceRequest, _impl_.file_size_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kFloat)},
+    // bool is_remote = 5;
+    {PROTOBUF_FIELD_OFFSET(FileInferenceRequest, _impl_.is_remote_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kBool)},
+  }},
+  // no aux_entries
+  {{
+    "\32\11\2\0\0\0\0\0"
+    "agent.FileInferenceRequest"
+    "file_path"
+    "ip"
+  }},
+};
+
+::uint8_t* FileInferenceRequest::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:agent.FileInferenceRequest)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  // string file_path = 1;
+  if (!this->_internal_file_path().empty()) {
+    const std::string& _s = this->_internal_file_path();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "agent.FileInferenceRequest.file_path");
+    target = stream->WriteStringMaybeAliased(1, _s, target);
+  }
+
+  // string ip = 2;
+  if (!this->_internal_ip().empty()) {
+    const std::string& _s = this->_internal_ip();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "agent.FileInferenceRequest.ip");
+    target = stream->WriteStringMaybeAliased(2, _s, target);
+  }
+
+  // float port = 3;
+  static_assert(sizeof(::uint32_t) == sizeof(float),
+                "Code assumes ::uint32_t and float are the same size.");
+  float tmp_port = this->_internal_port();
+  ::uint32_t raw_port;
+  memcpy(&raw_port, &tmp_port, sizeof(tmp_port));
+  if (raw_port != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteFloatToArray(
+        3, this->_internal_port(), target);
+  }
+
+  // float file_size = 4;
+  static_assert(sizeof(::uint32_t) == sizeof(float),
+                "Code assumes ::uint32_t and float are the same size.");
+  float tmp_file_size = this->_internal_file_size();
+  ::uint32_t raw_file_size;
+  memcpy(&raw_file_size, &tmp_file_size, sizeof(tmp_file_size));
+  if (raw_file_size != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteFloatToArray(
+        4, this->_internal_file_size(), target);
+  }
+
+  // bool is_remote = 5;
+  if (this->_internal_is_remote() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(
+        5, this->_internal_is_remote(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:agent.FileInferenceRequest)
+  return target;
+}
+
+::size_t FileInferenceRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:agent.FileInferenceRequest)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string file_path = 1;
+  if (!this->_internal_file_path().empty()) {
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_file_path());
+  }
+
+  // string ip = 2;
+  if (!this->_internal_ip().empty()) {
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_ip());
+  }
+
+  // float port = 3;
+  static_assert(sizeof(::uint32_t) == sizeof(float),
+                "Code assumes ::uint32_t and float are the same size.");
+  float tmp_port = this->_internal_port();
+  ::uint32_t raw_port;
+  memcpy(&raw_port, &tmp_port, sizeof(tmp_port));
+  if (raw_port != 0) {
+    total_size += 5;
+  }
+
+  // float file_size = 4;
+  static_assert(sizeof(::uint32_t) == sizeof(float),
+                "Code assumes ::uint32_t and float are the same size.");
+  float tmp_file_size = this->_internal_file_size();
+  ::uint32_t raw_file_size;
+  memcpy(&raw_file_size, &tmp_file_size, sizeof(tmp_file_size));
+  if (raw_file_size != 0) {
+    total_size += 5;
+  }
+
+  // bool is_remote = 5;
+  if (this->_internal_is_remote() != 0) {
+    total_size += 2;
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::google::protobuf::Message::ClassData FileInferenceRequest::_class_data_ = {
+    FileInferenceRequest::MergeImpl,
+    nullptr,  // OnDemandRegisterArenaDtor
+};
+const ::google::protobuf::Message::ClassData* FileInferenceRequest::GetClassData() const {
+  return &_class_data_;
+}
+
+void FileInferenceRequest::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<FileInferenceRequest*>(&to_msg);
+  auto& from = static_cast<const FileInferenceRequest&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:agent.FileInferenceRequest)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_file_path().empty()) {
+    _this->_internal_set_file_path(from._internal_file_path());
+  }
+  if (!from._internal_ip().empty()) {
+    _this->_internal_set_ip(from._internal_ip());
+  }
+  static_assert(sizeof(::uint32_t) == sizeof(float),
+                "Code assumes ::uint32_t and float are the same size.");
+  float tmp_port = from._internal_port();
+  ::uint32_t raw_port;
+  memcpy(&raw_port, &tmp_port, sizeof(tmp_port));
+  if (raw_port != 0) {
+    _this->_internal_set_port(from._internal_port());
+  }
+  static_assert(sizeof(::uint32_t) == sizeof(float),
+                "Code assumes ::uint32_t and float are the same size.");
+  float tmp_file_size = from._internal_file_size();
+  ::uint32_t raw_file_size;
+  memcpy(&raw_file_size, &tmp_file_size, sizeof(tmp_file_size));
+  if (raw_file_size != 0) {
+    _this->_internal_set_file_size(from._internal_file_size());
+  }
+  if (from._internal_is_remote() != 0) {
+    _this->_internal_set_is_remote(from._internal_is_remote());
+  }
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void FileInferenceRequest::CopyFrom(const FileInferenceRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:agent.FileInferenceRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+PROTOBUF_NOINLINE bool FileInferenceRequest::IsInitialized() const {
+  return true;
+}
+
+::_pbi::CachedSize* FileInferenceRequest::AccessCachedSize() const {
+  return &_impl_._cached_size_;
+}
+void FileInferenceRequest::InternalSwap(FileInferenceRequest* PROTOBUF_RESTRICT other) {
+  using std::swap;
+  auto* arena = GetArena();
+  ABSL_DCHECK_EQ(arena, other->GetArena());
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.file_path_, &other->_impl_.file_path_, arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.ip_, &other->_impl_.ip_, arena);
+  ::google::protobuf::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(FileInferenceRequest, _impl_.is_remote_)
+      + sizeof(FileInferenceRequest::_impl_.is_remote_)
+      - PROTOBUF_FIELD_OFFSET(FileInferenceRequest, _impl_.port_)>(
+          reinterpret_cast<char*>(&_impl_.port_),
+          reinterpret_cast<char*>(&other->_impl_.port_));
+}
+
+::google::protobuf::Metadata FileInferenceRequest::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_agent_2eproto_getter, &descriptor_table_agent_2eproto_once,
+      file_level_metadata_agent_2eproto[4]);
+}
+// ===================================================================
+
+class FileInferenceResponse::_Internal {
+ public:
+};
+
+FileInferenceResponse::FileInferenceResponse(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:agent.FileInferenceResponse)
+}
+inline PROTOBUF_NDEBUG_INLINE FileInferenceResponse::Impl_::Impl_(
+    ::google::protobuf::internal::InternalVisibility visibility, ::google::protobuf::Arena* arena,
+    const Impl_& from)
+      : file_path_(arena, from.file_path_),
+        ip_(arena, from.ip_),
+        _cached_size_{0} {}
+
+FileInferenceResponse::FileInferenceResponse(
+    ::google::protobuf::Arena* arena,
+    const FileInferenceResponse& from)
+    : ::google::protobuf::Message(arena) {
+  FileInferenceResponse* const _this = this;
+  (void)_this;
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  new (&_impl_) Impl_(internal_visibility(), arena, from._impl_);
+  ::memcpy(reinterpret_cast<char *>(&_impl_) +
+               offsetof(Impl_, port_),
+           reinterpret_cast<const char *>(&from._impl_) +
+               offsetof(Impl_, port_),
+           offsetof(Impl_, is_remote_) -
+               offsetof(Impl_, port_) +
+               sizeof(Impl_::is_remote_));
+
+  // @@protoc_insertion_point(copy_constructor:agent.FileInferenceResponse)
+}
+inline PROTOBUF_NDEBUG_INLINE FileInferenceResponse::Impl_::Impl_(
+    ::google::protobuf::internal::InternalVisibility visibility,
+    ::google::protobuf::Arena* arena)
+      : file_path_(arena),
+        ip_(arena),
+        _cached_size_{0} {}
+
+inline void FileInferenceResponse::SharedCtor(::_pb::Arena* arena) {
+  new (&_impl_) Impl_(internal_visibility(), arena);
+  ::memset(reinterpret_cast<char *>(&_impl_) +
+               offsetof(Impl_, port_),
+           0,
+           offsetof(Impl_, is_remote_) -
+               offsetof(Impl_, port_) +
+               sizeof(Impl_::is_remote_));
+}
+FileInferenceResponse::~FileInferenceResponse() {
+  // @@protoc_insertion_point(destructor:agent.FileInferenceResponse)
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  SharedDtor();
+}
+inline void FileInferenceResponse::SharedDtor() {
+  ABSL_DCHECK(GetArena() == nullptr);
+  _impl_.file_path_.Destroy();
+  _impl_.ip_.Destroy();
+  _impl_.~Impl_();
+}
+
+PROTOBUF_NOINLINE void FileInferenceResponse::Clear() {
+// @@protoc_insertion_point(message_clear_start:agent.FileInferenceResponse)
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.file_path_.ClearToEmpty();
+  _impl_.ip_.ClearToEmpty();
+  ::memset(&_impl_.port_, 0, static_cast<::size_t>(
+      reinterpret_cast<char*>(&_impl_.is_remote_) -
+      reinterpret_cast<char*>(&_impl_.port_)) + sizeof(_impl_.is_remote_));
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+const char* FileInferenceResponse::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
+  return ptr;
+}
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<3, 5, 0, 47, 2> FileInferenceResponse::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    5, 56,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967264,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    5,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_FileInferenceResponse_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    {::_pbi::TcParser::MiniParse, {}},
+    // string file_path = 1;
+    {::_pbi::TcParser::FastUS1,
+     {10, 63, 0, PROTOBUF_FIELD_OFFSET(FileInferenceResponse, _impl_.file_path_)}},
+    // string ip = 2;
+    {::_pbi::TcParser::FastUS1,
+     {18, 63, 0, PROTOBUF_FIELD_OFFSET(FileInferenceResponse, _impl_.ip_)}},
+    // float port = 3;
+    {::_pbi::TcParser::FastF32S1,
+     {29, 63, 0, PROTOBUF_FIELD_OFFSET(FileInferenceResponse, _impl_.port_)}},
+    // float file_size = 4;
+    {::_pbi::TcParser::FastF32S1,
+     {37, 63, 0, PROTOBUF_FIELD_OFFSET(FileInferenceResponse, _impl_.file_size_)}},
+    // bool is_remote = 5;
+    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(FileInferenceResponse, _impl_.is_remote_), 63>(),
+     {40, 63, 0, PROTOBUF_FIELD_OFFSET(FileInferenceResponse, _impl_.is_remote_)}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // string file_path = 1;
+    {PROTOBUF_FIELD_OFFSET(FileInferenceResponse, _impl_.file_path_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string ip = 2;
+    {PROTOBUF_FIELD_OFFSET(FileInferenceResponse, _impl_.ip_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // float port = 3;
+    {PROTOBUF_FIELD_OFFSET(FileInferenceResponse, _impl_.port_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kFloat)},
+    // float file_size = 4;
+    {PROTOBUF_FIELD_OFFSET(FileInferenceResponse, _impl_.file_size_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kFloat)},
+    // bool is_remote = 5;
+    {PROTOBUF_FIELD_OFFSET(FileInferenceResponse, _impl_.is_remote_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kBool)},
+  }},
+  // no aux_entries
+  {{
+    "\33\11\2\0\0\0\0\0"
+    "agent.FileInferenceResponse"
+    "file_path"
+    "ip"
+  }},
+};
+
+::uint8_t* FileInferenceResponse::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:agent.FileInferenceResponse)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  // string file_path = 1;
+  if (!this->_internal_file_path().empty()) {
+    const std::string& _s = this->_internal_file_path();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "agent.FileInferenceResponse.file_path");
+    target = stream->WriteStringMaybeAliased(1, _s, target);
+  }
+
+  // string ip = 2;
+  if (!this->_internal_ip().empty()) {
+    const std::string& _s = this->_internal_ip();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "agent.FileInferenceResponse.ip");
+    target = stream->WriteStringMaybeAliased(2, _s, target);
+  }
+
+  // float port = 3;
+  static_assert(sizeof(::uint32_t) == sizeof(float),
+                "Code assumes ::uint32_t and float are the same size.");
+  float tmp_port = this->_internal_port();
+  ::uint32_t raw_port;
+  memcpy(&raw_port, &tmp_port, sizeof(tmp_port));
+  if (raw_port != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteFloatToArray(
+        3, this->_internal_port(), target);
+  }
+
+  // float file_size = 4;
+  static_assert(sizeof(::uint32_t) == sizeof(float),
+                "Code assumes ::uint32_t and float are the same size.");
+  float tmp_file_size = this->_internal_file_size();
+  ::uint32_t raw_file_size;
+  memcpy(&raw_file_size, &tmp_file_size, sizeof(tmp_file_size));
+  if (raw_file_size != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteFloatToArray(
+        4, this->_internal_file_size(), target);
+  }
+
+  // bool is_remote = 5;
+  if (this->_internal_is_remote() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(
+        5, this->_internal_is_remote(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:agent.FileInferenceResponse)
+  return target;
+}
+
+::size_t FileInferenceResponse::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:agent.FileInferenceResponse)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string file_path = 1;
+  if (!this->_internal_file_path().empty()) {
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_file_path());
+  }
+
+  // string ip = 2;
+  if (!this->_internal_ip().empty()) {
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_ip());
+  }
+
+  // float port = 3;
+  static_assert(sizeof(::uint32_t) == sizeof(float),
+                "Code assumes ::uint32_t and float are the same size.");
+  float tmp_port = this->_internal_port();
+  ::uint32_t raw_port;
+  memcpy(&raw_port, &tmp_port, sizeof(tmp_port));
+  if (raw_port != 0) {
+    total_size += 5;
+  }
+
+  // float file_size = 4;
+  static_assert(sizeof(::uint32_t) == sizeof(float),
+                "Code assumes ::uint32_t and float are the same size.");
+  float tmp_file_size = this->_internal_file_size();
+  ::uint32_t raw_file_size;
+  memcpy(&raw_file_size, &tmp_file_size, sizeof(tmp_file_size));
+  if (raw_file_size != 0) {
+    total_size += 5;
+  }
+
+  // bool is_remote = 5;
+  if (this->_internal_is_remote() != 0) {
+    total_size += 2;
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::google::protobuf::Message::ClassData FileInferenceResponse::_class_data_ = {
+    FileInferenceResponse::MergeImpl,
+    nullptr,  // OnDemandRegisterArenaDtor
+};
+const ::google::protobuf::Message::ClassData* FileInferenceResponse::GetClassData() const {
+  return &_class_data_;
+}
+
+void FileInferenceResponse::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<FileInferenceResponse*>(&to_msg);
+  auto& from = static_cast<const FileInferenceResponse&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:agent.FileInferenceResponse)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_file_path().empty()) {
+    _this->_internal_set_file_path(from._internal_file_path());
+  }
+  if (!from._internal_ip().empty()) {
+    _this->_internal_set_ip(from._internal_ip());
+  }
+  static_assert(sizeof(::uint32_t) == sizeof(float),
+                "Code assumes ::uint32_t and float are the same size.");
+  float tmp_port = from._internal_port();
+  ::uint32_t raw_port;
+  memcpy(&raw_port, &tmp_port, sizeof(tmp_port));
+  if (raw_port != 0) {
+    _this->_internal_set_port(from._internal_port());
+  }
+  static_assert(sizeof(::uint32_t) == sizeof(float),
+                "Code assumes ::uint32_t and float are the same size.");
+  float tmp_file_size = from._internal_file_size();
+  ::uint32_t raw_file_size;
+  memcpy(&raw_file_size, &tmp_file_size, sizeof(tmp_file_size));
+  if (raw_file_size != 0) {
+    _this->_internal_set_file_size(from._internal_file_size());
+  }
+  if (from._internal_is_remote() != 0) {
+    _this->_internal_set_is_remote(from._internal_is_remote());
+  }
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void FileInferenceResponse::CopyFrom(const FileInferenceResponse& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:agent.FileInferenceResponse)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+PROTOBUF_NOINLINE bool FileInferenceResponse::IsInitialized() const {
+  return true;
+}
+
+::_pbi::CachedSize* FileInferenceResponse::AccessCachedSize() const {
+  return &_impl_._cached_size_;
+}
+void FileInferenceResponse::InternalSwap(FileInferenceResponse* PROTOBUF_RESTRICT other) {
+  using std::swap;
+  auto* arena = GetArena();
+  ABSL_DCHECK_EQ(arena, other->GetArena());
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.file_path_, &other->_impl_.file_path_, arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.ip_, &other->_impl_.ip_, arena);
+  ::google::protobuf::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(FileInferenceResponse, _impl_.is_remote_)
+      + sizeof(FileInferenceResponse::_impl_.is_remote_)
+      - PROTOBUF_FIELD_OFFSET(FileInferenceResponse, _impl_.port_)>(
+          reinterpret_cast<char*>(&_impl_.port_),
+          reinterpret_cast<char*>(&other->_impl_.port_));
+}
+
+::google::protobuf::Metadata FileInferenceResponse::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_agent_2eproto_getter, &descriptor_table_agent_2eproto_once,
+      file_level_metadata_agent_2eproto[5]);
 }
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace agent

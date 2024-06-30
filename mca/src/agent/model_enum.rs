@@ -2,5 +2,6 @@
 pub enum MCAModelEnum {
     Model1,
     Model2,
+    Model3,
 }
 

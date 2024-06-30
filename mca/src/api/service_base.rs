@@ -28,6 +28,11 @@ impl ServiceBase {
                 let proxy = Model2Proxy::new(&connection).await.expect("Failed to create proxy");
                 Arc::new(Mutex::new(Box::new(Model2Struct { proxy }) as Box<dyn std::any::Any + Send + Sync>))
             }
+            MCAModelEnum::Model3 => {
+                let connection = Connection::session().await.expect("Failed to connect to session");
+                let proxy = Model2Proxy::new(&connection).await.expect("Failed to create proxy");
+                Arc::new(Mutex::new(Box::new(Model2Struct { proxy }) as Box<dyn std::any::Any + Send + Sync>))
+            }
         };
         Self {
             name,

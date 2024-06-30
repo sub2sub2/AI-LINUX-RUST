@@ -46,6 +46,14 @@ impl ServiceManager {
                         )
                     );
                 }
+                ServiceEnum::FileService(svc) => {
+                    services.push(
+                        Some(
+                            Server::builder().add_service(svc.clone())
+                            .serve("[::1]:8082".parse().unwrap())
+                        )
+                    );
+                }
                 ServiceEnum::None => {}
             }
         }

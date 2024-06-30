@@ -441,6 +441,213 @@ class MnistInference final {
   typedef WithStreamedUnaryMethod_Inference<Service > StreamedService;
 };
 
+class FileInference final {
+ public:
+  static constexpr char const* service_full_name() {
+    return "agent.FileInference";
+  }
+  class StubInterface {
+   public:
+    virtual ~StubInterface() {}
+    virtual ::grpc::Status Inference(::grpc::ClientContext* context, const ::agent::FileInferenceRequest& request, ::agent::FileInferenceResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::agent::FileInferenceResponse>> AsyncInference(::grpc::ClientContext* context, const ::agent::FileInferenceRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::agent::FileInferenceResponse>>(AsyncInferenceRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::agent::FileInferenceResponse>> PrepareAsyncInference(::grpc::ClientContext* context, const ::agent::FileInferenceRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::agent::FileInferenceResponse>>(PrepareAsyncInferenceRaw(context, request, cq));
+    }
+    class async_interface {
+     public:
+      virtual ~async_interface() {}
+      virtual void Inference(::grpc::ClientContext* context, const ::agent::FileInferenceRequest* request, ::agent::FileInferenceResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void Inference(::grpc::ClientContext* context, const ::agent::FileInferenceRequest* request, ::agent::FileInferenceResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+    };
+    typedef class async_interface experimental_async_interface;
+    virtual class async_interface* async() { return nullptr; }
+    class async_interface* experimental_async() { return async(); }
+   private:
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::agent::FileInferenceResponse>* AsyncInferenceRaw(::grpc::ClientContext* context, const ::agent::FileInferenceRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::agent::FileInferenceResponse>* PrepareAsyncInferenceRaw(::grpc::ClientContext* context, const ::agent::FileInferenceRequest& request, ::grpc::CompletionQueue* cq) = 0;
+  };
+  class Stub final : public StubInterface {
+   public:
+    Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
+    ::grpc::Status Inference(::grpc::ClientContext* context, const ::agent::FileInferenceRequest& request, ::agent::FileInferenceResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::agent::FileInferenceResponse>> AsyncInference(::grpc::ClientContext* context, const ::agent::FileInferenceRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::agent::FileInferenceResponse>>(AsyncInferenceRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::agent::FileInferenceResponse>> PrepareAsyncInference(::grpc::ClientContext* context, const ::agent::FileInferenceRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::agent::FileInferenceResponse>>(PrepareAsyncInferenceRaw(context, request, cq));
+    }
+    class async final :
+      public StubInterface::async_interface {
+     public:
+      void Inference(::grpc::ClientContext* context, const ::agent::FileInferenceRequest* request, ::agent::FileInferenceResponse* response, std::function<void(::grpc::Status)>) override;
+      void Inference(::grpc::ClientContext* context, const ::agent::FileInferenceRequest* request, ::agent::FileInferenceResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+     private:
+      friend class Stub;
+      explicit async(Stub* stub): stub_(stub) { }
+      Stub* stub() { return stub_; }
+      Stub* stub_;
+    };
+    class async* async() override { return &async_stub_; }
+
+   private:
+    std::shared_ptr< ::grpc::ChannelInterface> channel_;
+    class async async_stub_{this};
+    ::grpc::ClientAsyncResponseReader< ::agent::FileInferenceResponse>* AsyncInferenceRaw(::grpc::ClientContext* context, const ::agent::FileInferenceRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::agent::FileInferenceResponse>* PrepareAsyncInferenceRaw(::grpc::ClientContext* context, const ::agent::FileInferenceRequest& request, ::grpc::CompletionQueue* cq) override;
+    const ::grpc::internal::RpcMethod rpcmethod_Inference_;
+  };
+  static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
+
+  class Service : public ::grpc::Service {
+   public:
+    Service();
+    virtual ~Service();
+    virtual ::grpc::Status Inference(::grpc::ServerContext* context, const ::agent::FileInferenceRequest* request, ::agent::FileInferenceResponse* response);
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_Inference : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_Inference() {
+      ::grpc::Service::MarkMethodAsync(0);
+    }
+    ~WithAsyncMethod_Inference() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status Inference(::grpc::ServerContext* /*context*/, const ::agent::FileInferenceRequest* /*request*/, ::agent::FileInferenceResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestInference(::grpc::ServerContext* context, ::agent::FileInferenceRequest* request, ::grpc::ServerAsyncResponseWriter< ::agent::FileInferenceResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(0, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  typedef WithAsyncMethod_Inference<Service > AsyncService;
+  template <class BaseClass>
+  class WithCallbackMethod_Inference : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_Inference() {
+      ::grpc::Service::MarkMethodCallback(0,
+          new ::grpc::internal::CallbackUnaryHandler< ::agent::FileInferenceRequest, ::agent::FileInferenceResponse>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::agent::FileInferenceRequest* request, ::agent::FileInferenceResponse* response) { return this->Inference(context, request, response); }));}
+    void SetMessageAllocatorFor_Inference(
+        ::grpc::MessageAllocator< ::agent::FileInferenceRequest, ::agent::FileInferenceResponse>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(0);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::agent::FileInferenceRequest, ::agent::FileInferenceResponse>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_Inference() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status Inference(::grpc::ServerContext* /*context*/, const ::agent::FileInferenceRequest* /*request*/, ::agent::FileInferenceResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* Inference(
+      ::grpc::CallbackServerContext* /*context*/, const ::agent::FileInferenceRequest* /*request*/, ::agent::FileInferenceResponse* /*response*/)  { return nullptr; }
+  };
+  typedef WithCallbackMethod_Inference<Service > CallbackService;
+  typedef CallbackService ExperimentalCallbackService;
+  template <class BaseClass>
+  class WithGenericMethod_Inference : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_Inference() {
+      ::grpc::Service::MarkMethodGeneric(0);
+    }
+    ~WithGenericMethod_Inference() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status Inference(::grpc::ServerContext* /*context*/, const ::agent::FileInferenceRequest* /*request*/, ::agent::FileInferenceResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_Inference : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_Inference() {
+      ::grpc::Service::MarkMethodRaw(0);
+    }
+    ~WithRawMethod_Inference() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status Inference(::grpc::ServerContext* /*context*/, const ::agent::FileInferenceRequest* /*request*/, ::agent::FileInferenceResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestInference(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(0, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_Inference : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_Inference() {
+      ::grpc::Service::MarkMethodRawCallback(0,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->Inference(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_Inference() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status Inference(::grpc::ServerContext* /*context*/, const ::agent::FileInferenceRequest* /*request*/, ::agent::FileInferenceResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* Inference(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_Inference : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_Inference() {
+      ::grpc::Service::MarkMethodStreamed(0,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::agent::FileInferenceRequest, ::agent::FileInferenceResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::agent::FileInferenceRequest, ::agent::FileInferenceResponse>* streamer) {
+                       return this->StreamedInference(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_Inference() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status Inference(::grpc::ServerContext* /*context*/, const ::agent::FileInferenceRequest* /*request*/, ::agent::FileInferenceResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedInference(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::agent::FileInferenceRequest,::agent::FileInferenceResponse>* server_unary_streamer) = 0;
+  };
+  typedef WithStreamedUnaryMethod_Inference<Service > StreamedUnaryService;
+  typedef Service SplitStreamedService;
+  typedef WithStreamedUnaryMethod_Inference<Service > StreamedService;
+};
+
 }  // namespace agent
 
 

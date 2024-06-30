@@ -51,6 +51,14 @@ impl MCAOperations for ModelConnection{
                     }));
                     return Ok("success".to_string());
                 }
+                MCAModelEnum::Model3 => {
+                    let connection = Connection::session().await?;
+                    let proxy = Model2Proxy::new(&connection).await?;
+                    self.connection_map.insert(model_enum, Box::new(Model2Struct {
+                            proxy,
+                    }));
+                    return Ok("success".to_string());
+                }
             }
         }
     }

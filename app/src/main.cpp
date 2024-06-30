@@ -145,6 +145,31 @@ int main() {
             
             break;
         }
+    case '4': {
+            // request
+            ApiEx<AgentClient<FileInference>> api("localhost", 8082); 
+
+            std::cout << ">>> Option 'request path' selected." << std::endl;
+
+            auto filePath = getStringInput();
+            if (filePath.empty())  
+                filePath = "testtesttest";
+            std::cout << filePath << std::endl;
+            auto response = api.request(
+                "/home/hyunsub/workspace/hyunsub/AI-LINUX-RUST/largefile.txt",
+                false
+            );
+
+            if (response == 0) {
+                std::cout << "Response: " << response << std::endl;            
+            } else 
+            {
+                std::cout << "gRPC not working" << std::endl;
+            }
+            
+            break;
+        }
+
         default:
             std::cout << ">>> Invalid option. Please choose a valid option.\n";
             break;

@@ -31,3 +31,22 @@ message MnistInferenceResponse {
     string file_path = 1;
 }
 
+service FileInference {
+    rpc Inference (FileInferenceRequest) returns (FileInferenceResponse);
+}
+
+message FileInferenceRequest {
+    string file_path = 1;
+    string ip = 2;
+    float port = 3;
+    float file_size = 4;
+    bool is_remote = 5;
+}
+
+message FileInferenceResponse {
+    string file_path = 1;
+    string ip = 2;
+    float port = 3;
+    float file_size = 4;
+    bool is_remote = 5;
+}

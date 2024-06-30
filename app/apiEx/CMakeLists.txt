@@ -4,6 +4,7 @@ message("${CMAKE_CURRENT_BINARY_DIR}")
 
 add_library(apiEx SHARED 
   appEx.h
+  FileServer.h
 )
 
 target_link_libraries(apiEx PRIVATE
