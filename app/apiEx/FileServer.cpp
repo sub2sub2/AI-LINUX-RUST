@@ -77,10 +77,6 @@ size_t FileServer::getFileSize(const std::string& filename) const {
     return file.tellg();
 }
 
-void FileServer::start(const std::string& filename) {
-    serverTask(filename);
-}
-
 void FileServer::startInThread(const std::string& filename) {
     serverThread = std::thread(&FileServer::serverTask, this, filename);
 }
@@ -91,6 +87,25 @@ void FileServer::serverTask(const std::string& filename) {
     int clientSocket;
     struct sockaddr_in clientAddr;
     socklen_t addrLen = sizeof(clientAddr);
+
+    struct timeval timeout;
+    timeout.tv_sec = 3; // 10 seconds timeout
+    timeout.tv_usec = 0;
+
+    fd_set readfds;
+    FD_ZERO(&readfds);
+    FD_SET(serverSocket, &readfds);
+
+    int activity = select(serverSocket + 1, &readfds, NULL, NULL, &timeout);
+
+    if (activity < 0) {
+        std::cerr << "Select error" << std::endl;
+        return;
+    } else if (activity == 0) {
+        std::cerr << "Timeout occurred! No client connected within 10 seconds." << std::endl;
+        return;
+    }
+
 
     clientSocket = accept(serverSocket, (struct sockaddr*)&clientAddr, &addrLen);
     if (clientSocket < 0) {
@@ -103,10 +118,7 @@ void FileServer::serverTask(const std::string& filename) {
     close(clientSocket);
 
     // 파일 전송이 완료되었음을 알림
-    {
-        fileSent = true;
-    }
-    cv.notify_one();
+    fileSent = true;
 }
 
 void FileServer::sendFile(int clientSocket, const std::string& filename) {

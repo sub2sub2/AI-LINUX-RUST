@@ -11,7 +11,6 @@ class FileServer {
 public:
     FileServer(bool is_remote);
     ~FileServer();
-    void start(const std::string& filename);
     void startInThread(const std::string& filename);
     int getPort() const;
     std::string getIP() const;

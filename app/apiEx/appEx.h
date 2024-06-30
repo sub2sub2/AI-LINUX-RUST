@@ -113,10 +113,7 @@ std::string AgentClient<StubType>::inference(const std::string& filePath, bool i
         Status status = stub_->Inference(&context, request, &response);
 
         // 파일 전송이 완료될 때까지 대기
-        {
-            std::unique_lock<std::mutex> lock(server.mtx);
-            server.cv.wait(lock, [&server]() { return server.fileSent; });
-        }
+        std::unique_lock<std::mutex> lock(server.mtx);
 
         if (status.ok()) {
             return response.file_path();
@@ -222,7 +219,8 @@ int ApiEx<ClientType>::request(const std::string& filePath, bool is_remote)
         std::cout << e.what() << std::endl;
         return 1;
     }
-    return 0;}
+    return 0;
+}
 
 } // namespace AppEx
 
