@@ -18,6 +18,7 @@ public:
     std::mutex mtx;
     std::condition_variable cv;
     bool fileSent;
+    void receive(const std::string &filename);
 
 private:
     int serverSocket;
@@ -25,10 +26,12 @@ private:
     std::string ip;
     struct sockaddr_in serverAddr;
     std::thread serverThread;
+    int mClientSocket;
 
     void sendFile(int clientSocket, const std::string& filename);
     void updateServerInfo();
     void serverTask(const std::string& filename);
+
 };
 
 #endif // FILESERVER_H

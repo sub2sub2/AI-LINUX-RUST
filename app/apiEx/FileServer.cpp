@@ -82,9 +82,8 @@ void FileServer::startInThread(const std::string& filename) {
 }
 
 void FileServer::serverTask(const std::string& filename) {
-    std::lock_guard<std::mutex> lock(mtx);
+    std::unique_lock<std::mutex> lock(mtx);
 
-    int clientSocket;
     struct sockaddr_in clientAddr;
     socklen_t addrLen = sizeof(clientAddr);
 
@@ -107,18 +106,18 @@ void FileServer::serverTask(const std::string& filename) {
     }
 
 
-    clientSocket = accept(serverSocket, (struct sockaddr*)&clientAddr, &addrLen);
-    if (clientSocket < 0) {
+    mClientSocket = accept(serverSocket, (struct sockaddr*)&clientAddr, &addrLen);
+    if (mClientSocket < 0) {
         std::cerr << "Accept failed" << std::endl;
         return;
     }
 
     std::cout << "Client connected" << std::endl;
-    sendFile(clientSocket, filename);
-    close(clientSocket);
+    sendFile(mClientSocket, filename);
 
     // 파일 전송이 완료되었음을 알림
-    fileSent = true;
+    lock.unlock();
+
 }
 
 void FileServer::sendFile(int clientSocket, const std::string& filename) {
@@ -128,14 +127,53 @@ void FileServer::sendFile(int clientSocket, const std::string& filename) {
         return;
     }
 
-    char buffer[BUFFER_SIZE];
-    while (file.read(buffer, BUFFER_SIZE)) {
-        send(clientSocket, buffer, BUFFER_SIZE, 0);
-    }
+    size_t fileSize = getFileSize(filename);
+    size_t totalSent = 0;
 
-    if (file.gcount() > 0) {
-        send(clientSocket, buffer, file.gcount(), 0);
+    char buffer[BUFFER_SIZE];
+
+    while (totalSent < fileSize) {
+        file.read(buffer, BUFFER_SIZE);
+        std::streamsize bytesRead = file.gcount();
+
+        if (bytesRead == 0) {
+            break; // 더 이상 읽을 데이터가 없음
+        }
+
+        size_t sent = 0;
+        while (sent < bytesRead) {
+            ssize_t bytesSent = send(clientSocket, buffer + sent, bytesRead - sent, 0);
+            if (bytesSent < 0) {
+                std::cerr << "데이터 전송 실패" << std::endl;
+                close(clientSocket);
+                return;
+            }
+            sent += bytesSent;
+        }
+        totalSent += bytesRead;
     }
 
     file.close();
+}
+
+void FileServer::receive(const std::string &filename)
+{
+    std::unique_lock<std::mutex> lock(mtx);
+    std::cout << "Test" << std::endl;
+
+    std::ofstream receivedFile(filename, std::ios::binary);
+    if (!receivedFile.is_open()) {
+        std::cerr << "Failed to open file for writing." << std::endl;
+        return;
+    }
+
+    int bytesRead;
+    char buffer[BUFFER_SIZE];
+    while ((bytesRead = recv(mClientSocket, buffer, BUFFER_SIZE, 0)) > 0) {
+        receivedFile.write(buffer, bytesRead);
+    }
+    std::cout << "receving done" << std::endl;
+
+    receivedFile.close();
+    close(mClientSocket);
 }
