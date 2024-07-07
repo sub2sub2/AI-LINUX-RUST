@@ -9,6 +9,8 @@
 #include <cstdlib>
 #include <syslog.h>
 #include <opencv2/opencv.hpp>
+#include <random>
+#include <ctime>
 
 #include "Timer.h"
 #include "Model.h"
@@ -23,6 +25,28 @@ const std::string modelPath = "/home/hyunsub/workspace/hyunsub/AI-LINUX-RUST/mod
 
 std::unique_ptr<ModelInstance> mModel = std::make_unique<ModelInstance>(modelPath);
 Timer timer;
+
+std::string generateRandomFilename(const std::string& prefix, const std::string& extension)
+{
+    static const char alphanum[] =
+        "0123456789"
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        "abcdefghijklmnopqrstuvwxyz";
+    int len = 5; // 파일 이름 길이
+
+    std::string filename = prefix;
+
+    // 랜덤 시드 설정
+    std::mt19937 gen(static_cast<unsigned long>(time(nullptr)));
+    std::uniform_int_distribution<> dis(0, sizeof(alphanum) - 2);
+
+    for (int i = 0; i < len; ++i) {
+        filename += alphanum[dis(gen)];
+    }
+
+    filename += extension;
+    return filename;
+}
 
 // D-Bus 메시지 수신을 처리하기 위한 콜백 함수
 DBusHandlerResult handleDBusMessage(DBusConnection* connection, DBusMessage* message, void* userdata) {
@@ -49,7 +73,9 @@ DBusHandlerResult handleDBusMessage(DBusConnection* connection, DBusMessage* mes
         std::cout << "File path: " << filePath << std::endl;
 
         std::vector<std::string> image_paths = {
-            "../test_images/1004.png", "../test_images/10.png", "../test_images/1010.png"
+            "/home/hyunsub/workspace/hyunsub/AI-LINUX-RUST/model/src2/test_images/1004.png",
+            "/home/hyunsub/workspace/hyunsub/AI-LINUX-RUST/model/src2/test_images/10.png",
+            "/home/hyunsub/workspace/hyunsub/AI-LINUX-RUST/model/src2/test_images/1010.png"
         };
         int batch_size = image_paths.size();
         int64_t input_size = batch_size * 1 * 28 * 28;
@@ -75,13 +101,24 @@ DBusHandlerResult handleDBusMessage(DBusConnection* connection, DBusMessage* mes
             std::memcpy(input_tensor_values.data() + i * 28 * 28, img.data, 28 * 28 * sizeof(float));
         }
 
-        
+        auto filename = generateRandomFilename("/tmp/.", "").c_str();
+        auto response = mModel->infernce(input_tensor_values);
 
-        auto response = mModel->infernce(input_tensor_values).c_str();
+        std::ofstream outfile(filename);
+        if (outfile.is_open()) {
+            outfile << response;
+            outfile.close();
+            std::cout << "Content saved to file: " << filename << std::endl;
+        } else {
+            std::cerr << "Unable to open file: " << filename << std::endl;
+        }
+
         DBusMessage* reply = dbus_message_new_method_return(message);
-        dbus_message_append_args(reply, DBUS_TYPE_STRING, &response, DBUS_TYPE_INVALID);
+        dbus_message_append_args(reply, DBUS_TYPE_STRING, &filename, DBUS_TYPE_INVALID);
         dbus_connection_send(connection, reply, NULL);
-        dbus_message_unref(reply);       
+        dbus_message_unref(reply); 
+        std::cout << "End" << std::endl;
+      
     }
     
     return DBUS_HANDLER_RESULT_HANDLED;

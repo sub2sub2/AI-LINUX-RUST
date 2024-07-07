@@ -1,5 +1,6 @@
 #include "Model.h"
 #include <iostream>
+#include <sstream>
 #include <algorithm>
 #include <vector>
 using namespace AIModel::Model;
@@ -90,13 +91,17 @@ std::string ModelInstance::infernce(std::vector<float> &inputData)
     int batch_size_out = output_shape[0];
     int num_classes = output_shape[1];
 
+    std::ostringstream oss;
+
     for (int64_t i = 0; i < batch_size_out; ++i) {
         auto max_it = std::max_element(output_data + i * num_classes, output_data + (i + 1) * num_classes);
         int max_index = std::distance(output_data + i * num_classes, max_it);
         float max_value = *max_it;
         std::cout << "Sample " << i << ": Class = " << max_index << ", Probability = " << max_value << std::endl;
+        oss << "Sample " << i << ": Class = " << max_index << ", Probability = " << max_value << "\n";
     }
+    std::string output = oss.str();
 
-    std::cout << std::endl;
-    return "";
+    std::cout << output << std::endl;
+    return output;
 }

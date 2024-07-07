@@ -114,6 +114,11 @@ std::string AgentClient<StubType>::inference(const std::string& filePath, bool i
 
         // 파일 전송이 완료될 때까지 대기
         std::unique_lock<std::mutex> lock(server.mtx);
+        lock.unlock();
+        server.receive("/tmp/.testtest");
+
+        std::unique_lock<std::mutex> lock2(server.mtx);
+        lock2.unlock();
 
         if (status.ok()) {
             return response.file_path();

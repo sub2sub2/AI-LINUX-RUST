@@ -156,7 +156,7 @@ int main() {
                 filePath = "testtesttest";
             std::cout << filePath << std::endl;
             auto response = api.request(
-                "/home/hyunsub/workspace/hyunsub/AI-LINUX-RUST/largefile.txt",
+                "/home/hyunsub/workspace/hyunsub/sample.txt",
                 false
             );
 
