@@ -4,7 +4,6 @@ use zbus::fdo::Error as FdoError;
 
 use crate::{
     agent::{
-        model_connection::{MCAOperations, MODEL_CONNECTION},
         model_enum::MCAModelEnum,
         model_structure::{IrisData, Model1Proxy, Model1Struct, Model1Trait}
     },

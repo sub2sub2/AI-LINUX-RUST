@@ -4,7 +4,7 @@ use mca_package::{api::{app_base::Role, app_manager::{check_auth, AppManager},
     services::agent::iris_inference_server::IrisInferenceServer,
     services::agent::mnist_inference_server::MnistInferenceServer,
     services::agent::file_inference_server::FileInferenceServer};
-use mca_package::agent::{model_connection::{MCAOperations, MODEL_CONNECTION}, model_enum::MCAModelEnum};
+use mca_package::agent::{model_enum::MCAModelEnum};
 #[tokio::main]
 async fn main() {
 // async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -32,8 +32,6 @@ async fn main() {
 
     let mut set = JoinSet::new(); // 서비스 별로(?) 스레드 풀이다.
     for service in service_manager.get_services() {
-        println!("test");
-
         match service {
             Some(svc) => {
                 // println!("{:?}", svc);
