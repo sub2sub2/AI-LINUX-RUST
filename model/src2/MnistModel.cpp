@@ -11,9 +11,23 @@
 #include <opencv2/opencv.hpp>
 #include <random>
 #include <ctime>
+#include <json/json.h>
+
 
 #include "Timer.h"
 #include "Model.h"
+
+Json::Value readJsonFromFile(const std::string& filename) {
+    std::ifstream file(filename);
+    Json::Value jsonData;
+    if (file.is_open()) {
+        file >> jsonData;
+        file.close();
+    } else {
+        std::cerr << "Unable to open file " << filename << std::endl;
+    }
+    return jsonData;
+}
 
 using namespace AIModel::Model;
 using namespace AIModel::Utils;
@@ -72,12 +86,8 @@ DBusHandlerResult handleDBusMessage(DBusConnection* connection, DBusMessage* mes
         auto filePath = std::string(str);
         std::cout << "File path: " << filePath << std::endl;
 
-        std::vector<std::string> image_paths = {
-            "/home/hyunsub/workspace/hyunsub/AI-LINUX-RUST/model/src2/test_images/1004.png",
-            "/home/hyunsub/workspace/hyunsub/AI-LINUX-RUST/model/src2/test_images/10.png",
-            "/home/hyunsub/workspace/hyunsub/AI-LINUX-RUST/model/src2/test_images/1010.png"
-        };
-        int batch_size = image_paths.size();
+        Json::Value jsonData = readJsonFromFile(filePath);
+        size_t batch_size = jsonData.size();
         int64_t input_size = batch_size * 1 * 28 * 28;
 
         std::vector<int64_t> output_shape = {batch_size, 10};
@@ -85,20 +95,28 @@ DBusHandlerResult handleDBusMessage(DBusConnection* connection, DBusMessage* mes
         mModel->set_input_size(input_shape);
         mModel->set_output_size(output_shape);
 
-        std::vector<float> input_tensor_values(input_size);
-        for (size_t i = 0; i < image_paths.size(); ++i) {
-            cv::Mat img = cv::imread(image_paths[i], cv::IMREAD_GRAYSCALE);
+
+        std::vector<float> input_tensor_values(batch_size * 28 * 28);
+
+        size_t i = 0;
+        for (const auto& key : jsonData.getMemberNames()) {
+            const Json::Value& imageValue = jsonData[key]["data"];
+            std::vector<uint8_t> imageData(imageValue.size());
+            for (Json::ArrayIndex j = 0; j < imageValue.size(); ++j) {
+                imageData[j] = imageValue[j].asUInt();
+            }
+
+            cv::Mat img(cv::Size(28, 28), CV_8UC1, imageData.data());
             if (img.empty()) {
-                std::cerr << "Failed to load image: " << image_paths[i] << std::endl;
+                std::cerr << "Failed to load image from JSON data: " << key << std::endl;
                 return DBUS_HANDLER_RESULT_HANDLED;
             }
-        
-            cv::resize(img, img, cv::Size(28, 28));
+
             img.convertTo(img, CV_32F, 1.0 / 255.0);
             img = (img - 0.5f) / 0.5f;
 
-            // 이미지를 입력 텐서 데이터에 복사
             std::memcpy(input_tensor_values.data() + i * 28 * 28, img.data, 28 * 28 * sizeof(float));
+            ++i;
         }
 
         auto filename = generateRandomFilename("/tmp/.", "").c_str();

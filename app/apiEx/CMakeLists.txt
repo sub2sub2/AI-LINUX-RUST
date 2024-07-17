@@ -12,10 +12,6 @@ target_link_libraries(apiEx PRIVATE
   gRPC::grpc++
   )
 
-# target_include_directories(apiEx PRIVATE
-#   "/home/sseo/Proj/AI-LINUX-RUST/grpc/include/grpcpp"
-#  )
-
 target_include_directories(apiEx PRIVATE "${CMAKE_SOURCE_DIR}/grpc")
 
 target_include_directories(apiEx PRIVATE

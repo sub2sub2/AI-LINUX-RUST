@@ -4,9 +4,11 @@
 // #include <agent.grpc.pb.h>
 #include <vector>
 #include <appEx.h>
+#include "JsonUtil.h"
 
 using namespace std;
 using namespace AppEx;
+using namespace JsonUtil;
 
 
 std::string getStringInput()
@@ -154,9 +156,17 @@ int main() {
             auto filePath = getStringInput();
             if (filePath.empty())  
                 filePath = "testtesttest";
+
+            std::vector<std::string> image_paths = {
+                "/home/hyunsub/workspace/hyunsub/AI-LINUX-RUST/model/src2/test_images/1004.png",
+                "/home/hyunsub/workspace/hyunsub/AI-LINUX-RUST/model/src2/test_images/10.png",
+                "/home/hyunsub/workspace/hyunsub/AI-LINUX-RUST/model/src2/test_images/1010.png"
+            };
+            Json::Value jsonData = JsonUtil::createJsonFromImages(image_paths);
+            JsonUtil::saveJsonToFile("images.json", jsonData);
             std::cout << filePath << std::endl;
             auto response = api.request(
-                "/home/hyunsub/workspace/hyunsub/sample.txt",
+                "images.json",
                 false
             );
 

@@ -9,6 +9,9 @@ message(SOURCES="${SOURCES}")
 
 include(apiEx/common.cmake)
 
+find_package(jsoncpp CONFIG REQUIRED)
+
+include_directories("/usr/include/jsoncpp")
 
 add_subdirectory(grpc)
 add_subdirectory(apiEx)
@@ -19,7 +22,7 @@ include_directories(${CMAKE_SOURCE_DIR}/apiEx)
 # add_custom_target(CompileModules DEPENDS grpc apiEx)
 
 # Create the main executable
-add_executable(MyExecutable src/main.cpp apiEx/FileServer.cpp)
+add_executable(MyExecutable src/main.cpp apiEx/FileServer.cpp src/JsonUtil.cpp)
 
 # add_dependencies(MyExecutable CompileModules)
 
@@ -34,4 +37,5 @@ target_link_libraries(MyExecutable
   ${_PROTOBUF_LIBPROTOBUF}
   ${_REFLECTION}
   agent_grpc_shared
+  JsonCpp::JsonCpp
 )
