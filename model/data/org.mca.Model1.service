@@ -1,4 +1,0 @@
-[D-BUS Service]
-Name=org.mca.Model1
-Exec=/usr/local/bin/IrisModel
-
