@@ -5,15 +5,18 @@ const clearTestBtn = document.getElementById('clear-test-btn');
 const catalogTbody = document.getElementById('catalog-tbody');
 const catalogRefreshBtn = document.getElementById('catalog-refresh-btn');
 const dbSelect = document.getElementById('db-select');
-const dbSchemaEl = document.getElementById('db-schema');
+const tableSelect = document.getElementById('table-select');
+const dbSearchInput = document.getElementById('db-search-input');
 const queryForm = document.getElementById('query-form');
 const queryInput = document.getElementById('query-input');
 const queryError = document.getElementById('query-error');
 const queryResultHead = document.getElementById('query-result-head');
 const queryResultBody = document.getElementById('query-result-body');
-const queryTruncatedHint = document.getElementById('query-truncated-hint');
+const queryRowCountHint = document.getElementById('query-row-count-hint');
 
+const BROWSE_LIMIT = 500;
 let dbSchemas = {}; // dbId -> tables
+let currentResult = { columns: [], rows: [], truncated: false }; // 검색/필터의 원본 데이터
 
 const rows = new Map(); // `${category}:${key}` -> entry
 
@@ -149,24 +152,30 @@ async function loadDbSchema(dbId) {
   const res = await fetch(`/api/db/${encodeURIComponent(dbId)}/schema`);
   const body = await res.json();
   if (body.status !== 'ok') {
-    dbSchemaEl.textContent = '';
+    tableSelect.innerHTML = '';
     return;
   }
 
   const tables = body.data.tables || [];
   dbSchemas[dbId] = tables;
-  dbSchemaEl.textContent = tables
-    .map((t) => `${t.name}(${t.columns.map((c) => c.name).join(', ')})`)
-    .join('  |  ');
+  tableSelect.innerHTML = tables
+    .map((t) => `<option value="${escapeHtml(t.name)}">${escapeHtml(t.name)}</option>`)
+    .join('');
 
-  if (tables.length > 0 && !queryInput.value.trim()) {
-    queryInput.value = `SELECT * FROM ${tables[0].name} LIMIT 50`;
+  if (tables.length > 0) {
+    await browseTable(dbId, tables[0].name);
   }
+}
+
+// SQL을 몰라도 되도록: 테이블을 고르면 전체 데이터를 가져오고, 이후 검색은 클라이언트에서
+// 필터링한다 (별도 쿼리 문법 입력 불필요).
+async function browseTable(dbId, tableName) {
+  dbSearchInput.value = '';
+  await runQuery(dbId, `SELECT * FROM ${tableName} LIMIT ${BROWSE_LIMIT}`);
 }
 
 async function runQuery(dbId, sql) {
   queryError.hidden = true;
-  queryTruncatedHint.hidden = true;
 
   const res = await fetch(`/api/db/${encodeURIComponent(dbId)}/query`, {
     method: 'POST',
@@ -176,22 +185,45 @@ async function runQuery(dbId, sql) {
   const body = await res.json();
 
   if (body.status !== 'ok') {
-    queryResultHead.innerHTML = '';
-    queryResultBody.innerHTML = '';
-    queryError.textContent = `[${body.code || 'error'}] ${body.message || '쿼리 실행 실패'}`;
+    currentResult = { columns: [], rows: [], truncated: false };
+    renderResultRows([]);
+    queryError.textContent = `[${body.code || 'error'}] ${body.message || '조회 실패'}`;
     queryError.hidden = false;
     return;
   }
 
-  const { columns, rows: resultRows, truncated } = body.data;
-  queryResultHead.innerHTML = columns.map((c) => `<th>${escapeHtml(c)}</th>`).join('');
-  queryResultBody.innerHTML = resultRows
+  currentResult = {
+    columns: body.data.columns,
+    rows: body.data.rows,
+    truncated: body.data.truncated,
+  };
+  applySearchFilter();
+}
+
+function applySearchFilter() {
+  const term = dbSearchInput.value.trim().toLowerCase();
+  const filtered = term
+    ? currentResult.rows.filter((row) =>
+        row.some((v) => v !== null && String(v).toLowerCase().includes(term))
+      )
+    : currentResult.rows;
+
+  queryResultHead.innerHTML = currentResult.columns.map((c) => `<th>${escapeHtml(c)}</th>`).join('');
+  renderResultRows(filtered);
+
+  const parts = [`${filtered.length}행`];
+  if (term) parts.push(`(전체 ${currentResult.rows.length}행 중 검색됨)`);
+  if (currentResult.truncated) parts.push('— DB에 더 많은 행이 있어 일부만 불러왔습니다');
+  queryRowCountHint.textContent = parts.join(' ');
+}
+
+function renderResultRows(rows) {
+  queryResultBody.innerHTML = rows
     .map(
       (row) =>
         `<tr>${row.map((v) => `<td>${escapeHtml(v === null ? 'NULL' : String(v))}</td>`).join('')}</tr>`
     )
     .join('');
-  queryTruncatedHint.hidden = !truncated;
 }
 
 function connectWs() {
@@ -239,6 +271,8 @@ injectForm.addEventListener('submit', async (ev) => {
 clearTestBtn.addEventListener('click', clearTestContext);
 catalogRefreshBtn.addEventListener('click', loadCatalog);
 dbSelect.addEventListener('change', () => loadDbSchema(dbSelect.value));
+tableSelect.addEventListener('change', () => browseTable(dbSelect.value, tableSelect.value));
+dbSearchInput.addEventListener('input', applySearchFilter);
 queryForm.addEventListener('submit', (ev) => {
   ev.preventDefault();
   const sql = queryInput.value.trim();

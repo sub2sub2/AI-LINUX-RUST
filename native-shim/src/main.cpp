@@ -8,7 +8,9 @@
 
 namespace {
 constexpr const char* kSocketPath = "/tmp/contextengine-tester-shim.sock";
-constexpr const char* kDbConfigPath = "db_config.json";
+// packaging/contextengine-tester-shim.spec가 db_config.json을 여기 설치한다. 패키지로
+// 실행되는 서비스는 CWD가 보장되지 않으므로 상대경로 대신 절대경로를 쓴다.
+constexpr const char* kDbConfigPath = "/etc/contextengine-tester-shim/db_config.json";
 }
 
 int main() {

@@ -158,7 +158,9 @@ button.small {
   flex-wrap: wrap;
 }
 
-#db-select {
+#db-select,
+#table-select,
+#db-search-input {
   padding: 0.35rem 0.5rem;
   border-radius: 6px;
   border: 1px solid var(--border);
@@ -166,9 +168,30 @@ button.small {
   color: inherit;
 }
 
+#db-search-input {
+  flex: 1;
+  min-width: 160px;
+}
+
 .schema-hint {
   font-size: 0.75rem;
   opacity: 0.75;
+}
+
+.advanced {
+  margin-top: 0.75rem;
+  border-top: 1px solid var(--border);
+  padding-top: 0.5rem;
+}
+
+.advanced summary {
+  cursor: pointer;
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
+.advanced #query-form {
+  margin-top: 0.5rem;
 }
 
 #query-form {

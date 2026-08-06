@@ -4,9 +4,10 @@ project(contextengine_tester_shim CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# 참고용 골격 프로젝트 — 실제 Tizen 빌드는 Tizen Studio/tizen-cli로 진행한다.
-# 아래는 로컬에서 구조를 확인하기 위한 최소 CMake 설정이며, TIDL 생성 라이브러리
-# 연결 전까지는 실제 빌드가 되지 않는다 (README.md 참고).
+include(GNUInstallDirs)
+
+# GBS(packaging/contextengine-tester-shim.spec)가 %cmake로 이 파일을 그대로 구동한다.
+# TIDL 생성 라이브러리 연결 전까지는 실제 빌드가 되지 않는다 (README.md 참고).
 #
 # 필요 패키지 (디바이스/에뮬레이터 빌드 시):
 #   - capi-appfw-app-control (app_control API)
@@ -43,3 +44,6 @@ target_link_libraries(contextengine_tester_shim PRIVATE
     ${SQLITE3_LIBRARIES}
     # TODO: contextengine TIDL 생성 라이브러리 링크 추가
 )
+
+install(TARGETS contextengine_tester_shim DESTINATION ${CMAKE_INSTALL_BINDIR})
+# tizen-manifest.xml / db_config.json은 packaging/*.spec의 %install 단계에서 직접 배치한다.

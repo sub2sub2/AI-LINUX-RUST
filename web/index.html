@@ -64,18 +64,15 @@
     </section>
 
     <section class="panel">
-      <h2>DB 쿼리</h2>
-      <p class="hint warn">읽기 전용(SELECT) 도구입니다. 실제 서비스 DB 파일에 직접 붙으니 무거운 쿼리는 주의하세요.</p>
+      <h2>DB 데이터 보기</h2>
+      <p class="hint warn">읽기 전용입니다. 실제 서비스 DB 파일에 직접 붙으니 큰 테이블은 조회에 시간이 걸릴 수 있어요.</p>
 
       <div class="db-controls">
         <select id="db-select"></select>
-        <div id="db-schema" class="schema-hint"></div>
+        <select id="table-select"></select>
+        <input type="search" id="db-search-input" placeholder="검색 (모든 컬럼 대상)" />
       </div>
 
-      <form id="query-form">
-        <textarea id="query-input" rows="3" placeholder="SELECT * FROM ... LIMIT 50"></textarea>
-        <button type="submit">쿼리 실행</button>
-      </form>
       <div id="query-error" class="error-box" hidden></div>
 
       <div class="table-scroll">
@@ -84,7 +81,15 @@
           <tbody id="query-result-body"></tbody>
         </table>
       </div>
-      <p id="query-truncated-hint" class="hint" hidden>결과가 많아 앞부분만 표시됩니다.</p>
+      <p id="query-row-count-hint" class="hint"></p>
+
+      <details class="advanced">
+        <summary>고급: SQL 직접 입력</summary>
+        <form id="query-form">
+          <textarea id="query-input" rows="3" placeholder="SELECT * FROM ... LIMIT 50"></textarea>
+          <button type="submit">쿼리 실행</button>
+        </form>
+      </details>
     </section>
   </main>
 

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://tizen.org/ns/packages" api-version="6.5"
+          package="org.tizen.contextengine-tester-shim" version="0.1.0">
+  <!-- TODO: package id/버전은 회사 네이밍 규칙에 맞춰 교체 -->
+  <service-application appid="org.tizen.contextengine-tester-shim"
+                        exec="contextengine_tester_shim"
+                        type="capp"
+                        on-boot="false"
+                        auto-restart="false"
+                        taskmanage="false">
+    <label>contextengine-tester-shim</label>
+  </service-application>
+  <privileges>
+    <!-- TODO: 아래는 자리표시자 — 실제 필요 privilege로 교체/보강 -->
+    <!-- app_control으로 contextengine을 호출하기 위한 privilege -->
+    <privilege>http://tizen.org/privilege/appmanager.launch</privilege>
+    <!-- docs/interface.md 2.3절: set-context/delete-context 등 테스트 전용 커맨드 호출용
+         내부 전용 privilege (신규 정의 필요) -->
+    <privilege>http://tizen.org/privilege/contextengine.testcontrol</privilege>
+    <!-- DB 파일 직접 읽기(2.5절)에 필요한 storage 관련 privilege 확인 필요 -->
+  </privileges>
+</manifest>

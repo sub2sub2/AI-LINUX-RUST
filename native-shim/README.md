@@ -19,8 +19,29 @@ TIDL 생성 코드(내부 코드, 이 저장소 범위 밖)에 연결해야 하�
 - [ ] `src/tidl_subscribe_client.cpp`: 실제 TIDL 생성 클라이언트로 교체
 - [ ] `src/app_control_client.cpp`: `kContextEngineAppId`, `kOperation` 상수를 실제 값으로 교체
 - [ ] `db_config.json`: 실제 SQLite DB 파일 경로로 교체
-- [ ] `CMakeLists.txt`: TIDL 생성 라이브러리 링크 추가
+- [ ] `CMakeLists.txt` / `packaging/*.spec`: TIDL 생성 라이브러리 BuildRequires/링크 추가
+- [ ] `tizen-manifest.xml`: package id, privilege 목록을 실제 값으로 확정
+- [ ] `.gbs.conf`: 사내 Tizen OBS/저장소 URL로 교체
 - [ ] `../docs/interface.md` 4절의 미확인 항목 확정 (특히 delete 이벤트 표현 방식)
+
+## GBS로 빌드하기
+
+이 프로젝트는 GBS(플랫폼/이미지 빌드) 방식을 전제로 구성했다:
+
+- `CMakeLists.txt` — 일반 CMake. GBS가 spec의 `%cmake` 매크로로 그대로 구동한다
+- `packaging/contextengine-tester-shim.spec` — RPM spec. `%install`에서 바이너리(via
+  `%make_install`), `tizen-manifest.xml`, `db_config.json`을 배치한다
+- `packaging/contextengine-tester-shim.manifest` — SMACK 매니페스트 (최소 placeholder)
+- `tizen-manifest.xml` — 서비스 앱 매니페스트 (package id/privilege는 TODO)
+
+```sh
+gbs build -A <arch> --include-all   # 예: armv7l, aarch64
+```
+
+TIDL 생성 라이브러리를 아직 링크하지 않았으므로(README 위 체크리스트), 현재 상태로는
+`gbs build`도 링크 단계에서 실패한다. 그 전까지는 `cmake . && make`로 나머지(app_control,
+소켓 서버, DB 조회)까지는 컴파일 여부를 로컬에서 미리 확인할 수 있다 — 단, glib/app_control/
+sqlite3 개발 패키지가 있는 환경(예: sbi/sysroot)에서만.
 
 ## 프로토콜
 
