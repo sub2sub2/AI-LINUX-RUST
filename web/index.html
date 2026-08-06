@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <title>contextengine tester</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>contextengine tester</h1>
+    <span id="ws-status" class="status status-connecting">connecting…</span>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>데이터 주입</h2>
+      <form id="inject-form">
+        <input type="text" name="category" placeholder="category (예: Setting)" required />
+        <input type="text" name="key" placeholder="key (예: language)" required />
+        <input type="text" name="value" placeholder='value (JSON, 예: "ko_KR" 또는 {"a":1})' required />
+        <button type="submit">주입</button>
+      </form>
+      <button id="clear-test-btn" class="secondary">test-injected 데이터 일괄 삭제</button>
+    </section>
+
+    <section class="panel">
+      <h2>실시간 context</h2>
+      <table id="context-table">
+        <thead>
+          <tr>
+            <th>category</th>
+            <th>key</th>
+            <th>value</th>
+            <th>source</th>
+            <th>updated</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="context-tbody"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
