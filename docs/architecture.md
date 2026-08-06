@@ -12,25 +12,34 @@ CLI/tc만으로는 확인하기 어려운 것들 — 실시간 데이터 흐름,
 
 ## 전체 구조
 
+native-shim이 contextengine과 두 개의 별도 채널(TIDL push, app_control 요청/응답)로
+통신하고, SQLite 파일은 그 둘을 거치지 않고 직접 읽는다는 것이 핵심이다.
+
+```mermaid
+flowchart LR
+    subgraph DEVICE["Tizen 디바이스"]
+        CE["contextengine<br/>데몬"]
+        NS["native-shim<br/>C++"]
+        SQL["SQLite 파일들<br/>context/catalog 저장"]
+    end
+    BS["bridge-server<br/>Node.js"]
+    BR["웹 브라우저"]
+
+    CE -->|"TIDL 구독 (push)"| NS
+    NS -->|"app_control 호출"| CE
+    NS -.->|"SQLite 직접 오픈 (우회)"| SQL
+    NS -->|"로컬 소켓 (요청/응답 + push, JSON)"| BS
+    BS -->|"REST (조회/주입/삭제/쿼리)"| BR
+    BS -->|"WebSocket (push 중계)"| BR
+
+    style SQL stroke:#a85f14,stroke-width:2px
 ```
-[Tizen 디바이스]
-  contextengine
-      │ TIDL subscribe(push, 카테고리/키 필터)   │ app_control(get/set/delete-context 등)
-      ▼                                          ▼
-                     native-shim (C++, Tizen 서비스 앱)
-                              │ SQLite 파일 직접 read-only 오픈 (db_reader)
-                              │
-                              │ 로컬 유닉스 소켓, 줄바꿈 구분 JSON
-                              ▼
-                     bridge-server (Node.js)
-                      - REST API
-                      - WebSocket (실시간 push 중계)
-                      - web/ 정적 파일 서빙
-                              │
-                        sdb forward (또는 동일 네트워크)
-                              ▼
-                     web 프론트엔드 (브라우저)
-```
+
+- **TIDL 구독**과 **app_control 호출**은 서로 다른 채널이다 (전자는 push, 후자는
+  요청/응답) — `interface.md` 1·2절 참고
+- **SQLite 직접 오픈**(주황 점선)은 이 둘을 완전히 우회한다 — 데몬 인터페이스와 무관 (`interface.md` 2.5절)
+- native-shim ↔ bridge-server는 로컬 소켓 하나로 요청/응답과 push 이벤트를 모두 주고받고,
+  bridge-server ↔ 브라우저는 REST(조작)와 WebSocket(실시간 반영)으로 나뉜다
 
 세 컴포넌트는 각자 독립적으로 교체 가능하도록 분리했다:
 - **native-shim**만 실제 Tizen/데몬에 의존한다 (TIDL, app_control, SQLite 파일 경로)
