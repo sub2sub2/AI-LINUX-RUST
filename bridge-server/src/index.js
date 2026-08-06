@@ -83,6 +83,28 @@ async function main() {
     res.json({ status: 'ok', data: { items } });
   });
 
+  // DB 직접 쿼리 — app_control/TIDL과 무관, native-shim이 SQLite 파일을 직접 read-only로
+  // 다룬다 (docs/interface.md 2.5절). 여기서는 그대로 shim.request()로 위임할 뿐.
+  app.get('/api/db', async (req, res) => {
+    const result = await shim.request('db-list', {});
+    res.status(result.status === 'ok' ? 200 : 500).json(result);
+  });
+
+  app.get('/api/db/:dbId/schema', async (req, res) => {
+    const result = await shim.request('db-schema', { db_id: req.params.dbId });
+    res.status(result.status === 'ok' ? 200 : 404).json(result);
+  });
+
+  app.post('/api/db/:dbId/query', async (req, res) => {
+    const { sql } = req.body || {};
+    if (!sql) {
+      res.status(400).json({ status: 'error', code: 'bad_request', message: 'sql required' });
+      return;
+    }
+    const result = await shim.request('db-query', { db_id: req.params.dbId, sql });
+    res.status(result.status === 'ok' ? 200 : 400).json(result);
+  });
+
   const server = http.createServer(app);
   const wss = new WebSocketServer({ server, path: '/ws' });
 

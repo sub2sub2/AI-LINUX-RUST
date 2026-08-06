@@ -33,7 +33,8 @@ void WriteLine(int fd, const std::string& line) {
     ::write(fd, out.data(), out.size());
 }
 
-CommandResult Dispatch(AppControlClient& client, const std::string& method, const json& params) {
+CommandResult Dispatch(AppControlClient& client, DbReader& dbReader, const std::string& method,
+                       const json& params) {
     if (method == "get-context") {
         return client.GetContext(params.value("category", ""), params.value("key", ""));
     }
@@ -50,6 +51,17 @@ CommandResult Dispatch(AppControlClient& client, const std::string& method, cons
     if (method == "clear-test-context") {
         return client.ClearTestContext();
     }
+    // DB 직접 쿼리 — app_control을 거치지 않고 dbReader가 SQLite 파일을 직접 다룬다
+    // (docs/interface.md 2.5절).
+    if (method == "db-list") {
+        return dbReader.ListDatabases();
+    }
+    if (method == "db-schema") {
+        return dbReader.GetSchema(params.value("db_id", ""));
+    }
+    if (method == "db-query") {
+        return dbReader.Query(params.value("db_id", ""), params.value("sql", ""));
+    }
     CommandResult r;
     r.ok = false;
     r.errorCode = "unknown_method";
@@ -59,8 +71,9 @@ CommandResult Dispatch(AppControlClient& client, const std::string& method, cons
 
 }  // namespace
 
-BridgeSocketServer::BridgeSocketServer(std::string socketPath, AppControlClient& appControl)
-    : socketPath_(std::move(socketPath)), appControl_(appControl) {}
+BridgeSocketServer::BridgeSocketServer(std::string socketPath, AppControlClient& appControl,
+                                        DbReader& dbReader)
+    : socketPath_(std::move(socketPath)), appControl_(appControl), dbReader_(dbReader) {}
 
 BridgeSocketServer::~BridgeSocketServer() { Stop(); }
 
@@ -98,7 +111,7 @@ void BridgeSocketServer::Run() {
             std::string method = req.value("method", "");
             json params = req.value("params", json::object());
 
-            CommandResult result = Dispatch(appControl_, method, params);
+            CommandResult result = Dispatch(appControl_, dbReader_, method, params);
 
             json resp;
             resp["type"] = "response";

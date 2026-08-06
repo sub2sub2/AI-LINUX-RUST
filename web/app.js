@@ -4,6 +4,16 @@ const injectForm = document.getElementById('inject-form');
 const clearTestBtn = document.getElementById('clear-test-btn');
 const catalogTbody = document.getElementById('catalog-tbody');
 const catalogRefreshBtn = document.getElementById('catalog-refresh-btn');
+const dbSelect = document.getElementById('db-select');
+const dbSchemaEl = document.getElementById('db-schema');
+const queryForm = document.getElementById('query-form');
+const queryInput = document.getElementById('query-input');
+const queryError = document.getElementById('query-error');
+const queryResultHead = document.getElementById('query-result-head');
+const queryResultBody = document.getElementById('query-result-body');
+const queryTruncatedHint = document.getElementById('query-truncated-hint');
+
+let dbSchemas = {}; // dbId -> tables
 
 const rows = new Map(); // `${category}:${key}` -> entry
 
@@ -120,6 +130,70 @@ async function clearTestContext() {
   await fetch('/api/context/clear-test', { method: 'POST' });
 }
 
+async function loadDbList() {
+  const res = await fetch('/api/db');
+  const body = await res.json();
+  if (body.status !== 'ok') return;
+
+  const databases = body.data.databases || [];
+  dbSelect.innerHTML = databases
+    .map((db) => `<option value="${escapeHtml(db.id)}">${escapeHtml(db.label)}</option>`)
+    .join('');
+
+  if (databases.length > 0) {
+    await loadDbSchema(databases[0].id);
+  }
+}
+
+async function loadDbSchema(dbId) {
+  const res = await fetch(`/api/db/${encodeURIComponent(dbId)}/schema`);
+  const body = await res.json();
+  if (body.status !== 'ok') {
+    dbSchemaEl.textContent = '';
+    return;
+  }
+
+  const tables = body.data.tables || [];
+  dbSchemas[dbId] = tables;
+  dbSchemaEl.textContent = tables
+    .map((t) => `${t.name}(${t.columns.map((c) => c.name).join(', ')})`)
+    .join('  |  ');
+
+  if (tables.length > 0 && !queryInput.value.trim()) {
+    queryInput.value = `SELECT * FROM ${tables[0].name} LIMIT 50`;
+  }
+}
+
+async function runQuery(dbId, sql) {
+  queryError.hidden = true;
+  queryTruncatedHint.hidden = true;
+
+  const res = await fetch(`/api/db/${encodeURIComponent(dbId)}/query`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ sql }),
+  });
+  const body = await res.json();
+
+  if (body.status !== 'ok') {
+    queryResultHead.innerHTML = '';
+    queryResultBody.innerHTML = '';
+    queryError.textContent = `[${body.code || 'error'}] ${body.message || '쿼리 실행 실패'}`;
+    queryError.hidden = false;
+    return;
+  }
+
+  const { columns, rows: resultRows, truncated } = body.data;
+  queryResultHead.innerHTML = columns.map((c) => `<th>${escapeHtml(c)}</th>`).join('');
+  queryResultBody.innerHTML = resultRows
+    .map(
+      (row) =>
+        `<tr>${row.map((v) => `<td>${escapeHtml(v === null ? 'NULL' : String(v))}</td>`).join('')}</tr>`
+    )
+    .join('');
+  queryTruncatedHint.hidden = !truncated;
+}
+
 function connectWs() {
   const protocol = location.protocol === 'https:' ? 'wss' : 'ws';
   const ws = new WebSocket(`${protocol}://${location.host}/ws`);
@@ -164,8 +238,16 @@ injectForm.addEventListener('submit', async (ev) => {
 
 clearTestBtn.addEventListener('click', clearTestContext);
 catalogRefreshBtn.addEventListener('click', loadCatalog);
+dbSelect.addEventListener('change', () => loadDbSchema(dbSelect.value));
+queryForm.addEventListener('submit', (ev) => {
+  ev.preventDefault();
+  const sql = queryInput.value.trim();
+  if (!sql || !dbSelect.value) return;
+  runQuery(dbSelect.value, sql);
+});
 
 loadInitial();
 loadCatalog();
+loadDbList();
 connectWs();
 setInterval(loadCatalog, 5000);

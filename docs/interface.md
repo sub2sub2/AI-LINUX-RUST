@@ -107,6 +107,23 @@ tester는 `list-catalog`(정의)와 `list-context`(실측)를 각각 조회해�
 
 ---
 
+## 2.5 DB 직접 쿼리 (신규, app_control/TIDL과 완전히 별개 경로)
+
+contextengine이 사용하는 SQLite DB들이 **파일 경로로 직접 접근 가능**하다는 것을 확인했다
+(사용자 확인 완료). 따라서 이 기능은 app_control이나 TIDL을 전혀 거치지 않고,
+native-shim이 DB 파일을 직접 read-only로 열어서 조회한다 — **데몬 쪽 인터페이스 변경이
+필요 없다.**
+
+- `native-shim/db_config.json`에 db_id → 파일 경로 매핑을 채워 넣기만 하면 됨 (경로는
+  회사 내부 정보라 이 저장소에는 placeholder만 있음)
+- 쿼리는 SELECT만 허용 (사용자 확인 완료) — `SQLITE_OPEN_READONLY`로 연결을 열고, 준비된
+  statement에 대해 `sqlite3_stmt_readonly()`로 재검증
+- 결과 행 수 상한(1000행) 적용
+
+자세한 프로토콜은 `native-shim/README.md`와 `bridge-server` 소스의 `/api/db/*` 참고.
+
+---
+
 ## 3. tester 쪽 아키텍처 요약 (참고)
 
 ```
@@ -130,3 +147,5 @@ native-shim ↔ bridge-server 간 로컬 소켓 프로토콜은 tester 내부 �
 - [ ] delete 시 콜백 payload 표현 방식 (`value: null` vs `deleted: true`) — 데몬 구현 시 확정 필요
 - [ ] `list-context` / `clear-test-context` 채택 여부 — 선택 사항, 필요 없으면 tester 쪽에서 우회 가능
 - [x] `list-catalog` 커맨드는 이미 존재함 (스키마는 가정치, 실제 필드명 확인 필요)
+- [x] DB들이 파일 경로로 직접 접근 가능한 SQLite인지 확인됨 → app_control/TIDL 변경 불필요
+- [x] DB 쿼리 권한은 SELECT만 허용하기로 확인됨

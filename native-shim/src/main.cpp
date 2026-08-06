@@ -4,9 +4,11 @@
 #include "app_control_commands.h"
 #include "bridge_socket_server.h"
 #include "context_engine_client.h"
+#include "db_reader.h"
 
 namespace {
 constexpr const char* kSocketPath = "/tmp/contextengine-tester-shim.sock";
+constexpr const char* kDbConfigPath = "db_config.json";
 }
 
 int main() {
@@ -14,8 +16,9 @@ int main() {
 
     auto appControl = CreateAppControlClient();
     auto subscriber = CreateContextSubscriber();
+    auto dbReader = CreateDbReader(kDbConfigPath);
 
-    BridgeSocketServer server(kSocketPath, *appControl);
+    BridgeSocketServer server(kSocketPath, *appControl, *dbReader);
 
     // 소켓 서버는 별도 스레드에서 블로킹 실행 — app_control 응답 콜백을 받는 메인(glib)
     // 루프 스레드와 분리해야 한다 (app_control_client.cpp의 NOTE 참고).

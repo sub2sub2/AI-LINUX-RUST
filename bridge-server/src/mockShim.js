@@ -2,11 +2,13 @@
 // ShimClient와 동일한 인터페이스(request(method, params), 'event' 이벤트)를 제공한다.
 
 const { EventEmitter } = require('events');
+const { MockDb } = require('./mockDb');
 
 class MockShim extends EventEmitter {
   constructor() {
     super();
     this.store = new Map(); // `${category}:${key}` -> { category, key, value, source, timestamp }
+    this.mockDb = new MockDb();
 
     // list-catalog 목데이터. 실제 스키마는 확인되지 않아 가정치임 (docs/interface.md 2.1 참고).
     // 일부러 일부 항목엔 대응하는 context가 없도록/오래되도록 구성해서 missing/stale 데모.
@@ -86,6 +88,23 @@ class MockShim extends EventEmitter {
           (e) => !params.plugin_id || e.plugin_id === params.plugin_id
         );
         return this._ok({ items });
+      }
+      case 'db-list': {
+        return this._ok({ databases: this.mockDb.list() });
+      }
+      case 'db-schema': {
+        const tables = this.mockDb.schema(params.db_id);
+        if (!tables) return this._err('db_not_found', `unknown db id: ${params.db_id}`);
+        return this._ok({ tables });
+      }
+      case 'db-query': {
+        const result = this.mockDb.query(params.db_id, params.sql);
+        if (!result.ok) return this._err(result.code, result.message);
+        return this._ok({
+          columns: result.columns,
+          rows: result.rows,
+          truncated: result.truncated,
+        });
       }
       case 'clear-test-context': {
         let count = 0;

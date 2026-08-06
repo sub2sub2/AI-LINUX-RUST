@@ -62,6 +62,30 @@
         <tbody id="catalog-tbody"></tbody>
       </table>
     </section>
+
+    <section class="panel">
+      <h2>DB 쿼리</h2>
+      <p class="hint warn">읽기 전용(SELECT) 도구입니다. 실제 서비스 DB 파일에 직접 붙으니 무거운 쿼리는 주의하세요.</p>
+
+      <div class="db-controls">
+        <select id="db-select"></select>
+        <div id="db-schema" class="schema-hint"></div>
+      </div>
+
+      <form id="query-form">
+        <textarea id="query-input" rows="3" placeholder="SELECT * FROM ... LIMIT 50"></textarea>
+        <button type="submit">쿼리 실행</button>
+      </form>
+      <div id="query-error" class="error-box" hidden></div>
+
+      <div class="table-scroll">
+        <table id="query-result-table">
+          <thead><tr id="query-result-head"></tr></thead>
+          <tbody id="query-result-body"></tbody>
+        </table>
+      </div>
+      <p id="query-truncated-hint" class="hint" hidden>결과가 많아 앞부분만 표시됩니다.</p>
+    </section>
   </main>
 
   <script src="app.js"></script>

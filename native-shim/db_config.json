@@ -1,0 +1,9 @@
+{
+  "databases": [
+    {
+      "id": "context_store",
+      "label": "Context Store (TODO: 실제 파일 경로로 교체)",
+      "path": "/opt/usr/data/contextengine/context.db"
+    }
+  ]
+}
