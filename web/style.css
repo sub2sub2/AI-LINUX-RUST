@@ -116,3 +116,31 @@ tr.flash {
 }
 
 code { font-size: 0.8em; }
+
+.panel h2 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+button.small {
+  padding: 0.2rem 0.6rem;
+  font-size: 0.75rem;
+}
+
+.hint {
+  font-size: 0.8rem;
+  opacity: 0.7;
+  margin: -0.25rem 0 0.75rem;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.badge-ok { background: color-mix(in srgb, #16a34a 20%, transparent); color: #16a34a; }
+.badge-stale { background: color-mix(in srgb, #ca8a04 20%, transparent); color: #ca8a04; }
+.badge-missing { background: color-mix(in srgb, var(--danger) 20%, transparent); color: var(--danger); }

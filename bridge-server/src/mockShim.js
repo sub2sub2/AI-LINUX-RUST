@@ -7,6 +7,44 @@ class MockShim extends EventEmitter {
   constructor() {
     super();
     this.store = new Map(); // `${category}:${key}` -> { category, key, value, source, timestamp }
+
+    // list-catalog 목데이터. 실제 스키마는 확인되지 않아 가정치임 (docs/interface.md 2.1 참고).
+    // 일부러 일부 항목엔 대응하는 context가 없도록/오래되도록 구성해서 missing/stale 데모.
+    this.catalog = [
+      {
+        plugin_id: 'battery-plugin',
+        category: 'Device',
+        key: 'battery',
+        data_type: 'object',
+        description: '배터리 상태',
+        report_interval_ms: 5000,
+      },
+      {
+        plugin_id: 'location-plugin',
+        category: 'Device',
+        key: 'location',
+        data_type: 'object',
+        description: '위치 정보',
+        report_interval_ms: 10000,
+      },
+      {
+        plugin_id: 'system-plugin',
+        category: 'System',
+        key: 'uptime',
+        data_type: 'number',
+        description: '부팅 후 경과 시간',
+        report_interval_ms: 2000,
+      },
+    ];
+
+    // system-plugin은 한 번만 보고하고 멈춘 상황을 흉내냄 (시간이 지나면 stale이 됨).
+    this.store.set(this._k('System', 'uptime'), {
+      category: 'System',
+      key: 'uptime',
+      value: 12,
+      source: 'system-plugin',
+      timestamp: Date.now(),
+    });
   }
 
   connect() {
@@ -40,6 +78,12 @@ class MockShim extends EventEmitter {
       case 'list-context': {
         const items = [...this.store.values()].filter(
           (e) => !params.category || e.category === params.category
+        );
+        return this._ok({ items });
+      }
+      case 'list-catalog': {
+        const items = this.catalog.filter(
+          (e) => !params.plugin_id || e.plugin_id === params.plugin_id
         );
         return this._ok({ items });
       }

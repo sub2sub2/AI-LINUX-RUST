@@ -2,6 +2,8 @@ const tbody = document.getElementById('context-tbody');
 const wsStatus = document.getElementById('ws-status');
 const injectForm = document.getElementById('inject-form');
 const clearTestBtn = document.getElementById('clear-test-btn');
+const catalogTbody = document.getElementById('catalog-tbody');
+const catalogRefreshBtn = document.getElementById('catalog-refresh-btn');
 
 const rows = new Map(); // `${category}:${key}` -> entry
 
@@ -56,6 +58,32 @@ function escapeHtml(str) {
   const div = document.createElement('div');
   div.textContent = str;
   return div.innerHTML;
+}
+
+async function loadCatalog() {
+  const res = await fetch('/api/catalog');
+  const body = await res.json();
+  if (body.status !== 'ok') return;
+  renderCatalog(body.data.items || []);
+}
+
+function renderCatalog(items) {
+  const sorted = [...items].sort((a, b) => (a.plugin_id + a.key).localeCompare(b.plugin_id + b.key));
+  catalogTbody.innerHTML = '';
+  for (const entry of sorted) {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${entry.plugin_id}</td>
+      <td>${entry.category}</td>
+      <td>${entry.key}</td>
+      <td>${entry.data_type || ''}</td>
+      <td>${entry.description || ''}</td>
+      <td><span class="badge badge-${entry.status}">${entry.status}</span></td>
+      <td>${entry.lastReportedAt ? formatTime(entry.lastReportedAt) : '-'}</td>
+      <td><code>${escapeHtml(entry.lastValue !== null && entry.lastValue !== undefined ? formatValue(entry.lastValue) : '')}</code></td>
+    `;
+    catalogTbody.appendChild(tr);
+  }
 }
 
 async function loadInitial() {
@@ -135,6 +163,9 @@ injectForm.addEventListener('submit', async (ev) => {
 });
 
 clearTestBtn.addEventListener('click', clearTestContext);
+catalogRefreshBtn.addEventListener('click', loadCatalog);
 
 loadInitial();
+loadCatalog();
 connectWs();
+setInterval(loadCatalog, 5000);

@@ -5,6 +5,7 @@ const { WebSocketServer } = require('ws');
 
 const { MockShim } = require('./mockShim');
 const { ShimClient } = require('./shimClient');
+const { computeCatalogStatus } = require('./catalogStatus');
 
 const PORT = process.env.PORT || 8787;
 const SHIM_MODE = process.env.SHIM_MODE || 'mock'; // 'mock' | 'socket'
@@ -62,6 +63,24 @@ async function main() {
   app.post('/api/context/clear-test', async (req, res) => {
     const result = await shim.request('clear-test-context', {});
     res.status(result.status === 'ok' ? 200 : 500).json(result);
+  });
+
+  // 카탈로그(plugin이 제공하기로 선언한 category/key 정의)와 실제 context를 대조해서
+  // 각 항목이 제대로 로드/보고되고 있는지(ok/stale/missing) 보여준다.
+  app.get('/api/catalog', async (req, res) => {
+    const [catalogResult, contextResult] = await Promise.all([
+      shim.request('list-catalog', { plugin_id: req.query.plugin_id || '' }),
+      shim.request('list-context', {}),
+    ]);
+
+    if (catalogResult.status !== 'ok') {
+      res.status(500).json(catalogResult);
+      return;
+    }
+
+    const contextItems = contextResult.status === 'ok' ? contextResult.data.items || [] : [];
+    const items = computeCatalogStatus(catalogResult.data.items || [], contextItems);
+    res.json({ status: 'ok', data: { items } });
   });
 
   const server = http.createServer(app);

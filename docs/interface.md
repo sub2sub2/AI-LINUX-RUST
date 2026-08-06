@@ -49,6 +49,29 @@ app_control context-engine <method> <param1> <param2> ...
 
 ### 2.1 기존 커맨드 (변경 없음)
 - `get-context <category> <key>` — 현재 값 조회
+- `list-catalog [plugin_id]` — 카탈로그(plugin이 어떤 category/key의 데이터를 제공하기로
+  선언했는지에 대한 정의, DB에 저장됨) 조회. **스키마는 실제 값을 확인하지 못해 아래는
+  가정치다 — 실제 필드명/구조가 다르면 bridge-server의 `/api/catalog` 매핑만 맞춰 고치면 됨.**
+
+  ```json
+  {
+    "status": "ok",
+    "data": {
+      "items": [
+        {
+          "plugin_id": "battery-plugin",
+          "category": "Device",
+          "key": "battery",
+          "data_type": "object",
+          "description": "배터리 상태",
+          "report_interval_ms": 5000
+        }
+      ]
+    }
+  }
+  ```
+  - `report_interval_ms`가 없다면(스키마에 없으면) tester는 "존재 여부"만으로 상태를 판단하고
+    stale 판정은 생략한다.
 
 ### 2.2 신규 커맨드 (테스트 전용, 이번에 추가 필요)
 
@@ -69,6 +92,18 @@ app_control context-engine <method> <param1> <param2> ...
 ### 2.3 보안/빌드 가드 (필수 제안)
 - `set-context` / `delete-context` / `clear-test-context`는 `CONTEXTENGINE_TEST_BUILD` 빌드 플래그로 감싸서 release 빌드에서 제외
 - 신규 내부 전용 privilege(예: `http://tizen.org/privilege/contextengine.testcontrol`) 정의, 테스트 빌드에서도 서명된 내부 앱만 호출 가능하도록 제한
+
+### 2.4 카탈로그 로드 상태 판단 (tester 내부 로직, 데몬 변경 불필요)
+
+tester는 `list-catalog`(정의)와 `list-context`(실측)를 각각 조회해서 bridge-server에서
+`category`+`key`로 조인한 뒤 항목별 상태를 계산한다:
+
+- **missing**: catalog에는 있는데 매칭되는 context가 없음 — plugin이 아예 보고 안 하고 있음
+- **stale**: context는 있는데 `report_interval_ms`가 있고, 마지막 보고 시각이 그 3배 이상
+  지남 — 한동안 안 들어옴
+- **ok**: 매칭되고 신선함
+
+이 로직은 데몬 인터페이스와 무관한 tester 내부 구현이라 자유롭게 조정 가능.
 
 ---
 
@@ -94,3 +129,4 @@ native-shim ↔ bridge-server 간 로컬 소켓 프로토콜은 tester 내부 �
 - [x] TIDL subscribe 필터링: 카테고리/키 지원 확인됨
 - [ ] delete 시 콜백 payload 표현 방식 (`value: null` vs `deleted: true`) — 데몬 구현 시 확정 필요
 - [ ] `list-context` / `clear-test-context` 채택 여부 — 선택 사항, 필요 없으면 tester 쪽에서 우회 가능
+- [x] `list-catalog` 커맨드는 이미 존재함 (스키마는 가정치, 실제 필드명 확인 필요)
